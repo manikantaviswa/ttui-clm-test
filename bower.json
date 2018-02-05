@@ -4,7 +4,8 @@
   "ignore": [],
   "dependencies": {
     "angular": "1.4.9",
-    "angular-sanitize": "1.4.9"
+    "angular-sanitize": "1.4.9",
+    "angular-ui-select": "~0.19.8"
   },
   "resolutions": {
     "angular": "1.4.9"
