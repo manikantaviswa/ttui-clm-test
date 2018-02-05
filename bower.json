@@ -1,7 +1,9 @@
 {
   "name": "ttui-clm-test",
   "version": "0.0.1",
-  "ignore": [],
+  "ignore": [
+    "src"
+  ],
   "dependencies": {
     "angular": "1.4.9",
     "angular-sanitize": "1.4.9",
