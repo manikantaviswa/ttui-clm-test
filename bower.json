@@ -1,1 +1,15 @@
-
+{
+    "name": "ttui-clm-test",
+    "version": "0.0.1",
+    "main": [
+      "dist/scripts/ttui-clm-library.js"
+    ],
+    "ignore": [],
+    "dependencies": {
+      "angular": "1.4.9",
+      "angular-sanitize": "1.4.9"
+    },
+    "resolutions": {
+      "angular": "1.4.9"
+    }
+  }
