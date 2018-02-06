@@ -1,20 +1,35 @@
+
+
 'use strict';
 
 var module = angular.module('TT-UI-CLM.FeasibilitySearch.Directives', [
-    // 'TT-UI-CLM.FeasibilitySearch.views',
+    'TT-UI-CLM.FeasibilitySearch.views',
     'ui.select'
 ]);
 
 module.directive('feasibilitySearch', function($log) {
     return {
-        restrict: 'E',
+        restrict: 'A',
         scope: {},
         link: function(scope, ele, attrs) {
             $log.info('msg from directive', ele, attrs);
         },
         templateUrl: 'views/feasibility-search.tpl'
     };
-}).run(['$templateCache', function($templateCache) {
+});
+
+'use strict';
+
+angular.module('TT-UI-CLM.FeasibilitySearch', [
+    'TT-UI-CLM.FeasibilitySearch.Directives',
+    'TT-UI-CLM.FeasibilitySearch.Views'
+]);
+
+
+'use strict';
+
+var module = angular.module('TT-UI-CLM.FeasibilitySearch.views', []);
+module.run(['$templateCache', function($templateCache) {
     $templateCache.put('views/feasibility-search.tpl',
         '<div class="form-horizontal-ttui panel panel-ttui" spinner-inside>' +
             '<div class="panel-body forms-ttui row">' +
@@ -126,4 +141,10 @@ module.directive('feasibilitySearch', function($log) {
             '</div>' +
         '</div>'
     );
-}])
+}]);
+
+'use strict';
+
+angular.module('TT-UI-CLM', [
+    'TT-UI-CLM.FeasibilitySearch'
+]);

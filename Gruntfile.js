@@ -12,6 +12,23 @@ module.exports = function(grunt) {
 			}
 		},
 
+		clean: {
+			dist: 'dist',
+			server: '.tmp'
+		},
+
+		copy: {
+			dist: {
+				expand: true,
+				dot: true,
+				cwd: 'src',
+				dest: 'dist',
+				src: [
+					'bower_components/**/*'
+				]
+			},
+		},
+
 		concat: {
 			dist: {
 				options: {
@@ -46,7 +63,8 @@ module.exports = function(grunt) {
 						],
 						dest: 'dist/scripts/',
 						rename: function(dest, src) {
-							return dest+moduleFilePrefix+src.split('/')[0]+'.js';
+							var moduleName = src.split('/')[0];
+							return dest + moduleName + '/' + moduleFilePrefix + moduleName + '.js';
 						}
 					}
 				]
@@ -57,20 +75,43 @@ module.exports = function(grunt) {
 				options: {},
 				files: [{
 					src: [
-						'dist/scripts/*.js',
-						'!dist/scripts/*min.js'
+						'src/scripts/**/*',
 					],
-					dest: 'dist/scripts/tt-ui-clm-library.js'
+					dest: 'dist/scripts/' + moduleFilePrefix + 'library.js'
+				}]
+			}
+		},
+		uglify: {
+			dist: {
+				options: {
+					preserveComments: 'some',
+					sourceMap: true,
+					screwIE8: true
+				},
+				files: [{
+					expand: true,
+					cwd: 'dist/scripts/',
+					src: [
+						'**.js'
+					],
+					dest: 'dist/scripts/',
+					ext: '.min.js',
+					extDot: 'last'
 				}]
 			}
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-concat');
-
 	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-contrib-clean');
 
 	grunt.registerTask('build', [
+		'clean',
+		'copy:dist',
 		'concat:dist',
+		'concat:library',
+		'uglify'
 	]);
 };
