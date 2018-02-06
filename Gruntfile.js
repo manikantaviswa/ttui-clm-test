@@ -4,19 +4,6 @@ module.exports = function(grunt) {
 	var moduleFilePrefix = 'ttui-clm-';
 
 	grunt.initConfig({
-		watch: {
-			js: {
-				files: [
-					'scripts/*.js'
-				],
-				options: {
-					livereload: true,
-					interval: 500,
-					debounceDelay: 500
-				}
-			}
-		},
-
 		jshint: {
 			scripts: {
 				src: [
