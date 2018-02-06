@@ -9,7 +9,7 @@ var module = angular.module('TT-UI-CLM.FeasibilitySearch.Directives', [
 
 module.directive('feasibilitySearch', function($log) {
     return {
-        restrict: 'A',
+        restrict: 'EA',
         scope: {},
         link: function(scope, ele, attrs) {
             $log.info('msg from directive', ele, attrs);

@@ -81,6 +81,7 @@ module.exports = function(grunt) {
 				}]
 			}
 		},
+		
 		uglify: {
 			dist: {
 				options: {
@@ -111,7 +112,7 @@ module.exports = function(grunt) {
 		'clean',
 		'copy:dist',
 		'concat:dist',
-		'concat:library',
-		'uglify'
+		'concat:library'
+//		'uglify'
 	]);
 };
