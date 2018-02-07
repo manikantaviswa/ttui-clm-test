@@ -4,8 +4,8 @@
     </head>
 
     <body ng-app="testApp" ng-controller="testCtrl">
-        {{testMsg}}123
-        <feasibility-search></feasibility-search>
+        <feasibility-search master-data="masterData" config="testMsg" permissions="testMsg" model="model" on-search="myFunc($result)"></feasibility-search>
+        {{masterData | json}}
     </body>
     <script type="text/javaScript" src="./bower_components/angular/angular.min.js"></script>
     <script type="text/javaScript" src="./bower_components/angular-sanitize/angular-sanitize.min.js"></script>
@@ -14,6 +14,18 @@
     <script type="text/javaScript">
         angular.module('testApp', ['TT-UI-CLM.FeasibilitySearch']).controller('testCtrl', function($scope) {
             $scope.testMsg = 'Test App Working';
+            $scope.model={};
+            $scope.masterData = {
+                localities: [
+                    { name: 'Locality 1', value: 'locality1' },
+                    { name: 'Locality 2', value: 'locality2' },
+                    { name: 'Locality 3', value: 'locality3' }
+                ]
+            };
+
+            $scope.myFunc = function(result) {
+                console.log(result)
+            }
         });
     </script>
 </html>

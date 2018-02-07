@@ -10,18 +10,27 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 // Source: src/scripts/feasibility-search/directives/feasibility-search.directive.js
 var module = angular.module('TT-UI-CLM.FeasibilitySearch.Directives', [
     'TT-UI-CLM.FeasibilitySearch.Views',
-    'ui.select'
+    'ui.select',
+    'ngSanitize'
 ]);
 
 module.directive('feasibilitySearch', function($log) {
     return {
         restrict: 'EA',
         scope: {
+            model: '=',
             config: '=',
-            permissions: '='
+            masterData: '=',
+            permissions: '=',
+
+            onSearch: '&'
         },
         link: function(scope, ele, attrs) {
-            $log.info('msg from directive', ele, attrs);
+            $log.info('msg from directive', scope);
+
+            scope.searchAddressFeasibility = function() {
+                scope.onSearch({$result: scope.model});
+            };
         },
         templateUrl: 'views/feasibility-search.tpl'
     };
@@ -50,7 +59,7 @@ module.run(['$templateCache', function($templateCache) {
                         '<div class="control-content col-sm-8">' +
                             '<ui-select id="city" ng-model="model.locality.locality.masterCode" theme="bootstrap" append-to-body="true" ng-change="setCountry()">' +
                                 '<ui-select-match placeholder="Select / Search Localities">{{$select.selected.name}}</ui-select-match>' +
-                                '<ui-select-choices repeat="locality in localities | filter: $select.search">' +
+                                '<ui-select-choices repeat="locality in masterData.localities | filter: $select.search">' +
                                     '<span ng-bind-html="locality.name | highlight: $select.search"></span>' +
                                 '</ui-select-choices>' +
                             '</ui-select>' +
@@ -62,7 +71,7 @@ module.run(['$templateCache', function($templateCache) {
                         '<div class="control-content col-sm-8">' +
                             '<ui-select id="city" ng-model="model.locality.subLocality.masterCode" theme="bootstrap" append-to-body="true" ng-change="setCountry()">' +
                                 '<ui-select-match placeholder="Select / Search Sub Localities">{{$select.selected.name}}</ui-select-match>' +
-                                '<ui-select-choices repeat="locality in localities | filter: $select.search">' +
+                                '<ui-select-choices repeat="locality in masterData.localities | filter: $select.search">' +
                                     '<span ng-bind-html="locality.name | highlight: $select.search"></span>' +
                                 '</ui-select-choices>' +
                             '</ui-select>' +
@@ -74,7 +83,7 @@ module.run(['$templateCache', function($templateCache) {
                         '<div class="control-content col-sm-8">' +
                             '<ui-select id="city" ng-model="model.locality.street.masterCode" theme="bootstrap" placeholder="Choose a street" append-to-body="true" ng-change="setCountry()">' +
                                 '<ui-select-match placeholder="Select / Search Street">{{$select.selected.name}}</ui-select-match>' +
-                                '<ui-select-choices repeat="locality in localities | filter: $select.search">' +
+                                '<ui-select-choices repeat="locality in masterData.localities | filter: $select.search">' +
                                     '<span ng-bind-html="locality.name | highlight: $select.search"></span>' +
                                 '</ui-select-choices>' +
                             '</ui-select>' +
@@ -84,7 +93,7 @@ module.run(['$templateCache', function($templateCache) {
                     '<div class="form-group">' +
                         '<label for="street" class="col-sm-4 control-label"></label>' +
                         '<div class="control-content col-sm-8">' +
-                            '<button type="button" class="btn btn-primary" ng-click="onCheckClick()">Check Feasibility</button>' +
+                            '<button type="button" class="btn btn-primary" ng-click="searchAddressFeasibility()">Check Feasibility</button>' +
                         '</div>' +
                     '</div>' +
                 '</div>' +
