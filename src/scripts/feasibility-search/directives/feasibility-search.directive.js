@@ -1,7 +1,7 @@
 'use strict';
 
 var module = angular.module('TT-UI-CLM.FeasibilitySearch.Directives', [
-    'TT-UI-CLM.FeasibilitySearch.views',
+    'TT-UI-CLM.FeasibilitySearch.Views',
     'ui.select'
 ]);
 

@@ -3,7 +3,7 @@
 'use strict';
 
 var module = angular.module('TT-UI-CLM.FeasibilitySearch.Directives', [
-    'TT-UI-CLM.FeasibilitySearch.views',
+    'TT-UI-CLM.FeasibilitySearch.Views',
     'ui.select'
 ]);
 
@@ -31,7 +31,7 @@ angular.module('TT-UI-CLM.FeasibilitySearch', [
 
 'use strict';
 
-var module = angular.module('TT-UI-CLM.FeasibilitySearch.views', []);
+var module = angular.module('TT-UI-CLM.FeasibilitySearch.Views', []);
 module.run(['$templateCache', function($templateCache) {
     $templateCache.put('views/feasibility-search.tpl',
         '<div class="form-horizontal-ttui panel panel-ttui" spinner-inside>' +
