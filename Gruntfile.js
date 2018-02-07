@@ -24,7 +24,8 @@ module.exports = function(grunt) {
 				cwd: 'src',
 				dest: 'dist',
 				src: [
-					'bower_components/**/*'
+					'bower_components/**/*',
+					'scss/**/*'
 				]
 			},
 		},
