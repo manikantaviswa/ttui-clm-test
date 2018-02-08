@@ -20,10 +20,6 @@ module.directive('feasibilitySearch', function() {
             onSearch: '&'
         },
         link: function(scope, ele, attrs) {
-
-            scope.searchAddressFeasibility = function() {
-                scope.onSearch({$result: scope.model});
-            };
         },
         controller: 'feasibilitySearchCtrl',
         templateUrl: 'views/feasibility-search.tpl'
