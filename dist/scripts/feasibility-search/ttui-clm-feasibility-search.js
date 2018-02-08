@@ -19,6 +19,11 @@ module.controller('feasibilitySearchCtrl', function($scope, $parse, feasibilityS
 
     setInitialData();
 
+    $scope.searchAddressFeasibility = function() {
+        console.log("from ttclm lib **********");
+        scope.onSearch({$result: scope.model});
+    };
+
     $scope.onSelectLocality = function(item, model) {
         $scope.subLocalities = feasibilitySearchService.getSubLocalities($scope.localities, $scope.model.locality.masterCode);
         $parse('model.subLocality.masterCode').assign($scope, null);
@@ -86,10 +91,6 @@ module.directive('feasibilitySearch', function() {
             onSearch: '&'
         },
         link: function(scope, ele, attrs) {
-
-            scope.searchAddressFeasibility = function() {
-                scope.onSearch({$result: scope.model});
-            };
         },
         controller: 'feasibilitySearchCtrl',
         templateUrl: 'views/feasibility-search.tpl'
