@@ -37,12 +37,14 @@ module.service('feasibilitySearchService', function($log, $parse) {
     function getSubLocalities(localities, locality) {
         var subLocalities = [];
         localities.forEach(function(loc) {
-            var sls = $parse('subLocalities.subLocality')(loc);
-            if(sls && sls.length) {
-                sls.forEach(function(sl) {
-                    sl.locality = {code: loc.code};
-                    subLocalities.push(sl);
-                });
+            if (!locality || (locality && loc.code === locality.code)) {
+                var sls = $parse('subLocalities.subLocality')(loc);
+                if (sls && sls.length) {
+                    sls.forEach(function(sl) {
+                        sl.locality = {code: loc.code};
+                        subLocalities.push(sl);
+                    });
+                }
             }
         });
         return subLocalities;
@@ -51,12 +53,14 @@ module.service('feasibilitySearchService', function($log, $parse) {
     function getStreets(subLocalities, subLocality) {
         var streets = [];
         subLocalities.forEach(function(sl) {
-            var sts = $parse('streets.street')(sl);
-            if(sts && sts.length) {
-                sts.forEach(function(st) {
-                    st.subLocality = {code: sl.code};
-                    streets.push(st);
-                });
+            if(!subLocality || (subLocality && subLocality.code === sl.code)) {
+                var sts = $parse('streets.street')(sl);
+                if(sts && sts.length) {
+                    sts.forEach(function(st) {
+                        st.subLocality = {code: sl.code};
+                        streets.push(st);
+                    });
+                }
             }
         });
         return streets;

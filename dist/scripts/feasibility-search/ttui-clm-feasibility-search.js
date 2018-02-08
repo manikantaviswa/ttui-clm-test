@@ -12,31 +12,56 @@ var module = angular.module('TT-UI-CLM.FeasibilitySearch.Controllers', [
     'TT-UI-CLM.FeasibilitySearch.Services',
 ]);
 
-module.controller('feasibilitySearchCtrl', function($scope, feasibilitySearchService) {
+module.controller('feasibilitySearchCtrl', function($scope, $parse, feasibilitySearchService) {
     $scope.localities = [];
     $scope.subLocalities = [];
     $scope.streets = [];
 
-    $scope.localities = feasibilitySearchService.getLocalities($scope.masterData);
-    $scope.subLocalities = feasibilitySearchService.getSubLocalities($scope.localities);
-    $scope.streets = feasibilitySearchService.getStreets($scope.subLocalities);
+    setInitialData();
 
     $scope.onSelectLocality = function(item, model) {
-        console.log($scope.model);
-        debugger;
-        $scope.subLocalities = feasibilitySearchService.getSubLocalities($scope.localities);
+        $scope.subLocalities = feasibilitySearchService.getSubLocalities($scope.localities, $scope.model.locality.masterCode);
+        $parse('model.subLocality.masterCode').assign($scope, null);
+        $parse('model.street.masterCode').assign($scope, null);
     };
 
     $scope.onSelectSubLocality = function(item, model) {
-        console.log($scope.model);
-        debugger;
-        $scope.streets = feasibilitySearchService.getStreets($scope.subLocalities);
+        $scope.streets = feasibilitySearchService.getStreets($scope.subLocalities, $scope.model.subLocality.masterCode);
+        setLocality();
+        $parse('model.street.masterCode').assign($scope, null);
     };
 
     $scope.onSelectStreet = function(item, model) {
-        console.log($scope.model);
-        debugger;
+        setSubLocality();
     };
+
+    function setInitialData() {
+        $scope.localities = feasibilitySearchService.getLocalities($scope.masterData);
+        $scope.subLocalities = feasibilitySearchService.getSubLocalities($scope.localities);
+        $scope.streets = feasibilitySearchService.getStreets($scope.subLocalities);
+    }
+
+    function setLocality() {
+        var locality = getItemByCode($scope.localities, $scope.model.subLocality.masterCode.locality.code);
+        $parse('model.locality.masterCode').assign($scope, locality);
+    }
+
+    function setSubLocality() {
+        var subLocality = getItemByCode($scope.subLocalities, $scope.model.street.masterCode.subLocality.code);
+        $parse('model.subLocality.masterCode').assign($scope, subLocality);
+        setLocality();
+    }
+
+    function getItemByCode(list, code) {
+        var item = null;
+        for (var i=0; i<list.length; i++) {
+            if (list[i].code === code) {
+                item = list[i];
+                break;
+            }
+        }
+        return item;
+    }
 });
 
 
@@ -117,12 +142,14 @@ module.service('feasibilitySearchService', function($log, $parse) {
     function getSubLocalities(localities, locality) {
         var subLocalities = [];
         localities.forEach(function(loc) {
-            var sls = $parse('subLocalities.subLocality')(loc);
-            if(sls && sls.length) {
-                sls.forEach(function(sl) {
-                    sl.locality = {code: loc.code};
-                    subLocalities.push(sl);
-                });
+            if (!locality || (locality && loc.code === locality.code)) {
+                var sls = $parse('subLocalities.subLocality')(loc);
+                if (sls && sls.length) {
+                    sls.forEach(function(sl) {
+                        sl.locality = {code: loc.code};
+                        subLocalities.push(sl);
+                    });
+                }
             }
         });
         return subLocalities;
@@ -131,12 +158,14 @@ module.service('feasibilitySearchService', function($log, $parse) {
     function getStreets(subLocalities, subLocality) {
         var streets = [];
         subLocalities.forEach(function(sl) {
-            var sts = $parse('streets.street')(sl);
-            if(sts && sts.length) {
-                sts.forEach(function(st) {
-                    st.subLocality = {code: sl.code};
-                    streets.push(st);
-                });
+            if(!subLocality || (subLocality && subLocality.code === sl.code)) {
+                var sts = $parse('streets.street')(sl);
+                if(sts && sts.length) {
+                    sts.forEach(function(st) {
+                        st.subLocality = {code: sl.code};
+                        streets.push(st);
+                    });
+                }
             }
         });
         return streets;
@@ -157,7 +186,7 @@ module.run(['$templateCache', function($templateCache) {
                     '<div class="form-group" ng-class="{\'has-error\': (profileForm.searchInput.$error.pattern)}">' +
                         '<label for="lacality" class="col-sm-4 control-label" translate="Locality">Locality</label>' +
                         '<div class="control-content col-sm-8">' +
-                            '<ui-select id="city" ng-model="model.masterCode" theme="bootstrap" append-to-body="true" on-select="onSelectLocality($event, $item)">'+
+                            '<ui-select id="city" ng-model="model.locality.masterCode" theme="bootstrap" append-to-body="true" on-select="onSelectLocality($event, $item)">'+
                                 '<ui-select-match placeholder="Select / Search Localities">{{$select.selected.name}}</ui-select-match>' +
                                 '<ui-select-choices repeat="locality in localities | filter: $select.search">' +
                                     '<span ng-bind-html="locality.name | highlight: $select.search"></span>' +
@@ -166,13 +195,13 @@ module.run(['$templateCache', function($templateCache) {
                             '<span class="help-block ng-hide"> This field is required </span>' +
                         '</div>' +
                     '</div>' +
-                    '{{subLocalities.length}}' +
-                    '<div class="form-group" ng-class="{\'has-error\': (profileForm.searchInput.$error.pattern)}">' +'<label for="lacality" class="col-sm-4 control-label" translate="//Locality">SubLocality</label>' +
+                    '<div class="form-group" ng-class="{\'has-error\': (profileForm.searchInput.$error.pattern)}">' +
+                        '<label for="lacality" class="col-sm-4 control-label" translate="Sub Locality">Sub Locality</label>' +
                         '<div class="control-content col-sm-8">' +
                             '<ui-select id="city" ng-model="model.subLocality.masterCode" theme="bootstrap" append-to-body="true" on-select="onSelectSubLocality($event, $item)">' +
                                 '<ui-select-match placeholder="Select / Search Sub Localities">{{$select.selected.name}}</ui-select-match>' +
-                                '<ui-select-choices repeat="locality in subLocalities | filter: $select.search">' +
-                                    '<span ng-bind-html="locality.name | highlight: $select.search"></span>' +
+                                '<ui-select-choices repeat="sl in subLocalities | filter: $select.search">' +
+                                    '<span ng-bind-html="sl.name | highlight: $select.search"></span>' +
                                 '</ui-select-choices>' +
                             '</ui-select>' +
                             '<span class="help-block ng-hide"> This field is required </span>' +
@@ -183,8 +212,8 @@ module.run(['$templateCache', function($templateCache) {
                         '<div class="control-content col-sm-8">' +
                             '<ui-select id="city" ng-model="model.street.masterCode" theme="bootstrap" placeholder="Choose a street" append-to-body="true" on-select="onSelectStreet($event, $item)">' +
                                 '<ui-select-match placeholder="Select / Search Street">{{$select.selected.name}}</ui-select-match>' +
-                                '<ui-select-choices repeat="locality in streets | filter: $select.search">' +
-                                    '<span ng-bind-html="locality.name | highlight: $select.search"></span>' +
+                                '<ui-select-choices repeat="st in streets | filter: $select.search">' +
+                                    '<span ng-bind-html="st.name | highlight: $select.search"></span>' +
                                 '</ui-select-choices>' +
                             '</ui-select>' +
                             '<span class="help-block ng-hide"> This field is required </span>' +
