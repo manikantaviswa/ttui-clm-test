@@ -24,12 +24,6 @@ module.directive('feasibilitySearch', function() {
             scope.searchAddressFeasibility = function() {
                 scope.onSearch({$result: scope.model});
             };
-
-            scope.$watch('masterData', function(newVal) {
-                //scope.localities = feasibilitySearchService.getLocalities(masterData);
-                //scope.subLocalities = feasibilitySearchService.getSubLocalities(masterData);
-                //scope.streets = feasibilitySearchService.getStreets(masterData);
-            }, true);
         },
         controller: 'feasibilitySearchCtrl',
         templateUrl: 'views/feasibility-search.tpl'

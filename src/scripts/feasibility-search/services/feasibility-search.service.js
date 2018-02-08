@@ -34,13 +34,31 @@ module.service('feasibilitySearchService', function($log, $parse) {
         return localities;
     }
 
-    function getSubLocalities(masterData, locality) {
+    function getSubLocalities(localities, locality) {
         var subLocalities = [];
+        localities.forEach(function(loc) {
+            var sls = $parse('subLocalities.subLocality')(loc);
+            if(sls && sls.length) {
+                sls.forEach(function(sl) {
+                    sl.locality = {code: loc.code};
+                    subLocalities.push(sl);
+                });
+            }
+        });
         return subLocalities;
     }
 
-    function getStreets(masterData, locality, subLocality) {
+    function getStreets(subLocalities, subLocality) {
         var streets = [];
+        subLocalities.forEach(function(sl) {
+            var sts = $parse('streets.street')(sl);
+            if(sts && sts.length) {
+                sts.forEach(function(st) {
+                    st.subLocality = {code: sl.code};
+                    streets.push(st);
+                });
+            }
+        });
         return streets;
     }
 });
