@@ -1,6 +1,6 @@
 {
-  "name": "ttui-clm-test",
-  "version": "0.0.9",
+  "name": "ttui-clm-test",  
+  "version": "0.1.01",
   "ignore": [
     "src"
   ],

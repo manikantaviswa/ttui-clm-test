@@ -20,6 +20,23 @@ module.controller('feasibilitySearchCtrl', function($scope, feasibilitySearchSer
     $scope.localities = feasibilitySearchService.getLocalities($scope.masterData);
     $scope.subLocalities = feasibilitySearchService.getSubLocalities($scope.localities);
     $scope.streets = feasibilitySearchService.getStreets($scope.subLocalities);
+
+    $scope.onSelectLocality = function(item, model) {
+        console.log($scope.model);
+        debugger;
+        $scope.subLocalities = feasibilitySearchService.getSubLocalities($scope.localities);
+    };
+
+    $scope.onSelectSubLocality = function(item, model) {
+        console.log($scope.model);
+        debugger;
+        $scope.streets = feasibilitySearchService.getStreets($scope.subLocalities);
+    };
+
+    $scope.onSelectStreet = function(item, model) {
+        console.log($scope.model);
+        debugger;
+    };
 });
 
 
@@ -140,7 +157,7 @@ module.run(['$templateCache', function($templateCache) {
                     '<div class="form-group" ng-class="{\'has-error\': (profileForm.searchInput.$error.pattern)}">' +
                         '<label for="lacality" class="col-sm-4 control-label" translate="Locality">Locality</label>' +
                         '<div class="control-content col-sm-8">' +
-                            '<ui-select id="city" ng-model="model.locality.locality.masterCode" theme="bootstrap" append-to-body="true" on-select="onSelectLocality($item, $model)"'> +
+                            '<ui-select id="city" ng-model="model.masterCode" theme="bootstrap" append-to-body="true" on-select="onSelectLocality($event, $item)">'+
                                 '<ui-select-match placeholder="Select / Search Localities">{{$select.selected.name}}</ui-select-match>' +
                                 '<ui-select-choices repeat="locality in localities | filter: $select.search">' +
                                     '<span ng-bind-html="locality.name | highlight: $select.search"></span>' +
@@ -149,10 +166,10 @@ module.run(['$templateCache', function($templateCache) {
                             '<span class="help-block ng-hide"> This field is required </span>' +
                         '</div>' +
                     '</div>' +
-                    '<div class="form-group" ng-class="{\'has-error\': (profileForm.searchInput.$error.pattern)}">' +
-                        '<label for="lacality" class="col-sm-4 control-label" translate="Locality">Locality</label>' +
+                    '{{subLocalities.length}}' +
+                    '<div class="form-group" ng-class="{\'has-error\': (profileForm.searchInput.$error.pattern)}">' +'<label for="lacality" class="col-sm-4 control-label" translate="//Locality">SubLocality</label>' +
                         '<div class="control-content col-sm-8">' +
-                            '<ui-select id="city" ng-model="model.locality.subLocality.masterCode" theme="bootstrap" append-to-body="true" on-select="onSelectSubLocality($item, $model)">' +
+                            '<ui-select id="city" ng-model="model.subLocality.masterCode" theme="bootstrap" append-to-body="true" on-select="onSelectSubLocality($event, $item)">' +
                                 '<ui-select-match placeholder="Select / Search Sub Localities">{{$select.selected.name}}</ui-select-match>' +
                                 '<ui-select-choices repeat="locality in subLocalities | filter: $select.search">' +
                                     '<span ng-bind-html="locality.name | highlight: $select.search"></span>' +
@@ -164,7 +181,7 @@ module.run(['$templateCache', function($templateCache) {
                     '<div class="form-group" ng-class="{\'has-error\': (profileForm.searchInput.$error.pattern)}">' +
                         '<label for="street" class="col-sm-4 control-label" translate="Street">Street</label>' +
                         '<div class="control-content col-sm-8">' +
-                            '<ui-select id="city" ng-model="model.locality.street.masterCode" theme="bootstrap" placeholder="Choose a street" append-to-body="true" on-select="onSelectStreet($item, $model)">' +
+                            '<ui-select id="city" ng-model="model.street.masterCode" theme="bootstrap" placeholder="Choose a street" append-to-body="true" on-select="onSelectStreet($event, $item)">' +
                                 '<ui-select-match placeholder="Select / Search Street">{{$select.selected.name}}</ui-select-match>' +
                                 '<ui-select-choices repeat="locality in streets | filter: $select.search">' +
                                     '<span ng-bind-html="locality.name | highlight: $select.search"></span>' +
@@ -211,7 +228,7 @@ module.run(['$templateCache', function($templateCache) {
                     '<div class="form-group" ng-class="{\'has-error\': (profileForm.searchInput.$error.pattern)}">' +
                         '<label for="lacality" class="col-sm-4 control-label" translate="Fixed Line Number">Fixed Line Number</label>' +
                         '<div class="control-content col-sm-8">' +
-                            '<input type="text" placeholder="" ng-model="model.locality.fixedLineNumber" />' +
+                            '<input type="text" placeholder="" ng-model="model.fixedLineNumber" />' +
                             '<span class="help-block ng-hide">This field is required</span>' +
                         '</div>' +
                     '</div>' +
