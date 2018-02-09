@@ -12,7 +12,7 @@ var module = angular.module('TT-UI-CLM.FeasibilitySearch.Controllers', [
     'TT-UI-CLM.FeasibilitySearch.Services',
 ]);
 
-module.controller('feasibilitySearchCtrl', function($scope, $parse, feasibilitySearchService) {
+function FeasibilitySearchCtrl($scope, $parse, feasibilitySearchService) {
     $scope.localities = [];
     $scope.subLocalities = [];
     $scope.streets = [];
@@ -20,20 +20,26 @@ module.controller('feasibilitySearchCtrl', function($scope, $parse, feasibilityS
     setInitialData();
 
     $scope.searchAddressFeasibility = function() {
-        console.log("from ttclm lib **********");
-        scope.onSearch({$result: scope.model});
+        $scope.onSearch({$result: $scope.model});
+        $scope.searchResult = {
+            locality: $scope.model.locality.name,
+            subLocality: $scope.model.subLocality.name,
+            street: $scope.model.street.name,
+            feasibility: '',
+            mdf: '8689809485',
+            cabinet : '8689809485',
+            fdp:  null
+        }
     };
 
     $scope.onSelectLocality = function(item, model) {
-        $scope.subLocalities = feasibilitySearchService.getSubLocalities($scope.localities, $scope.model.locality.masterCode);
-        $parse('model.subLocality.masterCode').assign($scope, null);
-        $parse('model.street.masterCode').assign($scope, null);
+        setSubLocalities(true);
+        setStreets(true);
     };
 
     $scope.onSelectSubLocality = function(item, model) {
-        $scope.streets = feasibilitySearchService.getStreets($scope.subLocalities, $scope.model.subLocality.masterCode);
         setLocality();
-        $parse('model.street.masterCode').assign($scope, null);
+        setStreets(true);
     };
 
     $scope.onSelectStreet = function(item, model) {
@@ -41,19 +47,39 @@ module.controller('feasibilitySearchCtrl', function($scope, $parse, feasibilityS
     };
 
     function setInitialData() {
+        setLocalities();
+        setSubLocalities();
+        setStreets();
+    }
+
+    function setLocalities() {
         $scope.localities = feasibilitySearchService.getLocalities($scope.masterData);
-        $scope.subLocalities = feasibilitySearchService.getSubLocalities($scope.localities);
-        $scope.streets = feasibilitySearchService.getStreets($scope.subLocalities);
+    }
+    
+    function setSubLocalities(clearSubLocality) {
+        var selectedLocality = $parse('model.locality')($scope);
+        $scope.subLocalities = feasibilitySearchService.getSubLocalities($scope.localities, selectedLocality);
+        if (clearSubLocality) {
+            $parse('model.subLocality').assign($scope, null);
+        }
+    }
+    
+    function setStreets(clearStreet) {
+        var selectedSubLocality = $parse('model.subLocality')($scope);
+        $scope.streets = feasibilitySearchService.getStreets($scope.subLocalities, selectedSubLocality);
+        if (clearStreet) {
+            $parse('model.street').assign($scope, null);
+        }
     }
 
     function setLocality() {
-        var locality = getItemByCode($scope.localities, $scope.model.subLocality.masterCode.locality.code);
-        $parse('model.locality.masterCode').assign($scope, locality);
+        var locality = getItemByCode($scope.localities, $scope.model.subLocality.locality.code);
+        $parse('model.locality').assign($scope, locality);
     }
 
     function setSubLocality() {
-        var subLocality = getItemByCode($scope.subLocalities, $scope.model.street.masterCode.subLocality.code);
-        $parse('model.subLocality.masterCode').assign($scope, subLocality);
+        var subLocality = getItemByCode($scope.subLocalities, $scope.model.street.subLocality.code);
+        $parse('model.subLocality').assign($scope, subLocality);
         setLocality();
     }
 
@@ -67,7 +93,13 @@ module.controller('feasibilitySearchCtrl', function($scope, $parse, feasibilityS
         }
         return item;
     }
-});
+}
+FeasibilitySearchCtrl.$inject = [
+    '$scope',
+    '$parse',
+    'FeasibilitySearchService'
+];
+module.controller(FeasibilitySearchCtrl.name, FeasibilitySearchCtrl);
 
 
 // Source: src/scripts/feasibility-search/directives/feasibility-search.directive.js
@@ -87,12 +119,9 @@ module.directive('feasibilitySearch', function() {
             // config: '=',
             masterData: '=',
             // permissions: '=',
-
             onSearch: '&'
         },
-        link: function(scope, ele, attrs) {
-        },
-        controller: 'feasibilitySearchCtrl',
+        controller: 'FeasibilitySearchCtrl',
         templateUrl: 'views/feasibility-search.tpl'
     };
 });
@@ -101,14 +130,13 @@ module.directive('feasibilitySearch', function() {
 // Source: src/scripts/feasibility-search/index.js
 angular.module('TT-UI-CLM.FeasibilitySearch', [
     'TT-UI-CLM.FeasibilitySearch.Directives',
-    'TT-UI-CLM.FeasibilitySearch.Views',
 ]);
 
 
 // Source: src/scripts/feasibility-search/services/feasibility-search.service.js
 var module = angular.module('TT-UI-CLM.FeasibilitySearch.Services', []);
 
-module.service('feasibilitySearchService', function($log, $parse) {
+function FeasibilitySearchService($parse) {
     return {
         getLocalities: getLocalities,
         getSubLocalities: getSubLocalities,
@@ -117,26 +145,29 @@ module.service('feasibilitySearchService', function($log, $parse) {
 
     function getLocalities(masterData) {
         var localities = [];
-        var localitiesObj = {};
-        var countries = $parse('countries.country')(masterData);
-        if(countries && countries.length) {
-            countries.forEach(function(c) {
-                var provinces = $parse('provinces.province')(c);
-                if(provinces && provinces.length) {
-                    provinces.forEach(function(p) {
-                        var cities = $parse('cities.city')(p);
-                        if(cities && cities.length) {
-                            cities.forEach(function(city) {
-                                localitiesObj[city.code] = city;
-                            });
-                        }
-                    });
-                }
+        var localitiesList = $parse('localities.locality')(masterData);
+        if (localitiesList && localitiesList.length) {
+            var localitiesObj = {};
+            var countries = $parse('countries.country')(masterData);
+            if (countries && countries.length) {
+                countries.forEach(function(c) {
+                    var provinces = $parse('provinces.province')(c);
+                    if(provinces && provinces.length) {
+                        provinces.forEach(function(p) {
+                            var cities = $parse('cities.city')(p);
+                            if(cities && cities.length) {
+                                cities.forEach(function(city) {
+                                    localitiesObj[city.code] = city;
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+            localities = localitiesList.map(function(loc) {
+                return angular.merge({}, loc, localitiesObj[loc.code]);
             });
         }
-        localities = masterData.localities.locality.map(function(loc) {
-            return angular.merge({}, loc, localitiesObj[loc.code]); 
-        });
         return localities;
     }
 
@@ -171,11 +202,14 @@ module.service('feasibilitySearchService', function($log, $parse) {
         });
         return streets;
     }
-});
+}
+FeasibilitySearchService.$inject = ['$parse']
+module.service(FeasibilitySearchService.name, FeasibilitySearchService); 
 
 
 // Source: src/scripts/feasibility-search/views/feasibility-search.views.js
 var module = angular.module('TT-UI-CLM.FeasibilitySearch.Views', []);
+
 module.run(['$templateCache', function($templateCache) {
     $templateCache.put('views/feasibility-search.tpl',
         '<div class="form-horizontal-ttui panel panel-ttui" spinner-inside>' +
@@ -187,7 +221,7 @@ module.run(['$templateCache', function($templateCache) {
                     '<div class="form-group" ng-class="{\'has-error\': (profileForm.searchInput.$error.pattern)}">' +
                         '<label for="lacality" class="col-sm-4 control-label" translate="Locality">Locality</label>' +
                         '<div class="control-content col-sm-8">' +
-                            '<ui-select id="city" ng-model="model.locality.masterCode" theme="bootstrap" append-to-body="true" on-select="onSelectLocality($event, $item)">'+
+                            '<ui-select id="city" ng-model="model.locality" theme="bootstrap" append-to-body="true" on-select="onSelectLocality($event, $item)">'+
                                 '<ui-select-match placeholder="Select / Search Localities">{{$select.selected.name}}</ui-select-match>' +
                                 '<ui-select-choices repeat="locality in localities | filter: $select.search">' +
                                     '<span ng-bind-html="locality.name | highlight: $select.search"></span>' +
@@ -199,7 +233,7 @@ module.run(['$templateCache', function($templateCache) {
                     '<div class="form-group" ng-class="{\'has-error\': (profileForm.searchInput.$error.pattern)}">' +
                         '<label for="lacality" class="col-sm-4 control-label" translate="Sub Locality">Sub Locality</label>' +
                         '<div class="control-content col-sm-8">' +
-                            '<ui-select id="city" ng-model="model.subLocality.masterCode" theme="bootstrap" append-to-body="true" on-select="onSelectSubLocality($event, $item)">' +
+                            '<ui-select id="city" ng-model="model.subLocality" theme="bootstrap" append-to-body="true" on-select="onSelectSubLocality($event, $item)">' +
                                 '<ui-select-match placeholder="Select / Search Sub Localities">{{$select.selected.name}}</ui-select-match>' +
                                 '<ui-select-choices repeat="sl in subLocalities | filter: $select.search">' +
                                     '<span ng-bind-html="sl.name | highlight: $select.search"></span>' +
@@ -211,7 +245,7 @@ module.run(['$templateCache', function($templateCache) {
                     '<div class="form-group" ng-class="{\'has-error\': (profileForm.searchInput.$error.pattern)}">' +
                         '<label for="street" class="col-sm-4 control-label" translate="Street">Street</label>' +
                         '<div class="control-content col-sm-8">' +
-                            '<ui-select id="city" ng-model="model.street.masterCode" theme="bootstrap" placeholder="Choose a street" append-to-body="true" on-select="onSelectStreet($event, $item)">' +
+                            '<ui-select id="city" ng-model="model.street" theme="bootstrap" placeholder="Choose a street" append-to-body="true" on-select="onSelectStreet($event, $item)">' +
                                 '<ui-select-match placeholder="Select / Search Street">{{$select.selected.name}}</ui-select-match>' +
                                 '<ui-select-choices repeat="st in streets | filter: $select.search">' +
                                     '<span ng-bind-html="st.name | highlight: $select.search"></span>' +

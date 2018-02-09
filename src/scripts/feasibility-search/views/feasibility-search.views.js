@@ -1,6 +1,7 @@
 'use strict';
 
 var module = angular.module('TT-UI-CLM.FeasibilitySearch.Views', []);
+
 module.run(['$templateCache', function($templateCache) {
     $templateCache.put('views/feasibility-search.tpl',
         '<div class="form-horizontal-ttui panel panel-ttui" spinner-inside>' +
@@ -12,7 +13,7 @@ module.run(['$templateCache', function($templateCache) {
                     '<div class="form-group" ng-class="{\'has-error\': (profileForm.searchInput.$error.pattern)}">' +
                         '<label for="lacality" class="col-sm-4 control-label" translate="Locality">Locality</label>' +
                         '<div class="control-content col-sm-8">' +
-                            '<ui-select id="city" ng-model="model.locality.masterCode" theme="bootstrap" append-to-body="true" on-select="onSelectLocality($event, $item)">'+
+                            '<ui-select id="city" ng-model="model.locality" theme="bootstrap" append-to-body="true" on-select="onSelectLocality($event, $item)">'+
                                 '<ui-select-match placeholder="Select / Search Localities">{{$select.selected.name}}</ui-select-match>' +
                                 '<ui-select-choices repeat="locality in localities | filter: $select.search">' +
                                     '<span ng-bind-html="locality.name | highlight: $select.search"></span>' +
@@ -24,7 +25,7 @@ module.run(['$templateCache', function($templateCache) {
                     '<div class="form-group" ng-class="{\'has-error\': (profileForm.searchInput.$error.pattern)}">' +
                         '<label for="lacality" class="col-sm-4 control-label" translate="Sub Locality">Sub Locality</label>' +
                         '<div class="control-content col-sm-8">' +
-                            '<ui-select id="city" ng-model="model.subLocality.masterCode" theme="bootstrap" append-to-body="true" on-select="onSelectSubLocality($event, $item)">' +
+                            '<ui-select id="city" ng-model="model.subLocality" theme="bootstrap" append-to-body="true" on-select="onSelectSubLocality($event, $item)">' +
                                 '<ui-select-match placeholder="Select / Search Sub Localities">{{$select.selected.name}}</ui-select-match>' +
                                 '<ui-select-choices repeat="sl in subLocalities | filter: $select.search">' +
                                     '<span ng-bind-html="sl.name | highlight: $select.search"></span>' +
@@ -36,7 +37,7 @@ module.run(['$templateCache', function($templateCache) {
                     '<div class="form-group" ng-class="{\'has-error\': (profileForm.searchInput.$error.pattern)}">' +
                         '<label for="street" class="col-sm-4 control-label" translate="Street">Street</label>' +
                         '<div class="control-content col-sm-8">' +
-                            '<ui-select id="city" ng-model="model.street.masterCode" theme="bootstrap" placeholder="Choose a street" append-to-body="true" on-select="onSelectStreet($event, $item)">' +
+                            '<ui-select id="city" ng-model="model.street" theme="bootstrap" placeholder="Choose a street" append-to-body="true" on-select="onSelectStreet($event, $item)">' +
                                 '<ui-select-match placeholder="Select / Search Street">{{$select.selected.name}}</ui-select-match>' +
                                 '<ui-select-choices repeat="st in streets | filter: $select.search">' +
                                     '<span ng-bind-html="st.name | highlight: $select.search"></span>' +

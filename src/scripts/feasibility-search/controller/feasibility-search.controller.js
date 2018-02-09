@@ -4,7 +4,7 @@ var module = angular.module('TT-UI-CLM.FeasibilitySearch.Controllers', [
     'TT-UI-CLM.FeasibilitySearch.Services',
 ]);
 
-module.controller('feasibilitySearchCtrl', function($scope, $parse, feasibilitySearchService) {
+function FeasibilitySearchCtrl($scope, $parse, feasibilitySearchService) {
     $scope.localities = [];
     $scope.subLocalities = [];
     $scope.streets = [];
@@ -12,20 +12,26 @@ module.controller('feasibilitySearchCtrl', function($scope, $parse, feasibilityS
     setInitialData();
 
     $scope.searchAddressFeasibility = function() {
-        console.log("from ttclm lib **********");
-        scope.onSearch({$result: scope.model});
+        $scope.onSearch({$result: $scope.model});
+        $scope.searchResult = {
+            locality: $scope.model.locality.name,
+            subLocality: $scope.model.subLocality.name,
+            street: $scope.model.street.name,
+            feasibility: '',
+            mdf: '8689809485',
+            cabinet : '8689809485',
+            fdp:  null
+        }
     };
 
     $scope.onSelectLocality = function(item, model) {
-        $scope.subLocalities = feasibilitySearchService.getSubLocalities($scope.localities, $scope.model.locality.masterCode);
-        $parse('model.subLocality.masterCode').assign($scope, null);
-        $parse('model.street.masterCode').assign($scope, null);
+        setSubLocalities(true);
+        setStreets(true);
     };
 
     $scope.onSelectSubLocality = function(item, model) {
-        $scope.streets = feasibilitySearchService.getStreets($scope.subLocalities, $scope.model.subLocality.masterCode);
         setLocality();
-        $parse('model.street.masterCode').assign($scope, null);
+        setStreets(true);
     };
 
     $scope.onSelectStreet = function(item, model) {
@@ -33,19 +39,39 @@ module.controller('feasibilitySearchCtrl', function($scope, $parse, feasibilityS
     };
 
     function setInitialData() {
+        setLocalities();
+        setSubLocalities();
+        setStreets();
+    }
+
+    function setLocalities() {
         $scope.localities = feasibilitySearchService.getLocalities($scope.masterData);
-        $scope.subLocalities = feasibilitySearchService.getSubLocalities($scope.localities);
-        $scope.streets = feasibilitySearchService.getStreets($scope.subLocalities);
+    }
+    
+    function setSubLocalities(clearSubLocality) {
+        var selectedLocality = $parse('model.locality')($scope);
+        $scope.subLocalities = feasibilitySearchService.getSubLocalities($scope.localities, selectedLocality);
+        if (clearSubLocality) {
+            $parse('model.subLocality').assign($scope, null);
+        }
+    }
+    
+    function setStreets(clearStreet) {
+        var selectedSubLocality = $parse('model.subLocality')($scope);
+        $scope.streets = feasibilitySearchService.getStreets($scope.subLocalities, selectedSubLocality);
+        if (clearStreet) {
+            $parse('model.street').assign($scope, null);
+        }
     }
 
     function setLocality() {
-        var locality = getItemByCode($scope.localities, $scope.model.subLocality.masterCode.locality.code);
-        $parse('model.locality.masterCode').assign($scope, locality);
+        var locality = getItemByCode($scope.localities, $scope.model.subLocality.locality.code);
+        $parse('model.locality').assign($scope, locality);
     }
 
     function setSubLocality() {
-        var subLocality = getItemByCode($scope.subLocalities, $scope.model.street.masterCode.subLocality.code);
-        $parse('model.subLocality.masterCode').assign($scope, subLocality);
+        var subLocality = getItemByCode($scope.subLocalities, $scope.model.street.subLocality.code);
+        $parse('model.subLocality').assign($scope, subLocality);
         setLocality();
     }
 
@@ -59,4 +85,10 @@ module.controller('feasibilitySearchCtrl', function($scope, $parse, feasibilityS
         }
         return item;
     }
-});
+}
+FeasibilitySearchCtrl.$inject = [
+    '$scope',
+    '$parse',
+    'FeasibilitySearchService'
+];
+module.controller(FeasibilitySearchCtrl.name, FeasibilitySearchCtrl);

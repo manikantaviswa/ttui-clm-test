@@ -2,7 +2,7 @@
 
 var module = angular.module('TT-UI-CLM.FeasibilitySearch.Services', []);
 
-module.service('feasibilitySearchService', function($log, $parse) {
+function FeasibilitySearchService($parse) {
     return {
         getLocalities: getLocalities,
         getSubLocalities: getSubLocalities,
@@ -11,26 +11,29 @@ module.service('feasibilitySearchService', function($log, $parse) {
 
     function getLocalities(masterData) {
         var localities = [];
-        var localitiesObj = {};
-        var countries = $parse('countries.country')(masterData);
-        if(countries && countries.length) {
-            countries.forEach(function(c) {
-                var provinces = $parse('provinces.province')(c);
-                if(provinces && provinces.length) {
-                    provinces.forEach(function(p) {
-                        var cities = $parse('cities.city')(p);
-                        if(cities && cities.length) {
-                            cities.forEach(function(city) {
-                                localitiesObj[city.code] = city;
-                            });
-                        }
-                    });
-                }
+        var localitiesList = $parse('localities.locality')(masterData);
+        if (localitiesList && localitiesList.length) {
+            var localitiesObj = {};
+            var countries = $parse('countries.country')(masterData);
+            if (countries && countries.length) {
+                countries.forEach(function(c) {
+                    var provinces = $parse('provinces.province')(c);
+                    if(provinces && provinces.length) {
+                        provinces.forEach(function(p) {
+                            var cities = $parse('cities.city')(p);
+                            if(cities && cities.length) {
+                                cities.forEach(function(city) {
+                                    localitiesObj[city.code] = city;
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+            localities = localitiesList.map(function(loc) {
+                return angular.merge({}, loc, localitiesObj[loc.code]);
             });
         }
-        localities = masterData.localities.locality.map(function(loc) {
-            return angular.merge({}, loc, localitiesObj[loc.code]); 
-        });
         return localities;
     }
 
@@ -65,4 +68,6 @@ module.service('feasibilitySearchService', function($log, $parse) {
         });
         return streets;
     }
-});
+}
+FeasibilitySearchService.$inject = ['$parse']
+module.service(FeasibilitySearchService.name, FeasibilitySearchService); 

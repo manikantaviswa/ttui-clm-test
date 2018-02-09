@@ -16,12 +16,9 @@ module.directive('feasibilitySearch', function() {
             // config: '=',
             masterData: '=',
             // permissions: '=',
-
             onSearch: '&'
         },
-        link: function(scope, ele, attrs) {
-        },
-        controller: 'feasibilitySearchCtrl',
+        controller: 'FeasibilitySearchCtrl',
         templateUrl: 'views/feasibility-search.tpl'
     };
 });
