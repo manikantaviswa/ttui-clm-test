@@ -1,0 +1,10 @@
+<div class="panel panel-ttui accordion-ttui">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+			<span href class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading"><span ng-class="{'text-muted': isDisabled}">{{heading}}</span></span>
+		</h3>
+	</div>
+	<div class="panel-collapse" uib-collapse="!isOpen">
+		<div class="panel-body" ng-transclude></div>
+	</div>
+</div>

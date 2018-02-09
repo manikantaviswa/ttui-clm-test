@@ -1,0 +1,47 @@
+<div role="tabpanel">
+	<!-- Nav tabs -->
+	<ul class="nav nav-tabs" role="tablist">
+		<li role="presentation" class="active">
+			<a href="#msht-index-html" aria-controls="index-html" role="tab" data-toggle="tab">
+				index.html
+			</a>
+		</li>
+		<li role="presentation">
+			<a href="#msht-app-js" aria-controls="app-js" role="tab" data-toggle="tab">
+				app.js
+			</a>
+		</li>
+		<li role="presentation">
+			<a href="#msht-readme-md" aria-controls="readme-md" role="tab" data-toggle="tab">
+				readme.md
+			</a>
+		</li>
+	</ul>
+
+	<!-- Tab panes -->
+	<div class="tab-content">
+		<div role="tabpanel" class="tab-pane active" id="msht-index-html">
+			{% highlight html %}
+			{% include angular-modules/multiselect-hierarchy-tree/index.lnk.html %}
+			{% endhighlight %}
+		</div>		
+		<div role="tabpanel" class="tab-pane" id="msht-app-js">
+			{% highlight javascript %}
+			{% include angular-modules/multiselect-hierarchy-tree/app.lnk.js %}
+			{% endhighlight %}
+		</div>
+		<div role="tabpanel" class="tab-pane" id="msht-readme-md">
+			{% highlight text %}
+			{% include angular-modules/multiselect-hierarchy-tree/readme.md %}
+			{% endhighlight %}
+		</div>
+	</div>
+
+	<!-- example -->
+	<div class="bs-example" dox-resize>
+		<a class="btn btn-open-example" href="../examples/multiselect-hierarchy-tree/multiselect-hierarchy-tree-src.zip">Download source files</a>
+		<a class="btn btn-open-example" href="../examples/multiselect-hierarchy-tree/">Open example</a>
+		<iframe class="window" src="../examples/multiselect-hierarchy-tree/index.html"></iframe>
+	</div>
+	<!-- -->
+</div>

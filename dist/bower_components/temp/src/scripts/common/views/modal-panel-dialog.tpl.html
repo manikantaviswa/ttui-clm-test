@@ -1,0 +1,17 @@
+<div class="modal" tabindex="-1" role="dialog">
+	<div class="modal-dialog {{::namespace ? 'modal-' + namespace : ''}}">
+		<div class="panel panel-default">
+			<div class="modal-header">
+				<button type="button" class="close" ng-click="$hide()">&times;</button>
+				<h4 ng-show="::title" class="modal-title" ng-bind-html="::title"></h4>
+			</div>
+			<div class="panel-body" ng-show="::content">
+				<div compile-html="::content"></div>
+			</div>
+			<div class="panel-footer text-right" ng-if="::!footer">
+				<button type="button" class="btn btn-default" ng-repeat="button in ::buttons" ng-click="button.action()" translate="{{::button.name}}"></button>
+			</div>
+			<div class="panel-footer text-right" ng-if="::footer"  compile-html="::footer"></div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,43 @@
+<div class="bs-docs-section">
+  <h1 id="download" class="page-header">Download</h1>
+
+  <p class="lead">TecnotreeUI (currently v{{ site.current_version }}) has a few easy ways to quickly get started, each one appealing to a different skill level and use case. Read through to see what suits your particular needs.</p>
+
+  <div class="row bs-downloads">
+    <div class="col-sm-4">
+      <h3 id="download-bootstrap">TecnotreeUI</h3>
+      <p>Compiled and minified CSS, JavaScript, and fonts. No docs or original source files are included.</p>
+      <p>
+        <a href="{{ site.download.dist | replace:'%%version%%',site.current_version }}" class="btn btn-lg btn-primary" role="button">Download</a>
+      </p>
+    </div>
+    <div class="col-sm-4">
+      <h3 id="download-source">Source code</h3>
+      <p>Source Sass, JavaScript, and font files, along with our docs. <strong>Requires a Sass compiler and <a href="#grunt">some setup.</a></strong></p>
+      <p>
+        <a href="{{ site.download.source | replace:'%%version%%',site.current_version }}" class="btn btn-lg btn-primary" role="button">Download source</a>
+      </p>
+    </div>
+  </div>
+
+  <h2 id="download-bower">Install with Bower - Recommended <span class="fa fa-exclamation" style="color: #882345;"></h2>
+  <p>You can also install and manage Sass, CSS, JavaScript, and fonts using <a href="http://bower.io">Bower</a>:</p>
+  
+  {% highlight bash %}$ bower install --save {{ site.repo }}#{{ site.current_version }}{% endhighlight %}
+
+  <p>Then in your application main scss file, import library scss files:</p>
+
+  {% highlight bash %}
+// ng-cloak
+@import "../../../bower_components/tecnotree-ui-library/dist/sass/angular-csp.scss";
+
+// font path
+$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+
+// image path
+$img-path: "../bower_components/tecnotree-ui-library/dist/images/";
+
+@import "../../../bower_components/tecnotree-ui-library/dist/sass/tecnotree-ui-library-custom-variables.scss";
+@import "../../../bower_components/tecnotree-ui-library/dist/sass/tecnotree-ui-library-components.scss";
+  {% endhighlight %}
+</div>

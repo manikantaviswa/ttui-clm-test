@@ -1,0 +1,28 @@
+<div ng-class="mshtNodeCtrl.getNodeContentClasses()">
+	<span class="node-expand" ng-if="mshtNodeCtrl.hasChildren()" ng-click="mshtNodeCtrl.toggleExpand()">
+		<span ng-mouseover="mshtNodeCtrl.iconHover(true)" ng-mouseleave="mshtNodeCtrl.iconHover(false)" ng-class="mshtNodeCtrl.getIconClasses();"></span>
+	</span>
+	<span class="node-title"
+		ng-mouseover="mshtNodeCtrl.hover(true)"
+		ng-mouseleave="mshtNodeCtrl.hover(false)"
+		ng-click="mshtNodeCtrl.labelClick()"
+		ng-bind="::mshtNodeCtrl.model.title">
+	</span>
+	<span class="pull-right">
+		<span class="counts" ng-if="mshtNodeCtrl.hasChildren()">
+			<span class="included-count" ng-bind="mshtNodeCtrl.model.getTotalCountsIncluded()"></span>
+			<span>/</span>
+			<span class="total-count" ng-bind="mshtNodeCtrl.model.getTotalCountsTotal()"></span>
+		</span>
+		<input class="css-checkbox" type="checkbox" id="{{$id}}-{{::mshtNodeCtrl.model.id}}" ng-click="mshtNodeCtrl.toggleSelect()" ng-checked="mshtNodeCtrl.model.isIncluded()" />
+		<!-- Add empty label tag for checkbox styling -->
+		<label class="css-label" for="{{$id}}-{{::mshtNodeCtrl.model.id}}"></label>
+	</span>
+</div>
+
+<!-- Use ng-include as an attribute for animations to work on chrome -->
+<div ng-include
+	ng-if="mshtNodeCtrl.expanded || mshtNodeCtrl.searchText"
+	ng-init="model = mshtNodeCtrl.model"
+	src="recursionTemplate">
+</div>

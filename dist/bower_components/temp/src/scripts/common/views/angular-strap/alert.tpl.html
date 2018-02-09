@@ -1,0 +1,12 @@
+<div class="alert" ng-class="[type ? 'alert-' + type : null]">
+	<button type="button" class="close" ng-if="dismissable" ng-click="$hide()">&times;</button>
+
+	<div ng-if="content | isArray:false">
+		<strong ng-bind="::title"></strong>&nbsp;<span ng-bind-html="content"></span>
+	</div>
+
+	<div ng-if="content | isArray">
+		<strong ng-bind="::title"></strong>
+		<div ng-repeat="msg in ::content" ng-bind-html="msg"></span>
+	</div>
+</div>

@@ -1,0 +1,138 @@
+<div class="bs-docs-section">
+  <h1 id="pagination" class="page-header">Pagination</h1>
+
+  <p class="lead">Pagination element is used to help browsing a large set of similar items divided into multiple pages (e.g. search results). The element provides navigation between pages and a selection of how many items are shown on one page.</p>
+
+  <div class="bs-callout bs-callout-warning" id="callout-buttons-anchor-accessibility">
+     <h4>If the number of pages goes over what can be presented </h4>
+      <ul>
+          <li>Keep Previous and Next are always visible</li>
+          <li>Keep First and second first pages always visible</li>
+          <li>Keep Last and second last pages always visible</li>
+          <li>indicate with "..." that the list is longer than what can be displayed</li>
+          <li>When user clicks further display "..." on left and right as needed</li>
+          <li>Always centre the page that has been selected so that it becomes the second link in the "middle group"</li>
+      </ul>
+  </div>
+
+  <h2 id="pagination-default">Default pagination</h2>
+  <div class="bs-example" data-example-id="simple-pagination">
+
+      <nav>
+          <ul class="pagination pagination-ttui">
+              <li>
+                  <a href="#" aria-label="Previous"><span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span> previous</a>
+              </li>
+              <li><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li class="disabled"><span>...</span></li>
+              <li><a href="#">15</a></li>
+              <li>
+                  <a href="#">next <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span></a>
+              </li>
+          </ul>
+      </nav>
+
+  </div>
+{% highlight html %}
+<nav>
+    <ul class="pagination pagination-ttui">
+        <li>
+            <a href="#" aria-label="Previous"><span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span> previous</a>
+        </li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li class="disabled"><span>...</span></li>
+        <li>
+            <a href="#">next <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span></a>
+        </li>
+    </ul>
+</nav>
+{% endhighlight %}
+
+  <h2 id="pagination-states">Disabled and active states</h2>
+  <p>Links are customizable for different circumstances. Use <code>.disabled</code> for unclickable links and <code>.active</code> to indicate the current page.</p>
+  <div class="bs-example" data-example-id="disabled-active-pagination">
+      <nav>
+          <ul class="pagination pagination-ttui">
+              <li class="disabled">
+                  <a href="#" aria-label="Previous"><span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span> previous</a>
+              </li>
+              <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li class="disabled"><span>...</span></li>
+              <li><a href="#">15</a></li>
+              <li>
+                  <a href="#">next <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span></a>
+              </li>
+          </ul>
+      </nav>
+  </div>
+{% highlight html %}
+<nav>
+  <ul class="pagination pagination-ttui">
+    <li class="disabled">
+       <a href="#" aria-label="Previous"><span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span> previous</a>
+    </li>
+    <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+    ...
+    <li class="disabled"><span>...</span></li>
+    ...
+  </ul>
+</nav>
+{% endhighlight %}
+
+
+<!--
+<h2 id="pagination-in-table">Pagination in table footer</h2>
+    <div class="bs-example" data-example-id="pagination-in-table">
+
+        <table class="table table-data-ttui">
+            <thead>
+            <tr>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <nav>
+            <ul class="pagination pagination-ttui">
+                <li class="disabled">
+                    <a href="#" aria-label="Previous"><span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span> previous</a>
+                </li>
+                <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li>
+                    <a href="#">next <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+{% highlight html %}
+<table class="table table-ttui">
+    ...
+
+    <tfoot>
+    <tr>
+        <td>
+            <tt-table-pagination />
+        </td>
+    </tr>
+    </tfoot>
+</table>
+
+{% endhighlight %}
+-->
+
+</div>

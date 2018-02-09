@@ -1,0 +1,133 @@
+.btn {
+	border: none;
+	text-transform: $btn-text-transform;
+	border-radius: $btn-border-radius-base;
+	@include button-size($btn-padding-base-vertical, $btn-padding-base-horizontal, $btn-font-size-base, $btn-line-height-base, $btn-border-radius-base);
+
+	&,
+	&:active,
+	&.active {
+		&:focus {
+			outline: 0;
+		}
+	}
+
+	&:hover,
+	&:focus {
+		color: $btn-color;
+		text-decoration: none;
+	}
+
+	&:active,
+	&.active {
+		outline: 0;
+		background-image: none;
+		@include box-shadow(inset 0 3px 5px rgba(0, 0, 0, .125));
+	}
+
+	&.disabled,
+	&[disabled],
+	fieldset[disabled] & {
+		cursor: not-allowed;
+		pointer-events: none; // Future-proof disabling of clicks
+		@include opacity(.65);
+		@include box-shadow(none);
+	}
+}
+
+@mixin button-colors($color, $bg, $bg-to:darken($bg, 10),
+					$color-hover:$color, $bg-hover:$bg, $bg-hover-to:darken($bg-hover, 10),
+					$color-active:$color, $bg-active:$bg-hover, $bg-active-to:darken($bg-active, 10),
+					$color-focus:$color, $bg-focus:$bg-hover, $bg-focus-to:darken($bg-focus, 10)) {
+	color: $color;
+	background: linear-gradient(to bottom, $bg, $bg-to);
+
+	&:focus,
+	&.focus{
+		color: $color-focus;
+		background: linear-gradient(to bottom, $bg-focus, $bg-focus-to);
+		border: none;
+	}
+	&:hover {
+		color: $color-hover;
+		background: linear-gradient(to bottom, $bg-hover, $bg-hover-to);
+		border: none;
+	}
+	&:active,
+	&.active,
+	.open > &.dropdown-toggle {
+		color: $color-active;
+		background: linear-gradient(to bottom, $bg-active, $bg-active-to);
+		border: none;
+
+		&:hover {
+			color: $color-hover;
+			background: linear-gradient(to bottom, $bg-hover, darken($bg-hover-to, 7));
+			border: none;
+		}
+		&:focus,
+		&.focus {
+			color: $color-focus;
+			background: linear-gradient(to bottom, $bg-focus, darken($bg-focus-to, 7));
+			border: none;
+		}
+	}
+
+	&.disabled,
+	&[disabled],
+	fieldset[disabled] & {
+		&,
+		&:hover,
+		&:focus,
+		&:active,
+		&.active {
+			background-color: lighten($bg, 20);
+			border: none;
+		}
+	}
+
+	.badge {
+		color: $bg;
+		background-color: $color;
+	}
+}
+
+.btn-default,
+.btn-link {
+	@include button-colors($color: $btn-default-color, $bg: $btn-default-bg, $bg-hover: $btn-default-bg-hover, $bg-active: $btn-default-bg-active);
+}
+
+.btn-primary {
+	@include button-colors($color: $btn-primary-color, $bg: $btn-primary-bg, $bg-hover: $btn-primary-bg-hover, $bg-active: $btn-primary-bg-active);
+}
+
+.btn-success {
+	@include button-colors($color: $btn-success-color, $bg: $brand-success, $bg-hover: $btn-success-bg-hover, $bg-active: $btn-success-bg-active);
+}
+
+.btn-info {
+	@include button-colors($color: $btn-info-color, $bg: $brand-info, $bg-hover: $btn-info-bg-hover, $bg-active: $btn-info-bg-active);
+}
+
+.btn-warning {
+	@include button-colors($color: $btn-warning-color, $bg: $brand-warning, $bg-hover: $btn-warning-bg-hover, $bg-active: $btn-warning-bg-active);
+}
+
+.btn-danger {
+	@include button-colors($color: $btn-danger-color, $bg: $brand-danger, $bg-hover: $btn-danger-bg-hover, $bg-active: $btn-danger-bg-active);
+}
+
+.btn-lg {
+	border-radius: $btn-border-radius-large;
+	font-size: $font-size-large;
+}
+
+.btn-sm {
+	border-radius: $btn-border-radius-small;
+	font-size: $font-size-small;
+}
+
+.btn-xs {
+	border-radius: $btn-border-radius-small;
+	font-size: $font-size-small;
+}

@@ -1,0 +1,54 @@
+<div class="bs-docs-section" ng-controller="CommonAppCtrl">
+	<h1 id="spinners" class="page-header">Spinners</h1>
+
+	<p>
+		<div class="input-group" ng-init="hide = 1">
+			<label class="radio-inline">
+				<input type="radio" name="inlineRadioOptions" ng-click="hideSpinner()" ng-model="hide" value="1"> Try hiding spinner
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="inlineRadioOptions" ng-click="showSpinner()"> Try showing spinner
+			</label>
+		</div>
+	</p>
+
+	<div class="bs-example">
+		<div role="tabpanel" spinner-inside>
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active">
+					<a href="#spinner-html" aria-controls="spinner-html" role="tab" data-toggle="tab">html</a>
+				</li>
+				<li role="presentation">
+					<a href="#spinner-js" aria-controls="spinner-js" role="tab" data-toggle="tab">js</a>
+				</li>
+			</ul>
+			<!-- Tab panes -->
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active" id="spinner-html">
+{% highlight html %}
+<div class="panel panel-default" spinner-inside>
+    <div class="panel-body">
+        Panel content
+    </div>
+</div>
+{% endhighlight %}
+				</div>
+
+				<div role="tabpanel" class="tab-pane" id="spinner-js">
+{% highlight js %}
+SPINNER_INSIDE_CONFIG.DEFAULT_MESSAGE = '';
+
+$scope.showSpinner = function() {
+    $rootScope.$emit(SPINNER_INSIDE_EVENTS.SHOW);
+}
+
+$scope.hideSpinner = function() {
+    $rootScope.$emit(SPINNER_INSIDE_EVENTS.HIDE);
+}
+{% endhighlight %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

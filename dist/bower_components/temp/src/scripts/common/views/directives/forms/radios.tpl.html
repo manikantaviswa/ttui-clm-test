@@ -1,0 +1,32 @@
+<div schema-validate="form" ng-model="$$value$$" ng-model-options="form.ngModelOptions" class="form-group" ng-init="hasFocus = false" ng-class="{'has-error': form.disableErrorState !== true && hasError(), 'has-focus': hasFocus, 'is-required': form.required}">
+	<label class="control-label" ng-class="::form.labelHtmlClass" ng-show="showTitle()" translate="{{::form.title}}"></label>
+
+	<div class="control-content {{::form.fieldStyle}}" ng-class="{'col-sm-2': form.fieldSize === 'small', 'col-sm-5': form.fieldSize === 'medium'}">
+		<div class="radio" ng-repeat="item in form.titleMap">
+			<label ng-mousedown="$parent.hasFocus = true">
+				<input
+					type="radio"
+
+					schema-name="form"
+					sf-changed="form"
+
+					reload-options="form"
+					populate-to="form"
+					autopopulate-to="form"
+
+					ng-focus="$parent.hasFocus = true"
+					ng-blur="$parent.hasFocus = false"
+					ng-disabled="form.readonly || (form.enabled && !evalExpr(form.enabled,{ model: model, 'arrayIndex': arrayIndex }))"
+					ng-model="$$value$$"
+					ng-value="item.value"
+					ng-attr-autofocus="{{form.focus}}"
+					ng-attr-tabindex="{{form.tabindex}}"
+				/>
+
+				<span translate="{{::item.name}}"></span>
+			</label>
+		</div>
+
+		<div class="help-block" sf-message="::form.description"></div>
+	</div>
+</div>

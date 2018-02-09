@@ -1,0 +1,43 @@
+<div class="bs-docs-section">
+
+	<h1 id="accordions" class="page-header">Accordions</h1>
+	
+	<div class="bs-example">
+		<uib-accordion class="accordion" close-others="false">
+			<uib-accordion-group>
+				<uib-accordion-heading>
+					Accordion 1
+					<i class="pull-right fa" ng-class="{'fa-chevron-down': accordion.groups[0].isOpen, 'fa-chevron-right': !accordion.groups[0].isOpen}"></i>
+				</uib-accordion-heading>
+				Accordion content
+			</uib-accordion-group>
+			<uib-accordion-group>
+				<uib-accordion-heading>
+					Accordion 2
+					<i class="pull-right fa" ng-class="{'fa-chevron-down': accordion.groups[1].isOpen, 'fa-chevron-right': !accordion.groups[1].isOpen}"></i>
+				</uib-accordion-heading>
+				Accordion content
+			</uib-accordion-group>
+			<uib-accordion-group>
+				<uib-accordion-heading>
+					Accordion 3
+					<i class="pull-right fa" ng-class="{'fa-chevron-down': accordion.groups[2].isOpen, 'fa-chevron-right': !accordion.groups[2].isOpen}"></i>
+				</uib-accordion-heading>
+				Accordion content
+			</uib-accordion-group>
+		</uib-accordion>
+	</div>
+
+{% highlight html %}
+<uib-accordion class="accordion" close-others="false">
+    <uib-accordion-group>
+        <uib-accordion-heading>
+            Accordion
+            <i class="pull-right fa" ng-class="{'fa-chevron-down': accordion.groups[0].isOpen, 'fa-chevron-right': !accordion.groups[0].isOpen}"></i>
+        </uib-accordion-heading>
+        Accordion content
+    </uib-accordion-group>
+</uib-accordion>
+{% endhighlight %}
+
+</div>

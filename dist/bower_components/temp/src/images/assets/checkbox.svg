@@ -1,0 +1,8 @@
+<svg width="17" height="52" viewBox="0 0 17 52" enable-background="new 0 0 17 52" xmlns="http://www.w3.org/2000/svg">
+	<rect x="0" y="0" width="17" height="17" style="fill:white;stroke:rgb(179,179,179);stroke-width:1" />
+	<rect x="0" y="18" width="17" height="17" style="fill:white;stroke:rgb(136,35,69);stroke-width:2" />
+	<rect x="0" y="35" width="17" height="17" style="fill:white;stroke:rgb(136,35,69);stroke-width:2" />
+	<svg x="0" y="17" width="17" height="17" xmlns="http://www.w3.org/2000/svg">
+		<polyline points="13,4,6,13,3,10" style="fill:none;stroke:rgb(136,35,69);stroke-width:3" />
+	</svg>
+</svg>

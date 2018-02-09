@@ -1,0 +1,34 @@
+<div class="form-group" ng-init="hasFocus = false" ng-class="{'has-error': form.disableErrorState !== true && hasError(), 'has-focus': hasFocus, 'is-required': form.required, 'hidden': form.type === 'hidden'}">
+	<label class="control-label" ng-class="::form.labelHtmlClass" ng-show="showTitle()" translate="{{::form.title}}" ng-if="form.type !== 'hidden'"></label>
+	<div class="control-content {{::form.fieldStyle}}" ng-class="{'col-sm-2': form.fieldSize === 'small', 'col-sm-5': form.fieldSize === 'medium'}">
+		<input
+			type="{{::form.type}}"
+			class="form-control"
+			placeholder="{{::form.description | translate}}"
+
+			schema-name="form"
+			sf-changed="form"
+			schema-validate="form"
+
+			reload-options="form"
+			populate-to="form"
+			autopopulate-to="form"
+
+			auto-tab-field
+			field-validator
+
+			ng-show="form.key"
+			ng-focus="hasFocus = true"
+			ng-blur="hasFocus = false"
+			ng-model-options="form.ngModelOptions"
+			ng-model="$$value$$"
+			ng-disabled="form.readonly || (form.disabled && evalExpr(form.disabled, {model: model, arrayIndex: arrayIndex}))"
+			ng-attr-autofocus="{{::form.focus}}"
+			ng-attr-tabindex="{{::form.tabindex}}"
+
+			ng-attr-maxlength="{{::form.maxlength}}"
+			ng-minlength="{{::form.minlength}}">
+
+		<div class="help-block" sf-message></div>
+	</div>
+</div>

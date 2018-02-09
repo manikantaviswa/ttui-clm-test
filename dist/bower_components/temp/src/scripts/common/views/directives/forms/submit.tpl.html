@@ -1,0 +1,24 @@
+<div ng-if="form.hidden" class="hide">
+	<input type="submit"
+		class="btn {{ form.style || 'btn-primary' }}"
+		translate-attr-value="{{::form.title}}"
+		ng-disabled="form.readonly">
+</div>
+
+<div class="form-group" ng-if="!form.hidden">
+	<div class="col-sm-9 col-md-offset-3">
+		<input type="submit"
+			   class="btn {{ form.style || 'btn-primary' }}"
+			   ng-disabled="form.readonly"
+			   ng-if="form.type === 'submit'"
+			   translate-attr-value="{{::form.title}}"
+			   >
+		<button class="btn {{ form.style || 'btn-default' }}"
+				type="button"
+				ng-click="buttonClick($event, form)"
+				ng-disabled="form.readonly"
+				ng-if="form.type !== 'submit'"
+				translate="{{::form.title}}">
+		</button>
+	</div>
+</div>

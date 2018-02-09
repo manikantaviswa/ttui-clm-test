@@ -1,0 +1,24 @@
+markdown: kramdown
+kramdown:
+  input: GFM
+highlighter: rouge
+permalink: pretty
+source: docs
+destination: _sites
+host: 0.0.0.0
+port: 4001
+url: 'http://git.tecnotree.com/tec_common/ui-lib'
+encoding: UTF-8
+current_version: 0.7.8
+repo: 'http://git.tecnotree.com/tec_common/ui-lib.git'
+sass_repo: 'https://github.com/twbs/bootstrap-sass'
+download:
+  source: >-
+    http://git.tecnotree.com/tec_common/ui-lib/repository/archive.zip?ref=%%version%%
+  dist: >-
+    http://git.tecnotree.com/tec_common/ui-lib/repository/archive.zip?ref=%%version%%
+  sass: 'https://github.com/twbs/bootstrap-sass/archive/v3.3.4.tar.gz'
+cdn:
+  css: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'
+  css_theme: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css'
+  js: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'

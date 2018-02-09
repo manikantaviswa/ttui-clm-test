@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="TT-APP.Demo"> <!--  ng-strict-di -->
+<head>
+	<!-- Meta, title, CSS, favicons, etc. -->
+	{% include header.html %}
+</head>
+<body>
+<a id="skippy" class="sr-only sr-only-focusable" href="#content">
+	<div class="container"><span class="skiplink-text">Skip to main content</span></div>
+</a>
+
+<!-- Docs master nav -->
+{% include nav/main.html %}
+
+<!-- Docs page layout -->
+<div class="bs-docs-header" id="content" tabindex="-1">
+	<div class="container">
+		<h1>{{ page.title }}</h1>
+		<p>{{ page.lead }}</p>
+	</div>
+</div>
+
+<div class="container bs-docs-container">
+
+	<div class="row">
+		<div class="col-md-10" role="main">
+			{{ content }}
+		</div>
+		{% unless page.fullwidth == true %}
+		<div class="col-md-2" role="complementary">
+			<nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm">
+				<ul class="nav bs-docs-sidenav">
+					{% if page.slug == "getting-started" %}
+						{% include nav/index.html %}
+					{% elsif page.slug == "components" %}
+						{% include nav/components.html %}
+					{% elsif page.slug == "angular-modules" %}
+						{% include nav/angular-modules.html %}
+					{% elsif page.slug == "developers-guide" %}
+						{% include nav/developers-guide.html %}
+					{% elsif page.slug == "release-notes" %}
+						{% include nav/release-notes.html %}
+					{% endif %}
+				</ul>
+				<a class="back-to-top" href="#top">
+					Back to top
+				</a>
+			</nav>
+		</div>
+		{% endunless %}
+	</div>
+</div>
+
+{% include footer.html %}
+</body>
+</html>

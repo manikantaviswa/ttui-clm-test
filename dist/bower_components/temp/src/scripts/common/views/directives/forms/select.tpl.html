@@ -1,0 +1,31 @@
+<div class="form-group" ng-init="hasFocus = false" ng-class="{'has-error': form.disableErrorState !== true && hasError(), 'has-focus': hasFocus, 'is-required': form.required}">
+	<label class="control-label" ng-class="::form.labelHtmlClass" ng-show="showTitle()" translate="{{::form.title}}"></label>
+
+	<div class="control-content {{::form.fieldStyle}}" ng-class="{'col-sm-2': form.fieldSize === 'small', 'col-sm-5': form.fieldSize === 'medium'}">
+		<select
+			class="form-control"
+
+			schema-name="form"
+			sf-changed="form"
+			schema-validate="form"
+
+			auto-tab-field
+
+			reload-options="form"
+			populate-to="form"
+			autopopulate-to="form"
+
+			ng-focus="hasFocus = true"
+			ng-blur="hasFocus = false"
+			ng-model="$$value$$"
+			ng-model-options="form.ngModelOptions"
+			ng-disabled="form.readonly || (form.disabled && evalExpr(form.disabled, {model: model, arrayIndex: arrayIndex}))"
+			ng-options="item.value as item.name for item in form.titleMap | form:this:model:form"
+			ng-attr-autofocus="{{form.focus}}"
+			ng-attr-tabindex="{{form.tabindex}}" >
+			<option value="">{{::form.description || 'Select' | translate}}</option>
+		</select>
+
+		<div class="help-block" sf-message></div>
+	</div>
+</div>

@@ -1,0 +1,15 @@
+<div class="form-group" ng-init="hasFocus = false" ng-class="{'has-error': form.disableErrorState !== true && hasError(), 'has-focus': hasFocus, 'is-required': form.required}">
+	<label class="control-label label-align-top" ng-class="::form.labelHtmlClass" ng-if="showTitle()" translate="{{::form.title}}"></label>
+
+	<div class="row" ng-init="columns = 12; columnsNum = form.columns.length">
+
+		<div ng-disabled="form.readonly"
+			ng-repeat="column in form.columns"
+			ng-class="column.style || ('col-md-' + (columns / columnsNum))">
+
+			<sf-decorator ng-repeat="item in column.items" form="item" class="inline-form-groups" ng-init="itemCount = column.items.length"></sf-decorator>
+
+		</div>
+	</div>
+	<div class="help-block" sf-message></div>
+</div>

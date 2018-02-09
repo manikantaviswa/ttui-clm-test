@@ -1,0 +1,30 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"properties": {
+		"booObject": {
+			"type": "object",
+			"properties": {
+				"firstName": {
+					"type": "string"
+				}
+			}
+		},
+		"mooObject": {
+			"type": "object",
+			"properties": {
+				"firstName": {
+					"type": "string"
+				}
+			}
+		},
+		"gooObject": {
+			"type": "object",
+			"properties": {
+				"firstName": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}

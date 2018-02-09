@@ -1,0 +1,11 @@
+[
+	{
+		"key": "booObject.firstName"
+	},
+	{
+		"key": "mooObject",
+		"items": [
+			"mooObject[].firstName"
+		]
+	}
+]

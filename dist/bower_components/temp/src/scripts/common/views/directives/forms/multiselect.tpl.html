@@ -1,0 +1,32 @@
+<div class="form-group" ng-init="hasFocus = false" ng-class="{'has-error': form.disableErrorState !== true && hasError(), 'has-focus': hasFocus, 'is-required': form.required}">
+	<label class="control-label" ng-class="::form.labelHtmlClass" ng-show="showTitle()" translate="{{::form.title}}"></label>
+
+	<div class="control-content {{::form.fieldStyle}}" ng-class="{'col-sm-2': form.fieldSize === 'small', 'col-sm-5': form.fieldSize === 'medium'}">
+		<select
+			class="form-control"
+			multiple="multiple"
+
+			schema-name="form"
+			sf-changed="form"
+			schema-validate="form"
+
+			auto-tab-field
+
+			ng-focus="hasFocus = true"
+			ng-blur="hasFocus = false"
+			ng-model="$$value$$"
+			ng-model-options="form.ngModelOptions"
+			ng-disabled="form.readonly"
+			ng-options="item.value as item.name for item in form.titleMap"
+			ng-attr-autofocus="{{form.focus}}"
+			ng-attr-tabindex="{{form.tabindex}}"
+			>
+		</select>
+
+		<div
+			class="help-block"
+			ng-show="(hasError() && errorMessage(schemaError()))"
+			ng-bind-html="(hasError() && errorMessage(schemaError()))">
+		</div>
+	</div>
+</div>

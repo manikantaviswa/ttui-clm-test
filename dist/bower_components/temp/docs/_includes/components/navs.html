@@ -1,0 +1,83 @@
+<div class="bs-docs-section">
+	<h1 id="nav-tabs" class="page-header">Tabs</h1>
+
+	<p class="lead">Tab controls are used to divide the content of a single screen to several smaller parts. Tab controls do not act as a substitute for the navigation bar but they can be used to make a single screen easier to comprehend and use. Independent screens should always be presented in navigation bar.</p>
+
+	<ul>
+		<li>The page content can be divided into several parallel groups that are logical parts of the whole. With tabs the user can focus on a single part instead of the complex whole.</li>
+		<li>The navigation order between the tabs is free and the tab contents are optional by nature.</li>
+		<li>Changing the information on one tab page does not affect the information on the other tabs or cause inconsistencies between tabs.</li>
+		<li>If a function requires going through all of the separate parts - even if the order is free - use a flow wizard instead, allowing the directed handling of all the parts.</li>
+	</ul>
+
+	<div class="bs-callout bs-callout-info" id="callout-navs-tabs-plugin">
+		<p>Navs available in Bootstrap have shared markup, starting with the base <code>.nav</code> class, as well as shared states. Swap modifier classes to switch between each style.</p>
+		<p>Using navs for tab panels requires JavaScript tabs plugin</p>
+	</div>
+
+	<div class="bs-callout bs-callout-warning" id="callout-navs-accessibility">
+		<h4 id="make-navs-used-as-navigation-accessible">Rules and recommendations</h4>
+		<p>Make sure that each tab's content forms a logical part of the view concept.</p>
+		<p>Place the most common part as a default tab (first tab on the left)</p>
+	</div>
+
+	<h2 id="nav-horizontal-tabs">Horizontal Tabs</h2>
+	<p>Note the <code>.nav-tabs</code> class requires the <code>.nav</code> base class.</p>
+	<div class="bs-example" data-example-id="simple-nav-tabs">
+		<ul class="nav nav-tabs">
+			<li role="presentation" class="active"><a href="#" data-toggle="tab">Home</a></li>
+			<li role="presentation"><a href="#" data-toggle="tab">Profile</a></li>
+			<li role="presentation"><a href="#" data-toggle="tab">Messages</a></li>
+		</ul>
+	</div>
+
+	{% highlight html %}
+<ul class="nav nav-tabs">
+	<li role="presentation" class="active"><a href="#">Home</a></li>
+	<li role="presentation"><a href="#">Profile</a></li>
+	<li role="presentation"><a href="#">Messages</a></li>
+</ul>
+	{% endhighlight %}
+
+	<h2 id="nav-disabled-tabs">Disabled Tabs</h2>
+	<p>For any nav component, add <code>.disabled</code> for <strong>gray links and no hover effects</strong>.</p>
+
+	<div class="bs-callout bs-callout-warning" id="callout-navs-anchor-disabled">
+		<h4>Link functionality not impacted</h4>
+		<p>This class will only change the <code>&lt;a&gt;</code>'s appearance, not its functionality. Use custom JavaScript to disable links here.</p>
+	</div>
+
+	<div class="bs-example" data-example-id="disabled-nav-link">
+		<ul class="nav nav-tabs">
+			<li role="presentation" class="active"><a href="#" data-toggle="tab">Home</a></li>
+			<li role="presentation"><a href="#" data-toggle="tab">Profile</a></li>
+			<li role="presentation" class="disabled"><a href="#">Messasges</a></li>
+		</ul>
+	</div>
+
+	{% highlight html %}
+<ul class="nav nav-tabs">
+	<li role="presentation"><a href="#">Home</a></li>
+	<li role="presentation"><a href="#">Profile</a></li>
+	<li role="presentation" class="disabled"><a href="#">Messages</a></li>
+</ul>
+	{% endhighlight %}
+
+	<h2 id="nav-vertical-tabs">Vertical Tabs</h2>
+
+	<div class="bs-example" data-example-id="vertical-nav-link">
+		<ul class="nav nav-list nav-stacked" style="width:250px">
+			<li role="presentation" class="active"><a href="#" data-toggle="tab">Home</a></li>
+			<li role="presentation"><a href="#" data-toggle="tab">Profile</a></li>
+			<li role="presentation"><a href="#" data-toggle="tab">Messages</a></li>
+		</ul>
+	</div>
+	{% highlight html %}
+<ul class="nav nav-list nav-stacked">
+	<li role="presentation" class="active"><a href="#" data-toggle="tab">Home</a></li>
+	<li role="presentation"><a href="#" data-toggle="tab">Profile</a></li>
+	<li role="presentation"><a href="#" data-toggle="tab">Messages</a></li>
+</ul>
+	{% endhighlight %}
+
+</div>

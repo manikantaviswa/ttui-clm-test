@@ -1,0 +1,57 @@
+<div class="bs-docs-section" ng-controller="ModalWindowsAppCtrl">
+	<h1 id="modal-windows" class="page-header">Modal Windows</h1>
+	<div class="bs-example">
+		<span>Click to open modal window:</span>
+		<button class="btn btn-default" ng-click="openModal()">Try me!</button>
+		<p>For animations to work you need to include angular-motion css.</p>
+
+		<div role="tabpanel">
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active">
+					<a href="#modal-html" aria-controls="modal-html" role="tab" data-toggle="tab">
+						html
+					</a>
+				</li>
+				<li role="presentation">
+					<a href="#modal-js" aria-controls="modal-js" role="tab" data-toggle="tab">
+						js
+					</a>
+				</li>
+			</ul>
+			<!-- Tab panes -->
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active" id="modal-html">
+{% highlight html %}
+<button class="btn btn-primary" ng-click="openModal();">Try</button>
+{% endhighlight %}
+				</div>
+
+				<div role="tabpanel" class="tab-pane" id="modal-js">
+{% highlight js %}
+var dialog = ModalDialog();
+
+$scope.openModal = function() {
+    dialog.show({
+        scope: {},
+        title: 'Confirmation',
+        namespace: 'panel-dialog',
+        content: '<div>Delete item?</div>', // User content or ContentUrl
+        //contentUrl: 'content.tpl.html',
+        //footerUrl: 'footer.tpl.html', 
+        buttons: [{
+            name:'Cancel',
+            action: dialog.hide.bind(dialog)
+        },
+        {
+            name: 'OK',
+            action: dialog.hide.bind(dialog)
+        }],
+    });
+};
+{% endhighlight %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

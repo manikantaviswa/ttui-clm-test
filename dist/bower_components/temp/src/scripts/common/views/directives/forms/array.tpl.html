@@ -1,0 +1,82 @@
+<div sf-array="form" ng-model="$$value$$" ng-model-options="form.ngModelOptions">
+	<div class="panel panel-ttui">
+
+		<div class="panel-heading">
+			<h3 class="panel-title" ng-if="form.title && form.notitle !== true" translate="{{::form.title}}"></h3>
+		</div>
+		
+		<div ng-switch on="form.schema.format">
+			<div ng-switch-when="table">
+				<!-- Render an array as a table -->
+
+				<table class="table table-data-ttui" ng-model="modelArray">
+					<thead>
+						<tr>
+							<th class="col-md-2" ng-repeat="item in copyWithIndex($index).items"
+								ng-class="{'has-error': item.disableErrorState !== true && hasError(), 'has-focus': hasFocus, 'is-required': item.required}">{{item.title}}</th>
+							<th ng-if="!form.readonly && canDeleteFromArray()"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-init="arrayIndex = $index" ng-repeat="item in modelArray track by $index">
+							<td ng-repeat="item in copyWithIndex($index).items">
+								<sf-decorator form="item"></sf-decorator>
+							</td>
+
+							<td ng-if="form.remove !== false && !form.readonly && canDeleteFromArray()">
+								<button ng-click="deleteFromArray($index)"
+										style="position: relative; z-index: 20;"
+										type="button"
+										class="close pull-right"
+										data-role="remove-section"
+										data-section="{{::form.id}}">
+
+										<span aria-hidden="true">&times;</span>
+										<span class="sr-only">Close</span>
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+			<div ng-switch-default>
+				<!-- Render an array as a block -->
+
+				<ol class="list-group list-group-ttui" ng-model="modelArray" ui-sortable data-role="section" ng-attr-data-section="{{::form.id}}">
+					<li class="list-group-item" ng-repeat="item in modelArray track by $index" ng-attr-data-section-index="{{::$index}}">
+						<button ng-if="form.remove !== false && !form.readonly && canDeleteFromArray()"
+								ng-click="deleteFromArray($index)"
+								style="position: relative; z-index: 20;"
+								type="button"
+								class="close pull-right"
+								data-role="remove-section"
+								data-section="{{::form.id}}">
+
+								<span aria-hidden="true">&times;</span>
+								<span class="sr-only">Close</span>
+						</button>
+
+						<sf-decorator ng-init="arrayIndex = $index" form="copyWithIndex($index)"></sf-decorator>
+					</li>
+				</ol>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="clearfix">
+		<button ng-if="form.add !== false && !form.readonly && canAppendToArray()"
+			ng-click="appendToArray()"
+			type="button"
+			class="btn btn-link pull-right"
+			data-role="add-section"
+			data-section="{{::form.id}}">
+
+			<i class="glyphicon glyphicon-plus"></i>
+			<span translate="{{::form.add || 'Add'}}">Add</span>
+		</button>
+	</div>
+
+	<div class="help-block" sf-message="::form.description"></div>
+</div>

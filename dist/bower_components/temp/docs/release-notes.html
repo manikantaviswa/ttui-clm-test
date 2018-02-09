@@ -1,0 +1,13 @@
+---
+layout: default
+title: Release Notes
+slug: release-notes
+lead: ""
+rootPath: "../"
+---
+
+{% capture releaseNotesInc %}{% include release-notes/notes.md %}{% endcapture %}
+
+<div class="bs-docs-section">
+	{{ releaseNotesInc | markdownify }}
+</div>

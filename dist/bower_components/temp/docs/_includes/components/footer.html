@@ -1,0 +1,57 @@
+<div class="bs-docs-section" ng-controller="CommonAppCtrl">
+	<h1 id="footer" class="page-header">Footer</h1>
+	<p>Put <code>.navbar-fixed-bottom</code> class to nav element for fixed footer effect.</p>
+	<p>
+		<div class="input-group" ng-init="static = 1">
+			<label class="radio-inline">
+				<input type="radio" name="navRadios" ng-click="fixed = false" ng-model="static" value="1"> Try static footer
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="navRadios" ng-click="fixed = true"> Try fixed footer
+			</label>
+		</div>
+	</p>
+
+	<div class="bs-example" dox-resize>
+		<nav class="navbar navbar-default navbar-static-bottom nav-footer" ng-class="{'navbar-fixed-bottom': fixed}">
+			<div class="nav-footer-left">
+				<img src="{{page.rootPath}}assets/img/logo-placeholder.png" height="45" />
+			</div>
+			<div class="nav-footer-middle">
+				<span class="hidden-xs">
+					<span translate="Application name">Application name</span>
+					<span>0.0.0</span>
+				</span>
+				<span class="visible-xs">
+					<span translate="App">App</span>
+					<span>0.0.0</span>
+				</span>
+			</div>
+			<div class="nav-footer-right">
+				<span><i><small>Powered by </small></i>&nbsp<b>TECNOTREE</b></span>
+			</div>
+		</nav>
+	</div>
+{% highlight html %}
+<nav class="navbar navbar-default navbar-static-bottom nav-footer">
+<!--<nav class="navbar navbar-default navbar-fixed-bottom nav-footer">-->
+    <div class="nav-footer-left">
+        <img src="logo.png" height="45" />
+    </div>
+    <div class="nav-footer-middle">
+        <span class="hidden-xs">
+            <span translate="Application name">Application name</span>
+            <span>0.0.0</span>
+        </span>
+        <span class="visible-xs">
+            <span translate="App">App</span>
+            <span>0.0.0</span>
+        </span>
+    </div>
+    <div class="nav-footer-right">
+        <span><i><small>Powered by </small></i>&nbsp<b>TECNOTREE</b></span>
+    </div>
+</nav>
+{% endhighlight %}
+
+</div>
