@@ -1,6 +1,6 @@
 'use strict';
 
-var module = angular.module('TT-UI-CLM.FeasibilitySearch.Services', []);
+var module = angular.module('TT-UI-CLM.FeasibilitySearch.Services.FeasibilitySearchService', []);
 
 function FeasibilitySearchService($parse) {
     return {
@@ -70,4 +70,4 @@ function FeasibilitySearchService($parse) {
     }
 }
 FeasibilitySearchService.$inject = ['$parse']
-module.service(FeasibilitySearchService.name, FeasibilitySearchService); 
+module.service(FeasibilitySearchService.name, FeasibilitySearchService);

@@ -3,6 +3,10 @@ module.exports = function(grunt) {
 
 	var moduleFilePrefix = 'ttui-clm-';
 
+	var modules = {
+		'feasibility-search': 'TTUI-CLM-FeasibilitySearch',
+	};
+
 	grunt.initConfig({
 		jshint: {
 			scripts: {
@@ -60,6 +64,7 @@ module.exports = function(grunt) {
 						src: [
 							'common/polyfills/Function.name.js',
 							'**/*.js',
+							'dist/temp/scripts/**/*.js',
 							'!*.js'
 						],
 						dest: 'dist/scripts/',
@@ -71,7 +76,6 @@ module.exports = function(grunt) {
 				]
 			},
 
-			// concatenate all generated modules to 1 file
 			library: {
 				options: {},
 				files: [{
@@ -104,50 +108,26 @@ module.exports = function(grunt) {
 		},
 
 		ngtemplates: {
-			app: {
-				src:          'src/scripts/**/*.html',
-				dest:         moduleFilePrefix + '-views.js',
-				options:      {
-					bootstrap:  function(module, script) {
-						return 'define(' + module + ', [], function() { return { init: ' + script + ' }; });';
-					}
-				}
-			},
 			dist: {
 				options: {
-					src:      '**.html',
-				    dest:     'template.js',
 					module: function(src) {
 						var cwd = grunt.template.process('src/scripts/');
 						var modulePath = src.replace(cwd, '').split('/')[0];
-
-						console.log('Module Path', modulePath);
-
 						return modules[modulePath];
 					},
 					prefix: 'scripts',
 					bootstrap: function(moduleName, script) {
 
 						var header =
-							'/* commonjs package manager support (eg componentjs) */\n' +
-							'if (typeof module !== "undefined" && typeof exports !== "undefined" && module.exports === exports){\n' +
-							'	module.exports = \'@@@@__SOURCE_FILENAME__\';\n' +
-							'}\n\n' +
-							'(function (window, angular, undefined) {\n' +
-							'	"use strict";\n\n'+
-							'   angular.module(\''+moduleName+'\', []).run([\'$templateCache\', function($templateCache) {\n';
+							'angular.module(\''+moduleName+'\').run([\'$templateCache\', function($templateCache) {\n';
 
 						var footer =
-							'\n'+
 							'}]);\n' +
-							'return angular;\n' +
-							'})(window, window.angular);';
-
+							'return angular;';
 						var cwd = grunt.template.process('app');
 						script = script.replace(new RegExp(cwd, 'g'), '');
-
 						script = script.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
-
+						console.log(script);
 						return grunt.template.process(header) + script + footer;
 					},
 					htmlmin: {
@@ -164,13 +144,13 @@ module.exports = function(grunt) {
 				files: [
 					{
 						expand: true,
-						cwd: 'app/scripts/',
+						cwd: 'src/scripts/',
 						src: [
 							'**/*.html'
 						],
-						dest: 'dist/scripts/',
+						dest: 'dist/temp/scripts/',
 						rename: function(dest, src) {
-							return dest+moduleFilePrefix+src.split('/')[0]+'.tpl.js';
+							return dest + src.split('/')[0] + '/' + src.split('/')[0]+'.tpl.js';
 						}
 					}
 				]
@@ -187,9 +167,9 @@ module.exports = function(grunt) {
 	grunt.registerTask('build', [
 		'clean',
 		'copy:dist',
+//		'ngtemplates',
 		'concat:dist',
 		'concat:library',
-		//'ngtemplates'
 //		'uglify'
 	]);
 };

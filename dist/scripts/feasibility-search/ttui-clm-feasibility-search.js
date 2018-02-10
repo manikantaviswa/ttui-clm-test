@@ -8,8 +8,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 
 
 // Source: src/scripts/feasibility-search/controller/feasibility-search.controller.js
-var module = angular.module('TT-UI-CLM.FeasibilitySearch.Controllers', [
-    'TT-UI-CLM.FeasibilitySearch.Services',
+var module = angular.module('TT-UI-CLM.FeasibilitySearch.Controllers.FeasibilitySearchCtrl', [
+    'TT-UI-CLM.FeasibilitySearch.Services.FeasibilitySearchService',
 ]);
 
 function FeasibilitySearchCtrl($scope, $parse, feasibilitySearchService) {
@@ -103,10 +103,9 @@ module.controller(FeasibilitySearchCtrl.name, FeasibilitySearchCtrl);
 
 
 // Source: src/scripts/feasibility-search/directives/feasibility-search.directive.js
-var module = angular.module('TT-UI-CLM.FeasibilitySearch.Directives', [
-    'TT-UI-CLM.FeasibilitySearch.Views',
-    'TT-UI-CLM.FeasibilitySearch.Controllers',
-    'TT-UI-CLM.FeasibilitySearch.Services',
+var module = angular.module('TT-UI-CLM.FeasibilitySearch.Directives.FeasibilitySearch', [
+    'TT-UI-CLM.FeasibilitySearch.Controllers.FeasibilitySearchCtrl',
+    'TT-UI-CLM.FeasibilitySearch.Services.FeasibilitySearchService',
     'ui.select',
     'ngSanitize'
 ]);
@@ -122,19 +121,19 @@ module.directive('feasibilitySearch', function() {
             onSearch: '&'
         },
         controller: 'FeasibilitySearchCtrl',
-        templateUrl: 'views/feasibility-search.tpl'
+        templateUrl: 'scripts/feasibility-search/views/feasibility-search.html'
     };
 });
 
 
 // Source: src/scripts/feasibility-search/index.js
 angular.module('TT-UI-CLM.FeasibilitySearch', [
-    'TT-UI-CLM.FeasibilitySearch.Directives',
+    'TT-UI-CLM.FeasibilitySearch.Directives.FeasibilitySearch',
 ]);
 
 
 // Source: src/scripts/feasibility-search/services/feasibility-search.service.js
-var module = angular.module('TT-UI-CLM.FeasibilitySearch.Services', []);
+var module = angular.module('TT-UI-CLM.FeasibilitySearch.Services.FeasibilitySearchService', []);
 
 function FeasibilitySearchService($parse) {
     return {
@@ -204,7 +203,7 @@ function FeasibilitySearchService($parse) {
     }
 }
 FeasibilitySearchService.$inject = ['$parse']
-module.service(FeasibilitySearchService.name, FeasibilitySearchService); 
+module.service(FeasibilitySearchService.name, FeasibilitySearchService);
 
 return angular;
 })(window, window.angular);

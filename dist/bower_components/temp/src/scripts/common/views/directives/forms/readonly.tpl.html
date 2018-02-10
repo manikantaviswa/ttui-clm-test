@@ -1,6 +1,0 @@
-<div class="form-group">
-  <label ng-show="showTitle()" translate="{{::form.title}}"></label>
-  <input ng-if="form.type !== 'textarea'" type="text" disabled class="form-control" value="{{$$value$$}}">
-  <textarea ng-if="form.type === 'textarea'"  disabled class="form-control">{{$$value$$}}</textarea>
-  <div class="help-block" sf-message="::form.description"></div>
-</div>

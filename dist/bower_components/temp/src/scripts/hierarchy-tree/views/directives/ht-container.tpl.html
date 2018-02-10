@@ -1,7 +1,0 @@
-<div class="hierarchy-tree-ttui">
-    <ol id="{{model.id}}-ol" class="tree-nodes" hierarchy-tree-nodes ng-model="::model">
-        <ng-transclude></ng-transclude>
-        <li id="{{node.id}}-li-{{node.dataType}}" hierarchy-tree-node ng-repeat="node in model" ng-class="{'background-none': root()}"
-        ng-include="recursionTemplate" ng-show="visible(node)"></li>
-    </ol>
-</div>

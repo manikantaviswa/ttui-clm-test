@@ -1,9 +1,8 @@
 'use strict';
 
-var module = angular.module('TT-UI-CLM.FeasibilitySearch.Directives', [
-    'TT-UI-CLM.FeasibilitySearch.Views',
-    'TT-UI-CLM.FeasibilitySearch.Controllers',
-    'TT-UI-CLM.FeasibilitySearch.Services',
+var module = angular.module('TT-UI-CLM.FeasibilitySearch.Directives.FeasibilitySearch', [
+    'TT-UI-CLM.FeasibilitySearch.Controllers.FeasibilitySearchCtrl',
+    'TT-UI-CLM.FeasibilitySearch.Services.FeasibilitySearchService',
     'ui.select',
     'ngSanitize'
 ]);
@@ -19,6 +18,6 @@ module.directive('feasibilitySearch', function() {
             onSearch: '&'
         },
         controller: 'FeasibilitySearchCtrl',
-        templateUrl: 'views/feasibility-search.tpl'
+        templateUrl: 'scripts/feasibility-search/views/feasibility-search.html'
     };
 });

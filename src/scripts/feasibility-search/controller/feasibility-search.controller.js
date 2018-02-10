@@ -1,7 +1,7 @@
 'use strict';
 
-var module = angular.module('TT-UI-CLM.FeasibilitySearch.Controllers', [
-    'TT-UI-CLM.FeasibilitySearch.Services',
+var module = angular.module('TT-UI-CLM.FeasibilitySearch.Controllers.FeasibilitySearchCtrl', [
+    'TT-UI-CLM.FeasibilitySearch.Services.FeasibilitySearchService',
 ]);
 
 function FeasibilitySearchCtrl($scope, $parse, feasibilitySearchService) {
