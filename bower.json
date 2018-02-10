@@ -7,7 +7,8 @@
   "dependencies": {
     "angular": "1.4.9",
     "angular-sanitize": "1.4.9",
-    "angular-ui-select": "~0.19.8"
+    "angular-ui-select": "~0.19.8",
+    "tecnotree-ui-library": "git@git.tecnotree.com:tec_common/ui-lib.git#0.6.24.19"
   },
   "resolutions": {
     "angular": "1.4.9"

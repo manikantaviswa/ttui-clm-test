@@ -1,0 +1,58 @@
+//
+// Open Sans
+//
+
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Open Sans'),
+		local('OpenSans-Regular'),
+		url(#{$ttui-font-path}open-sans-400-normal.eot?) format('embedded-opentype'), /* IE */
+		url(#{$ttui-font-path}open-sans-400-normal.woff2) format('woff2'),
+		url(#{$ttui-font-path}open-sans-400-normal.ttf) format('truetype');
+}
+
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 300;
+	src: local('Open Sans'),
+		local('OpenSans-Light'),
+		url(#{$ttui-font-path}open-sans-300-normal.eot) format('embedded-opentype'), /* IE */
+		url(#{$ttui-font-path}open-sans-300-normal.woff2) format('woff2'),
+		url(#{$ttui-font-path}open-sans-300-normal.ttf) format('truetype')
+}
+
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 600;
+	src: local('Open Sans'),
+		local('OpenSans-Semibold'),
+		url(#{$ttui-font-path}open-sans-600-normal.eot) format('embedded-opentype'), /* IE */
+		url(#{$ttui-font-path}open-sans-600-normal.woff2) format('woff2'),
+		url(#{$ttui-font-path}open-sans-600-normal.ttf) format('truetype');
+}
+
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 700;
+	src: local('Open Sans'),
+		local('OpenSans-Bold'),
+		url(#{$ttui-font-path}open-sans-700-normal.eot) format('embedded-opentype'), /* IE */
+		url(#{$ttui-font-path}open-sans-700-normal.woff2) format('woff2'),
+		url(#{$ttui-font-path}open-sans-700-normal.ttf) format('truetype');
+}
+
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 800;
+	src: local('Open Sans'),
+		local('OpenSans-Extrabold'),
+		url(#{$ttui-font-path}open-sans-800-normal.eot) format('embedded-opentype'), /* IE */
+		url(#{$ttui-font-path}open-sans-800-normal.woff2) format('woff2'),
+		url(#{$ttui-font-path}open-sans-800-normal.ttf) format('truetype');
+}
