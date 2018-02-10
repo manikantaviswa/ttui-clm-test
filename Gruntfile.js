@@ -4,7 +4,7 @@ module.exports = function(grunt) {
 	var moduleFilePrefix = 'ttui-clm-';
 
 	var modules = {
-		'feasibility-search': 'TTUI-CLM-FeasibilitySearch',
+		'feasibility-search': 'TT-UI-CLM.FeasibilitySearch',
 	};
 
 	grunt.initConfig({
@@ -18,7 +18,8 @@ module.exports = function(grunt) {
 
 		clean: {
 			dist: 'dist',
-			server: '.tmp'
+			server: '.tmp',
+			removeNgTemplates: ['src/scripts/**/*tpl.js']
 		},
 
 		copy: {
@@ -31,7 +32,7 @@ module.exports = function(grunt) {
 					'bower_components/**/*',
 					'scss/**/*'
 				]
-			},
+			}
 		},
 
 		concat: {
@@ -48,7 +49,7 @@ module.exports = function(grunt) {
 					footer:
 						'\n'+
 						'return angular;\n'+
-						'})(window, window.angular);',
+						'})(window, window.angular);\n',
 
 					sourceMap: false, // uglify does this
 
@@ -63,9 +64,9 @@ module.exports = function(grunt) {
 						cwd: 'src/scripts/',
 						src: [
 							'common/polyfills/Function.name.js',
+							'**/*/index.js',
 							'**/*.js',
-							'dist/temp/scripts/**/*.js',
-							'!*.js'
+							'!index.js'
 						],
 						dest: 'dist/scripts/',
 						rename: function(dest, src) {
@@ -122,12 +123,11 @@ module.exports = function(grunt) {
 							'angular.module(\''+moduleName+'\').run([\'$templateCache\', function($templateCache) {\n';
 
 						var footer =
-							'}]);\n' +
-							'return angular;';
+							'}]);\n';
+
 						var cwd = grunt.template.process('app');
 						script = script.replace(new RegExp(cwd, 'g'), '');
 						script = script.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
-						console.log(script);
 						return grunt.template.process(header) + script + footer;
 					},
 					htmlmin: {
@@ -148,7 +148,7 @@ module.exports = function(grunt) {
 						src: [
 							'**/*.html'
 						],
-						dest: 'dist/temp/scripts/',
+						dest: 'src/scripts/',
 						rename: function(dest, src) {
 							return dest + src.split('/')[0] + '/' + src.split('/')[0]+'.tpl.js';
 						}
@@ -166,10 +166,11 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('build', [
 		'clean',
+		'ngtemplates',
 		'copy:dist',
-//		'ngtemplates',
 		'concat:dist',
-		'concat:library',
-//		'uglify'
+		// 'concat:library',
+		// 'uglify'
+		'clean:removeNgTemplates'
 	]);
 };

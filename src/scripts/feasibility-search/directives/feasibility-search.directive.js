@@ -18,6 +18,6 @@ module.directive('feasibilitySearch', function() {
             onSearch: '&'
         },
         controller: 'FeasibilitySearchCtrl',
-        templateUrl: 'scripts/feasibility-search/views/feasibility-search.html'
+        templateUrl: 'scripts/feasibility-search/views/feasibility-search.tpl.html'
     };
 });
