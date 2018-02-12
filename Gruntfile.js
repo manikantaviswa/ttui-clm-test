@@ -4,7 +4,8 @@ module.exports = function(grunt) {
 	var moduleFilePrefix = 'ttui-clm-';
 
 	var modules = {
-		'feasibility-search': 'TT-UI-CLM.FeasibilitySearch',
+		'feasibility-search': 'TT-UI-CLM.FeasibilitySearch.Tpl',
+		'select-plan-offering': 'TT-UI-CLM.SelectPlanOffering.Tpl',
 	};
 
 	grunt.initConfig({

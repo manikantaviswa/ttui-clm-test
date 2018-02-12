@@ -1,0 +1,30 @@
+<html>
+
+<head>
+    <title>Test Dist JS Files</title>
+</head>
+
+<body ng-app="testApp" ng-controller="testCtrl">
+    <select-plan-offering  master-data="masterData" config="testMsg" permissions="testMsg" model="model">
+    </select-plan-offering>
+</body>
+<script type="text/javaScript" src="./bower_components/angular/angular.min.js"></script>
+<script type="text/javaScript" src="./bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+<script type="text/javaScript" src="./bower_components/angular-ui-select/dist/select.min.js"></script>
+<script type="text/javaScript" src="./bower_components/ttui-table/dist/scripts/ttui-table"></script>
+<script type="text/javaScript" src="./bower_components/ttui-table/dist/scripts/ttui-table.tpl.js"></script>
+<script type="text/javaScript" src="../dist/scripts/select-plan-offering/ttui-clm-select-plan-offering.js"></script>
+
+<script type="text/javaScript">
+        angular.module('testApp', ['TT-UI-CLM.SelectPlanOffering']).controller('testCtrl', function($scope) {
+            $scope.testMsg = 'Test App Working';
+            $scope.model={};
+            $scope.masterData ={"response":{"body":[{ "_id" : { "$oid" : "58b3fa128cd2fcc0c421c46f"} , "offering" : { "version" : "1.0" , "offeringSubCategory" : { "code" : "Generic"} , "name" : "POSTPLANO07" , "code" : "POSTPLANO07" , "description" : "POSTPLANO07" , "associatedProducts" : { "associatedProduct" : [ { "autoRenewal" : false}]} , "constraints" : { "purchasingOption" : { "code" : "all"} , "recurringPurchase" : true} , "charges" : { "isChargeConvergent" : true , "sumOfOTC" : 200 , "sumOfRC" : 0} , "currency" : { "code" : "MUR"}}}, { "_id" : { "$oid" : "58b7de838cd2c114244fdef4"} , "offering" : { "version" : "1.0" , "offeringSubCategory" : { "code" : "Generic"} , "code" : "ADVANCER" , "name" : "ADVANCE RENTAL PLAN" , "description" : "Advance Rental Plan of Mauritius" , "associatedProducts" : { "associatedProduct" : [ { "autoRenewal" : false}]} , "constraints" : { "purchasingOption" : { "code" : "all"} , "recurringPurchase" : true} , "charges" : { "isChargeConvergent" : true , "sumOfOTC" : 0 , "sumOfRC" : 50} , "currency" : { "code" : "MUR"}}}, { "_id" : { "$oid" : "589a33338cd2aee0d8e526eb"} , "offering" : { "version" : "2.0" , "offeringSubCategory" : { "code" : "Generic"} , "code" : "C85" , "name" : "C85" , "description" : "C85" , "associatedProducts" : { "associatedProduct" : [ { "autoRenewal" : false}]} , "constraints" : { "purchasingOption" : { "code" : "all"} , "recurringPurchase" : true} , "charges" : { "isChargeConvergent" : true , "sumOfOTC" : 0 , "sumOfRC" : 85} , "currency" : { "code" : "MUR"}}}, { "_id" : { "$oid" : "58f4ca078cd248e379fd76b6"} , "offering" : { "version" : "1.0" , "offeringSubCategory" : { "code" : "Generic"} , "code" : "UPCDemo" , "name" : "UPCDemo" , "description" : "UPCDemo" , "associatedProducts" : { "associatedProduct" : [ { "autoRenewal" : false}]} , "constraints" : { "purchasingOption" : { "code" : "all"} , "recurringPurchase" : true} , "charges" : { "isChargeConvergent" : true , "sumOfOTC" : 200 , "sumOfRC" : 100} , "currency" : { "code" : "MUR"}}}, { "_id" : { "$oid" : "58be92708cd20c63894ff9dd"} , "offering" : { "version" : "1.0" , "offeringSubCategory" : { "code" : "Plan"} , "code" : "MT123" , "name" : "MT Offer" , "associatedProducts" : { "associatedProduct" : [ { "autoRenewal" : false}]} , "constraints" : { "purchasingOption" : { "code" : "all"} , "recurringPurchase" : true} , "charges" : { "isChargeConvergent" : true , "sumOfOTC" : 150 , "sumOfRC" : 200} , "currency" : { "code" : "MUR"}}}, { "_id" : { "$oid" : "58f5d5028cd2bfc3435f7522"} , "offering" : { "version" : "1.0" , "offeringSubCategory" : { "code" : "Generic"} , "code" : "UPC-ChrginBill-Demo" , "name" : "UPC-ChrginBill-Demo" , "description" : "UPC-ChrginBill-Demo" , "tags" : { "tag" : [ { "name" : "testing"}]} , "associatedProducts" : { "associatedProduct" : [ { "autoRenewal" : false}]} , "constraints" : { "purchasingOption" : { "code" : "all"} , "recurringPurchase" : true} , "charges" : { "isChargeConvergent" : true , "sumOfOTC" : 100 , "sumOfRC" : 0} , "currency" : { "code" : "MUR"}}}, { "_id" : { "$oid" : "58f7327d8cd2bfc3435f7540"} , "offering" : { "version" : "1.0" , "offeringSubCategory" : { "code" : "Generic"} , "code" : "iPHONE3" , "name" : "iPHONE CONTRACT PLAN - Only Plan - No Device" , "description" : "iPHONE CONTRACT PLAN - Only Plan - No Device" , "associatedProducts" : { "associatedProduct" : [ { "autoRenewal" : false}]} , "constraints" : { "purchasingOption" : { "code" : "all"} , "recurringPurchase" : false} , "charges" : { "isChargeConvergent" : true , "sumOfOTC" : 2000 , "sumOfRC" : 499} , "currency" : { "code" : "MUR"}}}]}}
+
+            $scope.myFunc = function(result) {
+                console.log(result)
+            }
+        });
+    </script>
+
+</html>

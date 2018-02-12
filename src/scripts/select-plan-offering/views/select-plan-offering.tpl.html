@@ -1,0 +1,99 @@
+<style>
+	/* Style the tab content */
+	.tabcontent {
+		float: left;
+		padding: 0px 12px;
+		border: 1px solid #ccc;
+		width: 80%;
+		border-left: none;
+		height: auto;
+	}
+	/* Style the tab */
+	.tab {
+		float: left;
+		border: 1px solid #ccc;
+		background-color: #f1f1f1;
+		width: 20%;
+		height: auto;
+	}
+</style>
+
+<div class="col-md-12" style="padding: 0px;">
+	<div class="panel panel-default">
+		<div class="panel-body table-no-padding">
+			<table tt-table
+				st-table="offeringList"
+				st-safe-src="plansList"
+				st-items-by-page="10"
+				class="table table-hover ttui-table">
+				<thead class="table-extra-header">
+					<tr>
+						<th colspan="{{tableCtrl.colspan}}">
+							<!-- table filter tags -->
+							<span class="table-extra-header-left">
+								<tt-table-filter-tags tags="tableCtrl.tableState.search.predicateObject"></tt-table-filter-tags>
+								</span>
+						</th>
+					</tr>
+				</thead>
+
+				<thead class="main-header">
+				<tr>
+					<!-- <th
+						tt-table-dropdown
+						is-open="false"
+						disable-auto-filters="false"
+						auto-close="disabled"
+						path="'code'"
+						set-filters="codeFilters">
+						<tt-table-text-tooltip text="'Offer Code'" ></tt-table-text-tooltip>
+					</th>
+					<th uib-dropdown
+						tt-table-dropdown
+						is-open="false"
+						disable-auto-filters="false"
+						auto-close="disabled"
+						path="'description'">
+						<tt-table-text-tooltip text="'Offering Name'" uib-dropdown-toggle></tt-table-text-tooltip>
+					</th> -->
+					<th class="" tt-table-tooltip>Offering Code</th>
+					<th class="" tt-table-tooltip>Offering Name</th>
+					<th class="currency" tt-table-tooltip>Charge in Invoice</th>
+					<th class="currency" tt-table-tooltip>Charge Upfront</th>
+					<th tt-table-tooltip>Quantity</th>
+					<th></th>
+					<!--<th></th>-->
+				</tr>
+				</thead>
+				<tbody ng-repeat="items in offeringList track by $index">
+					<tr ng-class="{'active':offering.selected}" ng-click="offering.expanded=!offering.expanded;">
+						<td ng-bind="items.offering.code" data-mobile-label="Offering Code"></td>
+						<td ng-bind="items.offering.name" data-mobile-label="Offering Name"></td>
+						<td>
+							<input type="number" name="quantity" ng-model="offering.quantity" min="1" style="width:50px;" ng-change="multipleSelectOffering.updateOfferQuantity(offering)" ng-disabled="offering.disable">
+						</td>
+						<td class="icons-checkbox">
+							 <a class="list-group-item-link" href ng-if="!offering.selected" ng-click="multipleSelectOffering.selectPlanOffering(offering); $event.stopPropagation();" translate="Select">Select</a>
+							<a class="list-group-item-link" href ng-if="offering.selected" ng-click="multipleSelectOffering.unselectOffering(offering); $event.stopPropagation();" translate="Unselect">Unselect</a>
+						</td> 
+					</tr>
+				</tbody>
+				<tfoot>
+				<tr>
+					<!-- <td colspan="7">
+						<div st-pagination=""
+							 st-items-by-page="multipleSelectOffering.config.itemsByPage"
+							 st-displayed-pages="multipleSelectOffering.config.displayedPages"
+							 st-template="scripts/ttui-table/table-pagination.tpl.html"
+							 class="pull-right"></div>
+					</td> -->
+				</tr>
+				</tfoot>
+
+
+
+			</table>
+		</div>
+	</div>
+
+</div>
