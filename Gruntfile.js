@@ -19,7 +19,7 @@ module.exports = function(grunt) {
 		clean: {
 			dist: 'dist',
 			server: '.tmp',
-			removeNgTemplates: ['src/scripts/**/*tpl.js']
+			removeNgTemplates: ['src/scripts/**/*.tpl.js']
 		},
 
 		copy: {

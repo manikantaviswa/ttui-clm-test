@@ -2,6 +2,7 @@
 
 var module = angular.module('TT-UI-CLM.FeasibilitySearch.Controllers.FeasibilitySearchCtrl', [
     'TT-UI-CLM.FeasibilitySearch.Services.FeasibilitySearchService',
+    'TT-UI-CLM.FeasibilitySearch.Services.SearchFeasibilityAPIService'
 ]);
 
 function FeasibilitySearchCtrl($scope, $parse, feasibilitySearchService) {
