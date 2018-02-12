@@ -2,6 +2,7 @@
    var module = angular.module('TT-UI-CLM.FxlSelectOffering.Directives.SelectOffering', [
     'TT-UI-CLM.FxlSelectOffering.Controllers.FxlSelectOfferingCtrl',
     'TT-UI-CLM.FxlSelectOffering.Services.FxlSelectOfferingService',
+    'TT-UI-CLM.FxlSelectOffering.Tpl',
    
 ]);
 

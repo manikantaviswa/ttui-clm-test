@@ -8,10 +8,10 @@
   <script src="./bower_components/objectpath/lib/ObjectPath.js"></script>
   <script src="./bower_components/angular-schema-form/dist/schema-form.js"></script>
   <script src="./bower_components/angular-schema-form/dist/bootstrap-decorator.js"></script>
-  <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
+  <!-- <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet" type="text/css" /> -->
       
   <script src="../dist/scripts/fxl-select-offering/ttui-clm-fxl-select-offering.js"></script>
-    
+  <script src="../dist/scripts/fxl-select-offering/ttui-clm-fxl-select-offering.tpl.js"></script>
   <script>
   
       (function () {
@@ -94,7 +94,7 @@
 <body ng-controller="indexCtrl">
     
             <div>
-            <select-offering schema="schemaObject" form="schemaForm" model="schemaModel" list="todoMain" title="Angular To-do"></select-offering>
+            <select-offering schema="schemaObject" form="schemaForm" model="schemaModel" list="" title="Angular To-do"></select-offering>
         </div>
 
 </body>

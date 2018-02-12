@@ -4,7 +4,7 @@ module.exports = function(grunt) {
 	var moduleFilePrefix = 'ttui-clm-';
  
 	var modules = {
-	   'fxl-select-offering': 'TT-UI-CLM.FxlSelectOffering',
+	   'fxl-select-offering': 'TT-UI-CLM.FxlSelectOffering.Tpl',	   
 	   'feasibility-search': 'TT-UI-CLM.FeasibilitySearch.Tpl',
 	   'select-number': 'TT-UI-CLM.SelectNumber.Tpl'
 	};
