@@ -2,10 +2,10 @@
 
 var module = angular.module('TT-UI-CLM.FeasibilitySearch.Controllers.FeasibilitySearchCtrl', [
     'TT-UI-CLM.FeasibilitySearch.Services.FeasibilitySearchService',
-    'TT-UI-CLM.FeasibilitySearch.Services.SearchFeasibilityAPIService'
+    'TT-UI-CLM.FeasibilitySearch.Services.SearchFeasibilityAPIService',
 ]);
 
-function FeasibilitySearchCtrl($scope, $parse, feasibilitySearchService) {
+function FeasibilitySearchCtrl($scope, $parse, feasibilitySearchService, SearchFeasibilityAPIService) {
     $scope.localities = [];
     $scope.subLocalities = [];
     $scope.streets = [];
@@ -14,6 +14,11 @@ function FeasibilitySearchCtrl($scope, $parse, feasibilitySearchService) {
 
     $scope.searchAddressFeasibility = function() {
         $scope.onSearch({$result: $scope.model});
+        new SearchFeasibilityAPIService().sendRequest(null).then(function(res) {
+            console.log(res);
+        }).catch(function(err) {
+            console.log(err);
+        });
         $scope.searchResult = {
             locality: $scope.model.locality.name,
             subLocality: $scope.model.subLocality.name,
