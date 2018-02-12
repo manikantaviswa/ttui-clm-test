@@ -161,7 +161,8 @@ module.exports = function(grunt) {
 				   ],
 				   dest: 'src/scripts/',
 				   rename: function(dest, src) {
-					  return dest + src.split('/')[0] + '/' + src.split('/')[0]+'.tpl.js';
+					   var moduleName = src.split('/')[0];
+					  return dest + moduleName + '/' + moduleFilePrefix + moduleName+'.tpl.js';
 				   }
 				}
 			 ]
