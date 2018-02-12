@@ -5,6 +5,7 @@ module.exports = function(grunt) {
 
 	var modules = {
 		'feasibility-search': 'TT-UI-CLM.FeasibilitySearch',
+		'fxl-select-offering': 'TT-UI-CLM.FxlSelectOffering',
 	};
 
 	grunt.initConfig({

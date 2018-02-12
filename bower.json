@@ -8,6 +8,8 @@
     "angular": "1.4.9",
     "angular-sanitize": "1.4.9",
     "angular-ui-select": "~0.19.8",
+    "angular-schema-form": "0.8.12",
+    "angular-bootstrap": "~0.13.4",
     "tecnotree-ui-library": "git@git.tecnotree.com:tec_common/ui-lib.git#0.6.24.19"
   },
   "resolutions": {
