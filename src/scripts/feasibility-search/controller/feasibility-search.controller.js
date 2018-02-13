@@ -25,11 +25,15 @@ function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService
             var searchResult = angular.merge(res.feasibilityDetails, {
                 locality: $parse('model.locality.locality.name')($scope),
                 subLocality: $parse('model.locality.subLocality.name')($scope),
-                street: $parse('model.locality.street.name')($scope),
+                street: $parse('model.locality.street.name')($scope)
             });
+            if (isNumberSearch) {
+                searchResult.serviceNumber = true;
+            } else {
+                searchResult.locality = true;
+            }
             $scope.onSearch({$result: searchResult});
-            $parse('searchResult.' + (isNumberSearch ? 'serviceNumber' : 'locality')).assign($scope, searchResult);
-            $scope.searchResult[isNumberSearch ? 'serviceNumber' : 'locality'] = searchResult;
+            $scope.searchResult = searchResult;
             Spinner.inner.hide();
         }).catch(function(err) {
             Spinner.inner.hide();            
