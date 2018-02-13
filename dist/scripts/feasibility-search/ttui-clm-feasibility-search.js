@@ -29,23 +29,22 @@ function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService
 
     $scope.searchAddressFeasibility = function(isNumberSearch) {
         $scope.searchResult = null;
+        var searchResult = {};
         Spinner.inner.show();
         if (isNumberSearch) {
             var req = { serviceNumber: $scope.model.serviceNumber };
+            searchResult.serviceNumberSearch = true;
         } else {
             var req = $scope.model.locality;
+            searchResult.localitySearch = true;
         }
         SearchFeasibilityAPIService(req).then(function(res) {
-            var searchResult = angular.merge(res.feasibilityDetails, {
+            searchResult = angular.merge(res.feasibilityDetails, {
                 locality: $parse('model.locality.locality.name')($scope),
                 subLocality: $parse('model.locality.subLocality.name')($scope),
                 street: $parse('model.locality.street.name')($scope)
-            });
-            if (isNumberSearch) {
-                searchResult.serviceNumber = true;
-            } else {
-                searchResult.locality = true;
-            }
+            }, searchResult);
+
             $scope.onSearch({$result: searchResult});
             $scope.searchResult = searchResult;
             Spinner.inner.hide();
