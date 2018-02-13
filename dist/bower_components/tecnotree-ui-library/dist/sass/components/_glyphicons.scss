@@ -1,0 +1,111 @@
+.glyphicon-refresh-animate {
+ 	-webkit-animation: spin .7s infinite linear;
+	-moz-animation: spin .7s infinite linear;
+	-ms-animation: spin .7s infinite linear;
+	-animation: spin .7s infinite linear;
+
+	-webkit-transform-origin: center 12px;
+	-ms-transform-origin: center 12px;
+	-moz-transform-origin: center 13px;
+}
+
+@keyframes spin {
+	from {
+		transform: scale(1) rotate(0deg);
+		-ms-transform: scale(1) rotate(0deg);
+	}
+	to {
+		transform: scale(1) rotate(360deg);
+		-ms-transform: scale(1) rotate(360deg);
+	}
+}
+
+@-webkit-keyframes spin {
+	from {
+		-webkit-transform: rotate(0deg);
+		-moz-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+
+	to {
+		-webkit-transform: rotate(360deg);
+		-moz-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+.glyphicon-ttui {
+	&:before {
+		height: 0;
+		display: inline-block;
+		padding-top: 101%;
+		white-space: nowrap;
+		overflow: hidden;
+		background-position: center center;
+		background-repeat: no-repeat;
+		background-size: contain;
+	}
+	&.glyphicon-alert:before {
+		background-image: url('#{$img-path}assets/error_or_issue.svg');
+	}
+	&.glyphicon-calendar:before {
+		background-image: url('#{$img-path}assets/date-picker-input.svg');
+	}
+	&.glyphicon-envelope:before {
+		background-image: url('#{$img-path}assets/email-input.svg');
+	}
+	&.glyphicon-euro:before, &.glyphicon-eur:before {
+		background-image: url('#{$img-path}assets/currency-euro-input.svg');
+	}
+	&.glyphicon-filter:before {
+		background-image: url('#{$img-path}assets/filter_OFF.svg');
+	}
+	&.glyphicon-lock:before {
+		background-image: url('#{$img-path}assets/password-input.svg');
+	}
+	&.glyphicon-ok-sign:before {
+		background-image: url('#{$img-path}assets/done_success.svg');
+	}
+	&.glyphicon-pencil:before {
+		background-image: url('#{$img-path}assets/edit-icon.svg');
+	}
+	&.glyphicon-question-sign:before {
+		background-image: url('#{$img-path}assets/pending_or_issue.svg');
+	}
+	&.glyphicon-refresh:before {
+		background-image: url('#{$img-path}assets/progress_indicator.svg');
+	}
+	&.glyphicon-remove-sign:before {
+		background-image: url('#{$img-path}assets/delete.svg');
+	}
+	&.glyphicon-search:before {
+		background-image: url('#{$img-path}assets/search.svg');
+	}
+	&.glyphicon-user:before {
+		background-image: url('#{$img-path}assets/user-input.svg');
+	}
+	&.glyphicon-chevron-circle-right:before {
+		content: "\00a0";
+		background-image: url('#{$img-path}assets/chevron-circle-right.svg');
+	}
+	&.glyphicon-chevron-circle-right-black:before {
+		content: "\00a0";
+		background-image: url('#{$img-path}assets/chevron-circle-right-black.svg');
+	}
+	&.glyphicon-chevron-circle-down:before {
+		content: "\00a0";
+		background-image: url('#{$img-path}assets/chevron-circle-down.svg');
+	}
+	&.glyphicon-chevron-circle-down-black:before {
+		content: "\00a0";
+		background-image: url('#{$img-path}assets/chevron-circle-down-black.svg');
+	}
+	&.glyphicon-circle:before {
+		content: "\00a0";
+		background-image: url('#{$img-path}assets/circle.svg');
+	}
+	&.glyphicon-checkbox:before {
+		content: "\00a0";
+		background-image: url('#{$img-path}assets/checkbox.svg');
+	}
+}

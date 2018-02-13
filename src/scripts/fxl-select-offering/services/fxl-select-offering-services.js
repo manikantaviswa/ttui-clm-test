@@ -5,7 +5,6 @@
     module.service('FxlSelectOfferingService', FxlSelectOfferingService);
 
     function FxlSelectOfferingService() {
-
         this.message = '';
         this.getAllList = function (todoMain) {
         this.message = todoMain;

@@ -1,15 +1,12 @@
- 'use strict';   
+'use strict';
 
-    var module = angular.module('TT-UI-CLM.FxlSelectOffering.Controllers.FxlSelectOfferingCtrl', [
-        'TT-UI-CLM.FxlSelectOffering.Services.FxlSelectOfferingService',
-        'TT-UI-CLM.FxlSelectOffering.Services.FxlSelectOfferingAPIService'
-    ]);
+var module = angular.module('TT-UI-CLM.FxlSelectOffering.Controllers.FxlSelectOfferingCtrl', ['TT-UI-CLM.FxlSelectOffering.Services.FxlSelectOfferingService', 'TT-UI-CLM.FxlSelectOffering.Services.FxlSelectOfferingAPIService']);
 
-    FxlSelectOfferingCtrl.$inject = ['$scope','FxlSelectOfferingService'];
-        
-    function FxlSelectOfferingCtrl($scope,FxlSelectOfferingService) {
-        $scope.directivelist = FxlSelectOfferingService.getAllList($scope.list);
-      
-      }
+FxlSelectOfferingCtrl.$inject = ['$scope', 'FxlSelectOfferingService'];
 
-    module.controller(FxlSelectOfferingCtrl.name, FxlSelectOfferingCtrl);
+function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService) {
+    $scope.directivelist = FxlSelectOfferingService.getAllList($scope.masterData);
+
+}
+
+module.controller(FxlSelectOfferingCtrl.name, FxlSelectOfferingCtrl);

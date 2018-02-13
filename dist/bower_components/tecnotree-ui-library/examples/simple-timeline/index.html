@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="TT-APP.SimpleTimelineDemo" ng-controller="simpleTimelineCtrl">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="../../favicon.ico">
+
+	<title>Simple Timeline Demo</title>
+
+	<link href="../../dist/css/tecnotree-ui-library.css" rel="stylesheet">
+	<link href="../../dist/css/vendor.css" rel="stylesheet">
+</head>
+<body>
+<div class="page-wrapper">
+	<div class="container-main" bs-affix-target>
+		<div class="row no-gutter">
+			<!--<div class="col-md-4">-->
+				<simple-timeline
+					events="timelineEvents"
+					show-events-max="3"
+					hide-line="false"
+					show-end-badge="true"
+					show-more-badge="true"
+					badge-size="large"
+					show-date-filter="true"
+					filters="timelineFilters"
+					set-default-date-filter-range="true">
+				</simple-timeline>
+			<!--</div>-->
+		</div>
+	</div>
+</div>
+
+<script src="../../dist/bower_components/angular/angular.js"></script>
+<script src="../../dist/bower_components/jquery/dist/jquery.js"></script>
+<script src="../../dist/bower_components/tv4/tv4.js"></script>
+<script src="../../dist/bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+<script src="../../dist/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="../../dist/bower_components/angular-animate/angular-animate.js"></script>
+<script src="../../dist/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="../../dist/bower_components/a0-angular-storage/dist/angular-storage.min.js"></script>
+<script src="../../dist/bower_components/angular-schema-form/dist/schema-form.min.js"></script>
+<script src="../../dist/bower_components/objectpath/lib/ObjectPath.js"></script>
+<script src="../../dist/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+<script src="../../dist/bower_components/angular-strap/dist/angular-strap.min.js"></script>
+<script src="../../dist/bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+<script src="../../dist/bower_components/angular-cookies/angular-cookies.min.js"></script>
+<script src="../../dist/bower_components/angular-translate/angular-translate.min.js"></script>
+<script src="../../dist/bower_components/angular-translate-storage-local/angular-translate-storage-local.min.js"></script>
+<script src="../../dist/bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
+<script src="../../dist/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+<script src="../../dist/bower_components/angular-translate-loader-partial/angular-translate-loader-partial.min.js"></script>
+<script src="../../dist/bower_components/angular-smart-table/dist/smart-table.min.js"></script>
+<script src="../../dist/bower_components/angular-resource/angular-resource.min.js"></script>
+<script src="../../dist/bower_components/momentjs/min/moment.min.js"></script>
+<script src="../../dist/bower_components/moment-jalaali/build/moment-jalaali.js"></script>
+<script src="../../dist/bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js"></script>
+
+<script src="../../dist/scripts/ttui-common.js"></script>
+<script src="../../dist/scripts/ttui-common.tpl.js"></script>
+<script src="../../dist/scripts/ttui-form.js"></script>
+
+<script src="app.js"></script>
+
+</body>
+</html>
