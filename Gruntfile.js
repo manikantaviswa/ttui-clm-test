@@ -6,7 +6,8 @@ module.exports = function(grunt) {
 	var modules = {
 	   'fxl-select-offering': 'TT-UI-CLM.FxlSelectOffering.Tpl',	   
 	   'feasibility-search': 'TT-UI-CLM.FeasibilitySearch.Tpl',
-	   'select-number': 'TT-UI-CLM.SelectNumber.Tpl'
+	   'select-number': 'TT-UI-CLM.SelectNumber.Tpl',
+	   'slot-picker': 'TT-UI-CLM.SlotPicker.Tpl'
 	};
  
 	grunt.initConfig({
@@ -137,7 +138,7 @@ module.exports = function(grunt) {
 							 'return angular;\n'+
 							 '})(window, window.angular);\n';
  
-				   var cwd = grunt.template.process('app');
+				   var cwd = grunt.template.process('');
 				   script = script.replace(new RegExp(cwd, 'g'), '');
 				   script = script.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
 				   return grunt.template.process(header) + script + footer;

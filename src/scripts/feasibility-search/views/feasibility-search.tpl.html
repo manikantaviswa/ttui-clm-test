@@ -7,7 +7,7 @@
             <div class="form-group" ng-class="{'has-error': (profileForm.searchInput.$error.pattern)}">
                 <label for="lacality" class="col-sm-4 control-label" translate="Locality">Locality</label>
                 <div class="control-content col-sm-8">
-                    <ui-select id="city" ng-model="model.locality" theme="bootstrap" append-to-body="true" on-select="onSelectLocality($event, $item)">+
+                    <ui-select id="city" ng-model="model.locality.locality" theme="bootstrap" append-to-body="true" on-select="onSelectLocality($event, $item)">+
                         <ui-select-match placeholder="Select / Search Localities">{{$select.selected.name}}</ui-select-match>
                         <ui-select-choices repeat="locality in localities | filter: $select.search">
                             <span ng-bind-html="locality.name | highlight: $select.search"></span>
@@ -19,7 +19,7 @@
             <div class="form-group" ng-class="{'has-error': (profileForm.searchInput.$error.pattern)}">
                 <label for="lacality" class="col-sm-4 control-label" translate="Sub Locality">Sub Locality</label>
                 <div class="control-content col-sm-8">
-                    <ui-select id="city" ng-model="model.subLocality" theme="bootstrap" append-to-body="true" on-select="onSelectSubLocality($event, $item)">
+                    <ui-select id="city" ng-model="model.locality.subLocality" theme="bootstrap" append-to-body="true" on-select="onSelectSubLocality($event, $item)">
                         <ui-select-match placeholder="Select / Search Sub Localities">{{$select.selected.name}}</ui-select-match>
                         <ui-select-choices repeat="sl in subLocalities | filter: $select.search">
                             <span ng-bind-html="sl.name | highlight: $select.search"></span>
@@ -31,7 +31,7 @@
             <div class="form-group" ng-class="{'has-error': (profileForm.searchInput.$error.pattern)}">
                 <label for="street" class="col-sm-4 control-label" translate="Street">Street</label>
                 <div class="control-content col-sm-8">
-                    <ui-select id="city" ng-model="model.street" theme="bootstrap" placeholder="Choose a street" append-to-body="true" on-select="onSelectStreet($event, $item)">
+                    <ui-select id="city" ng-model="model.locality.street" theme="bootstrap" placeholder="Choose a street" append-to-body="true" on-select="onSelectStreet($event, $item)">
                         <ui-select-match placeholder="Select / Search Street">{{$select.selected.name}}</ui-select-match>
                         <ui-select-choices repeat="st in streets | filter: $select.search">
                             <span ng-bind-html="st.name | highlight: $select.search"></span>
@@ -43,11 +43,11 @@
             <div class="form-group">
                 <label for="street" class="col-sm-4 control-label"></label>
                 <div class="control-content col-sm-8">
-                    <button type="button" class="btn btn-primary" ng-click="searchAddressFeasibility()">Check Feasibility</button>
+                    <button type="button" class="btn btn-primary" ng-click="searchAddressFeasibility(false)">Check Feasibility</button>
                 </div>
             </div>
         </div>
-        <div class="col-sm-6" ng-if="searchResult">
+        <div class="col-sm-6" ng-if="searchResult.locality">
             <div class="feasibility-search-result">
                 <div class="row">
                     <div class="col-xs-2">
@@ -55,10 +55,10 @@
                     </div>
                     <div class="col-xs-10">
                         <div>The address &lt; <em>{{searchResult.locality}}, {{searchResult.subLocality}}, {{searchResult.street}} &gt;</em></div>
-                        <p><strong>{{searchResult.feasibility || "--unknown--"}}</strong></p>
-                        <div>MDF: {{searchResult.mdf || "--unknown--"}}</div>
+                        <p><strong>Has {{searchResult.technology}} Feasibility</strong></p>
+                        <div>MDF: {{searchResult.MDF || "--unknown--"}}</div>
                         <div>Cabinet: {{searchResult.cabinet || "--unknown--"}}</div>
-                        <div>FDP: {{searchResult.fdp || "--unknown--"}}</div>
+                        <div>FDP: {{searchResult.FDP || "--unknown--"}}</div>
                     </div>
                 </div>
             </div>
@@ -78,18 +78,18 @@
             <div class="form-group" ng-class="{'has-error': (profileForm.searchInput.$error.pattern)}">
                 <label for="lacality" class="col-sm-4 control-label" translate="Fixed Line Number">Fixed Line Number</label>
                 <div class="control-content col-sm-8">
-                    <input type="text" placeholder="" ng-model="model.fixedLineNumber" />
+                    <input type="text" placeholder="" ng-model="model.serviceNumber" />
                     <span class="help-block ng-hide">This field is required</span>
                 </div>
             </div>
             <div class="form-group">
                 <label for="street" class="col-sm-4 control-label"></label>
                 <div class="control-content col-sm-8">
-                    <button type="button" class="btn btn-primary" ng-click="onCheckClick()">Check Feasibility</button>
+                    <button type="button" class="btn btn-primary" ng-click="searchAddressFeasibility(true)">Check Feasibility</button>
                 </div>
             </div>
         </div>
-        <div class="col-sm-6" ng-if="searchResult">
+        <div class="col-sm-6" ng-if="searchResult.serviceNumber">
             <div class="feasibility-search-result">
                 <div class="row">
                     <div class="col-xs-2">
@@ -97,10 +97,10 @@
                     </div>
                     <div class="col-xs-10">
                         <div>The address &lt; <em>{{searchResult.locality}}, {{searchResult.subLocality}}, {{searchResult.street}} &gt;</em></div>
-                        <p><strong>{{searchResult.feasibility || "--unknown--"}}</strong></p>
-                        <div>MDF: {{searchResult.mdf || "--unknown--"}}</div>
-                        <div>Cabinet: {{searchResult.cabinet || "--unknown--"}}</div>
-                        <div>FDP: {{searchResult.fdp || "--unknown--"}}</div>
+                        <p><strong>{{searchResult.technology || "--unknown--"}}</strong></p>
+                        <div>MDF: {{searchResult.MDF || "--unknown--"}}</div>
+                        <div>Cabinet: {{searchResult.Cabinet || "--unknown--"}}</div>
+                        <div>FDP: {{searchResult.FDP || "--unknown--"}}</div>
                     </div>
                 </div>
             </div>
