@@ -6,7 +6,7 @@ module.exports = function(grunt) {
 	var modules = {
 	   'feasibility-search': 'TT-UI-CLM.FeasibilitySearch.Tpl',
 	   'select-number': 'TT-UI-CLM.SelectNumber.Tpl',
-	   'select-plan-offering': 'TT-UI-CLM.SelectPlanOffering.Tpl'
+	   'select-plan-offering': 'TT-UI-CLM.SelectPlanOffering.Tpl',
 	};
  
 	grunt.initConfig({

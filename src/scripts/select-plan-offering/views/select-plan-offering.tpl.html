@@ -1,5 +1,6 @@
 <style>
 	/* Style the tab content */
+
 	.tabcontent {
 		float: left;
 		padding: 0px 12px;
@@ -8,7 +9,9 @@
 		border-left: none;
 		height: auto;
 	}
+
 	/* Style the tab */
+
 	.tab {
 		float: left;
 		border: 1px solid #ccc;
@@ -21,75 +24,72 @@
 <div class="col-md-12" style="padding: 0px;">
 	<div class="panel panel-default">
 		<div class="panel-body table-no-padding">
-			<table tt-table
-				st-table="offeringList"
-				st-safe-src="plansList"
-				st-items-by-page="10"
-				class="table table-hover ttui-table">
+			<table tt-table st-table="offeringList" st-safe-src="plansList" st-items-by-page="10" class="table table-hover ttui-table">
 				<thead class="table-extra-header">
 					<tr>
 						<th colspan="{{tableCtrl.colspan}}">
-							<!-- table filter tags -->
 							<span class="table-extra-header-left">
 								<tt-table-filter-tags tags="tableCtrl.tableState.search.predicateObject"></tt-table-filter-tags>
-								</span>
+							</span>
+							<!-- table actions -->
+							<span class="table-extra-header-right">
+								<a ng-show="tableCtrl.showActions()" class="btn btn-default" ng-click="example.executeAction(tableCtrl.getSelectionModel())"
+								 href>action 1</a>
+								<a ng-show="tableCtrl.showActions()" class="btn btn-default" href>action 2</a>
+								<a ng-show="tableCtrl.showActions()" class="btn btn-default" href>action 3</a>
+							</span>
+
 						</th>
 					</tr>
 				</thead>
 
 				<thead class="main-header">
-				<tr>
-					<!-- <th
-						tt-table-dropdown
-						is-open="false"
-						disable-auto-filters="false"
-						auto-close="disabled"
-						path="'code'"
-						set-filters="codeFilters">
-						<tt-table-text-tooltip text="'Offer Code'" ></tt-table-text-tooltip>
-					</th>
-					<th uib-dropdown
-						tt-table-dropdown
-						is-open="false"
-						disable-auto-filters="false"
-						auto-close="disabled"
-						path="'description'">
-						<tt-table-text-tooltip text="'Offering Name'" uib-dropdown-toggle></tt-table-text-tooltip>
-					</th> -->
-					<th class="" tt-table-tooltip>Offering Code</th>
-					<th class="" tt-table-tooltip>Offering Name</th>
-					<th class="currency" tt-table-tooltip>Charge in Invoice</th>
-					<th class="currency" tt-table-tooltip>Charge Upfront</th>
-					<th tt-table-tooltip>Quantity</th>
-					<th></th>
-					<!--<th></th>-->
-				</tr>
+					<tr>
+						<th uib-dropdown is-open="dropdownCtrl.isOpen" auto-close="disabled" tt-table-dropdown path="column.path" set-filters="column.filters">
+							<tt-table-text-tooltip text="'Offering'" uib-dropdown-toggle></tt-table-text-tooltip>
+						</th>
+
+						<th st-sort="charges.sumOfOTC" translate="Charge Upfront">Charge Upfront</th>
+						<th st-sort="charges.sumOfRC" translate="Charge in Invoice">Charge in Invoice</th>
+						<th></th>
+					</tr>
 				</thead>
-				<tbody ng-repeat="items in offeringList track by $index">
-					<tr ng-class="{'active':offering.selected}" ng-click="offering.expanded=!offering.expanded;">
-						<td ng-bind="items.offering.code" data-mobile-label="Offering Code"></td>
-						<td ng-bind="items.offering.name" data-mobile-label="Offering Name"></td>
+				<tbody ng-repeat="items in offeringData track by $index">
+					<tr ng-class="{'active':items.selected}" ng-click="items.expanded=!offering.expanded;">
+						<td ng-bind="::items.name" data-mobile-label="Offering"></td>
+						<td ng-bind="::items.charges.sumOfOTC | currency : items.currency.code "></td>
+						<td ng-bind="::items.charges.sumOfRC | currency  : items.currency.code"></td>
 						<td>
-							<input type="number" name="quantity" ng-model="offering.quantity" min="1" style="width:50px;" ng-change="multipleSelectOffering.updateOfferQuantity(offering)" ng-disabled="offering.disable">
+							<a class="list-group-item-link" href ng-if="!items.selected" ng-click="selectPlanOffering(items); $event.stopPropagation();"
+							 translate="Select">Select</a>
+							<a class="list-group-item-link" href ng-if="items.selected" ng-click="unselectOffering(items); $event.stopPropagation();"
+							 translate="Unselect">Unselect</a>
 						</td>
-						<td class="icons-checkbox">
-							 <a class="list-group-item-link" href ng-if="!offering.selected" ng-click="multipleSelectOffering.selectPlanOffering(offering); $event.stopPropagation();" translate="Select">Select</a>
-							<a class="list-group-item-link" href ng-if="offering.selected" ng-click="multipleSelectOffering.unselectOffering(offering); $event.stopPropagation();" translate="Unselect">Unselect</a>
-						</td> 
 					</tr>
 				</tbody>
-				<tfoot>
-				<tr>
-					<!-- <td colspan="7">
+				<!-- <tfoot>
+					<tr>
+						<td colspan="7">
 						<div st-pagination=""
-							 st-items-by-page="multipleSelectOffering.config.itemsByPage"
-							 st-displayed-pages="multipleSelectOffering.config.displayedPages"
+							 st-items-by-page="15"
+							 st-displayed-pages="10"
 							 st-template="scripts/ttui-table/table-pagination.tpl.html"
 							 class="pull-right"></div>
-					</td> -->
-				</tr>
-				</tfoot>
-
+					</td>
+					</tr>
+				</tfoot> -->
+				<tfoot ng-if="tableCtrl.enablePagination">
+						<tr>
+							<td colspan="7">
+									<div st-pagination=""
+									st-items-by-page="15"
+									st-displayed-pages="10"
+									st-template="bower_components/ttui-table/table-pagination.tpl.html"
+									class="pull-right"></div>
+							</td>
+						</tr>
+					</tfoot>
+	
 
 
 			</table>

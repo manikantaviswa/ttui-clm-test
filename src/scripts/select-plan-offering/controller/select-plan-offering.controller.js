@@ -5,16 +5,19 @@ var module = angular.module('TT-UI-CLM.SelectPlanOffering.Controllers.SelectPlan
 ])
 
 function SelectPlanOfferingCtrl($scope,$parse, selectPlanOfferingService) {
-    $scope.offeringList = [];
-    setInitialState();
+    $scope.offeringData = [];
     function setInitialState() {
-       
         getOfferings();
     }
     function getOfferings() {
        // $scope.offering = selectPlanOfferingService.getOfferings($scope.masterData.response.body);
-       var offering = $parse('masterData.response.body')($scope);
-       $scope.offeringList = offering;
+       var offering = $parse('masterData')($scope);
+       $scope.offeringData = offering;
+       $scope.ready = "Welcome to fxl";
+    }
+    setInitialState();
+    function selectPlanOffering(offering){
+        
     }
 }
 
