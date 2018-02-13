@@ -9,7 +9,7 @@ module.constant('API_CONFIG', {
     RESPONSE_ERROR_JSON_PATH: 'response.errors.error'
 });
 
-/*function SearchFeasibilityAPIService($q, $parse, Api, ResourceFactory, API_CONFIG) {
+function SearchFeasibilityAPIService($q, $parse, Api, ResourceFactory, API_CONFIG) {
 
     var prepareRequest = function(msisdn) {
         var requestData = {
@@ -51,4 +51,3 @@ module.constant('API_CONFIG', {
 
 SearchFeasibilityAPIService.$inject = ['$q', '$parse', 'Api', 'ResourceFactory', 'API_CONFIG'];
 module.factory(SearchFeasibilityAPIService.name, SearchFeasibilityAPIService);
-*/

@@ -1,6 +1,6 @@
 'use strict'
 
-var module = angular.module('TT-UI-CLM.SelectPlanOffering.Services', [])
+var module = angular.module('TT-UI-CLM.SelectPlanOffering.Services.SelectPlanOfferingService', [])
 function SelectPlanOfferingService($parse) {
     return {
         getOfferings: getOfferings
