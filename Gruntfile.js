@@ -139,11 +139,7 @@ module.exports = function(grunt) {
 							 'return angular;\n'+
 							 '})(window, window.angular);\n';
  
-<<<<<<< HEAD
-				   var cwd = grunt.template.process('app');
-=======
 				   var cwd = grunt.template.process('');
->>>>>>> master
 				   script = script.replace(new RegExp(cwd, 'g'), '');
 				   script = script.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
 				   return grunt.template.process(header) + script + footer;
