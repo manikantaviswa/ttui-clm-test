@@ -32,15 +32,7 @@ function SlotPickerCtrl($scope, $compile, uiCalendarConfig) {
 
     /* alert on eventClick */
     $scope.alertOnEventClick = function( date, jsEvent, view){
-        $scope.alertMessage = (date.title + ' was clicked ');
-    };
-    /* alert on Drop */
-     $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
-       $scope.alertMessage = ('Event Droped to make dayDelta ' + delta);
-    };
-    /* alert on Resize */
-    $scope.alertOnResize = function(event, delta, revertFunc, jsEvent, ui, view ){
-       $scope.alertMessage = ('Event Resized to make dayDelta ' + delta);
+        alert('hello', date, view);
     };
     /* add and removes an event source of choice */
     $scope.addRemoveEventSource = function(sources,source) {
@@ -78,26 +70,16 @@ function SlotPickerCtrl($scope, $compile, uiCalendarConfig) {
         uiCalendarConfig.calendars[calendar].fullCalendar('render');
       }
     };
-     /* Render Tooltip */
-    $scope.eventRender = function( event, element, view ) { 
-        element.attr({'tooltip': event.title,
-                     'tooltip-append-to-body': true});
-        $compile(element)($scope);
-    };
     /* config object */
     $scope.uiConfig = {
       calendar:{
-        height: 450,
-        editable: true,
+        editable: false,
         header:{
           left: 'title',
           center: '',
           right: 'today prev,next'
         },
-        eventClick: $scope.alertOnEventClick,
-        eventDrop: $scope.alertOnDrop,
-        eventResize: $scope.alertOnResize,
-        eventRender: $scope.eventRender
+        eventClick: $scope.alertOnEventClick
       }
     };
 
