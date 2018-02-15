@@ -10,7 +10,8 @@
     "angular-ui-select": "~0.19.8",
     "tecnotree-ui-library": "git@git.tecnotree.com:tec_common/ui-lib.git#0.6.24.19",
     "angular-ui-calendar": "^1.0.2",
-    "ttui-table": "http://git.tecnotree.com/tec_common/ttui-table.git#^0.1.1"
+    "ttui-table": "http://git.tecnotree.com/tec_common/ttui-table.git#^0.1.1",
+    "angular-bootstrap-calendar": "^1.0.0"
   },
   "resolutions": {
     "angular": "1.4.9"

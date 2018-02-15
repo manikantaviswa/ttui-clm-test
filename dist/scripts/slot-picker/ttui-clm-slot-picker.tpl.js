@@ -8,7 +8,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 
 angular.module('TT-UI-CLM.SlotPicker.Tpl',[]).run(['$templateCache', function($templateCache) {
 $templateCache.put('scripts/slot-picker/views/slot-picker.tpl.html',
-    "<div class=\"calendar-wrapper my-app-cal\"><div ui-calendar=\"uiConfig.calendar\" ng-model=\"eventSources\"></div><div class=\"colors row\"><div ng-repeat=\"color in colors\" class=\"color-swatch col-md-6\"><span ng-style=\"{'background-color': color}\">&emsp;</span> <span>{{colorMeaning[$index]}}</span></div></div><pre>{{selectedSlot[0].slots | json: 2}}</pre></div>"
+    "<div class=\"row\"><div class=\"col-md-6\"><div class=\"calendar-wrapper my-app-cal\"><div ui-calendar=\"uiConfig.calendar\" ng-model=\"eventSources\"></div><div class=\"colors row\"><div ng-repeat=\"color in colors\" class=\"color-swatch col-md-6\"><span ng-style=\"{'background-color': color}\">&emsp;</span> <span>{{colorMeaning[$index]}}</span></div></div></div></div><pre class=\"col-md-6\">{{selectedSlot | json: 2}}</pre></div>"
   );
 }]);
 return angular;
