@@ -1,0 +1,75 @@
+// Actual modal
+.modal-content {
+	border-radius: $modal-border-radius;
+	border: none;
+	overflow: hidden;
+}
+
+// Modal header
+// Top section of the modal w/ title and dismiss
+.modal-header {
+	background-color: $panel-default-heading-bg;
+	padding: 0 #{$panel-body-padding};
+	border: none;
+
+	> .modal-title {
+		margin: 0;
+		text-transform: uppercase;
+		color: $panel-default-text;
+		line-height: 1.5;
+		padding: 9px 0;
+	}
+
+	> .close {
+		margin-top: 5px;
+		font-size: 28px;
+		height: auto;
+		width: auto;
+		outline: none;
+
+		&:active, &:focus {
+			outline: none;
+			opacity: 0.8;
+		}
+
+		&:hover {
+			opacity: 0.8;
+		}
+	}
+}
+
+// Modal body
+// Where all modal content resides (sibling of .modal-header and .modal-footer)
+.modal-body {
+	padding: $panel-body-padding;
+	overflow-y: auto;
+	max-height: $modal-content-max-height;
+}
+
+// Footer (for actions)
+.modal-footer {
+	padding: 15px 15px; // $panel-body-padding=20px
+}
+
+// Modal panel-dialog (namespace)
+.modal-dialog.modal-panel-dialog {
+	.modal-header {
+		@extend .panel-heading;
+	}
+
+	.modal-body {
+		@extend .panel-body;
+		overflow-y: auto;
+		max-height: $modal-content-max-height;
+	}
+
+	.modal-content {
+		@extend .modal-content;
+		@extend .panel;
+		@extend .panel-primary;
+	}
+
+	.modal-footer {
+		@extend .panel-footer;
+	}
+}

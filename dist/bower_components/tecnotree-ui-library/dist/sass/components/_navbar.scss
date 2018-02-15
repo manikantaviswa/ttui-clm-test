@@ -1,0 +1,25 @@
+.navbar {
+	border: none;
+	font-size: $navbar-font-size;
+	margin: 0;
+}
+
+.navbar-static-top, .navbar-static-bottom {
+	margin-bottom: 0;
+}
+
+.navbar-static-top{
+	min-height: $navbar-static-top-height;
+}
+
+.navbar-static-bottom{
+	min-height: $navbar-static-bottom-height;
+	font-size: $navbar-static-bottom-size;
+}
+
+@media (min-width: $grid-float-breakpoint) {
+	footer .navbar-right {
+		margin-right: 0;
+	}
+}
+

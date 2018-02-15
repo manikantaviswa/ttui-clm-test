@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="TableDemo" ng-controller="demoCtrl">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title>Complex Table</title>
+
+	<link href="../../../../../../css/tecnotree-ui-library.css" rel="stylesheet">
+	<link href="../../../css/table.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Charges table -->
+<div class="col-md-12" style="padding: 0px;">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			Complex Table
+		</div>
+		<div class="panel-body table-no-padding">
+			<div class="panel-body">
+				Panel content
+			</div>
+			<table  tt-table
+					st-table="data"
+					class="table table-hover ttui-table">
+				<thead class="table-extra-header">
+					<tr>
+						<th colspan="{{tableCtrl.colspan}}">
+							<span class="table-extra-header-left"></span>
+							<!-- table actions -->
+							<span class="table-extra-header-right">
+								<a ng-show="tableCtrl.showActions()" class="btn btn-default" href>action 1</a>
+								<a ng-show="tableCtrl.showActions()" class="btn btn-default" href>action 2</a>
+								<a ng-show="tableCtrl.showActions()" class="btn btn-default" href>action 3</a>
+							</span>
+						</th>
+					</tr>
+				</thead>
+				<thead class="main-header">
+					<tr>
+						<th class="icons-checkbox th" ng-click="tableCtrl.toggleSelectAll()">
+							<tt-table-checkbox value="tableCtrl.selectAll"></tt-table-checkbox>
+						</th>
+						<th tt-table-tooltip>Code</th>
+						<th tt-table-tooltip>Name</th>
+						<th tt-table-tooltip>Description aaa bbb ccc ddd</th>
+						<th tt-table-tooltip class="date">Date</th>
+						<th class="currency" tt-table-tooltip>Charge in Invoice</th>
+						<th class="currency" tt-table-tooltip>Charge Upfront</th>
+						<th></th>
+					</tr>
+				</thead>
+				<!-- table main items -->
+				<tbody ng-repeat="item in data track by $index">
+					<tr ng-class="{'active':item._meta.selected}"
+						ng-click="item._meta.expanded=!item._meta.expanded;">
+						
+						<td class="icons-checkbox" ng-class="{'expanded':item._meta.expanded}">
+							<tt-table-checkbox value="item._meta.selected" data-selection-model="item" data-no-click></tt-table-checkbox>
+						</td>
+						<td ng-bind="item.code" data-mobile-label="Code"></td>
+						<td ng-bind="item.name" data-mobile-label="Name"></td>
+						<td tt-table-tooltip ng-bind="item.description" data-mobile-label="Description"></td>
+						<td class="date" ng-bind="item.date | date" data-mobile-label="Date"></td>
+						<td class="currency" ng-bind="item.invoice | currency" data-mobile-label="Charge In Invoice"></td>
+						<td class="currency" ng-bind="item.upfront | currency" data-mobile-label="Charge Upfront"></td>
+						<td class="icons">
+							<a class="glyphicon glyphicon-edit" ng-click="$event.stopPropagation();"></a>
+							<a class="divider" ng-if="item.items"></a>
+							<a class="glyphicon glyphicon-chevron-right" ng-class="{'rotate-right':item._meta.expanded}" ng-if="item.items"></a>
+						</td>
+					</tr>
+					<tr class="expanding-row" ng-if="item.items">
+						<td colspan="{{tableCtrl.colspan}}">
+							<div uib-collapse="!item._meta.expanded">
+								<table class="table">
+									<thead>
+										<tr>
+											<th class="icons-checkbox"></th>
+											<th tt-table-tooltip>Charge</th>
+											<th tt-table-tooltip>Item 1</th>
+											<th tt-table-tooltip>Item 2 aaa bbb ccc ddd</th>
+											<th tt-table-tooltip>Tax</th>
+											<th class="currency">Charge In Invoice</th>
+											<th class="currency">Charge Upfront</th>
+											<th class="icons"></th>
+										</tr>
+									</thead>
+									<!-- table sub items -->
+									<tbody>
+										<tr ng-repeat="items in item.items">
+											<td class="icons-checkbox empty"></td>
+											<td ng-bind="items.code" data-mobile-label="Code"></td>
+											<td ng-bind="items.item1" data-mobile-label="Item 1"></td>
+											<td tt-table-tooltip ng-bind="items.item2" data-mobile-label="Item 2"></td>
+											<td ng-bind="items.tax" data-mobile-label="Tax"></td>
+											<td class="currency" ng-bind="items.invoice | currency" data-mobile-label="Charge In Invoice"></td>
+											<td class="currency" ng-bind="items.upfront | currency" data-mobile-label="Charge Upfront"></td>
+											<td class="icons empty"></td>
+										</tr>
+										<tr>
+											<td colspan="{{tableCtrl.colspan}}">
+												<uib-tabset>
+													<uib-tab heading="Tab 1">
+														<div class="panel-body">
+															<span class="text-muted">Content 1</span>
+														</div>
+													</uib-tab>
+													<uib-tab heading="Tab 2">
+														<div class="panel-body">
+															<span class="text-muted">Some header:</span>
+															<ul>
+																<li>point 1</li>
+																<li>point 2</li>
+																<li>point 3</li>
+															</ul>
+														</div>
+													</uib-tab>
+												</uib-tabset>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</td>
+					</tr>
+					<tr class="totals-row" ng-if="$last">
+						<td class="empty"></td>
+						<td class="empty"></td>
+						<td class="empty"></td>
+						<td class="empty"></td>
+						<td class="date">Total Inc. Tax</td>
+						<td class="currency" ng-bind="tableCtrl.sum('invoice') | currency"></td>
+						<td class="currency" ng-bind="tableCtrl.sum('upfront') | currency"></td>
+						<td class="empty"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="panel-body">
+			More panel content
+		</div>
+		<div class="panel-footer">
+			Panel footer
+		</div>
+	</div>
+</div>
+
+<script src="../../../../../jquery/jquery.js"></script>
+<script src="../../../../../angular/angular.js"></script>
+<script src="../../../../../angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="../../../../../angular-animate/angular-animate.js"></script>
+<script src="../../../../../angular-strap/dist/angular-strap.js"></script>
+<script src="../../../../../angular-strap/dist/angular-strap.tpl.js"></script>
+<script src="../../../../../angular-smart-table/dist/smart-table.js"></script>
+<script src="../../../../../angular-translate/angular-translate.js"></script>
+
+<script type="text/javascript" src="../../ttui-table.js"></script>
+<script type="text/javascript" src="../../ttui-table.tpl.js"></script>
+<script type="text/javascript" src="./table-example-controller.js"></script>
+<script type="text/javascript" src="./table-example-resource.js"></script>
+<script type="text/javascript" src="./table-example-config.js"></script>
+<script type="text/javascript" src="app.js"></script>
+
+</body>
+</html>

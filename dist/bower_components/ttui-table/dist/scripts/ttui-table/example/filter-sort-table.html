@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="TableDemo" ng-controller="demoCtrl">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title>Filter, Sort Table</title>
+
+	<link href="../../../../../../css/tecnotree-ui-library.css" rel="stylesheet">
+	<link href="../../../css/table.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Data table -->
+<div class="col-md-12" ng-controller="exampleCtrl as example" style="padding: 0px;">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			Filter, Sort Table
+		</div>
+		<div class="panel-body table-no-padding">
+			<div class="panel-body">
+				panel content
+			</div>
+			<!-- table -->
+			<table 	tt-table
+					st-table="example.examplePipeData"
+					st-pipe="example.examplePipe"
+					st-items-by-page="10"
+					class="table table-hover ttui-table">
+				<!-- extra header -->
+				<thead class="table-extra-header">
+					<tr>
+						<th colspan="{{tableCtrl.colspan}}">
+							<!-- table filter tags -->
+							<span class="table-extra-header-left">
+								<tt-table-filter-tags tags="tableCtrl.tableState.search.predicateObject" tag-delimiter="|"></tt-table-filter-tags>
+							</span>
+							<!-- table actions -->
+							<span class="table-extra-header-right">
+								<a ng-show="tableCtrl.showActions()" class="btn btn-default" ng-click="example.executeAction(tableCtrl.getSelectionModel())" href>action 1</a>
+								<a ng-show="tableCtrl.showActions()" class="btn btn-default" href>action 2</a>
+								<a ng-show="tableCtrl.showActions()" class="btn btn-default" href>action 3</a>
+							</span>
+						</th>
+					</tr>
+				</thead>
+				<!-- - -->
+				<thead class="main-header">
+					<tr>
+						<th class="icons-checkbox th" ng-click="tableCtrl.toggleSelectAll()">
+							<tt-table-checkbox value="tableCtrl.selectAll"></tt-table-checkbox>
+						</th>
+						<!-- to disable auto filters add disable-auto-filters="true" -->
+						<th ng-repeat="column in example.columns track by $index"
+							ng-class="{'date':column.type==='date', 'currency':column.type==='currency'}"
+							uib-dropdown
+							is-open="dropdownCtrl.isOpen"
+							auto-close="disabled"
+							tt-table-dropdown
+							build-filter-string-fn="example.buildString"
+							path="column.path"
+							ng-click="">
+								<tt-table-text-tooltip text="column.title" uib-dropdown-toggle></tt-table-text-tooltip>
+								<!--<tt-table-filter-popup path="column.path"></tt-table-filter-popup>-->
+						</th>
+						<th></th>
+					</tr>
+				</thead>
+				<!-- table main items -->
+				<tbody ng-repeat="item in example.examplePipeData track by $index" ng-class="{'loading':example.isLoading}">
+					<tr ng-class="{'active':item._meta.selected}" ng-click="tableCtrl.toggleExpanded(item)">
+						<td class="icons-checkbox" ng-class="{'expanded':item._meta.expanded}">
+							<tt-table-checkbox
+								data-no-click
+								data-selection-model="item"
+								value="item._meta.selected"></tt-table-checkbox>
+						</td>
+						<td ng-bind="item.code" data-mobile-label="Code"></td>
+						<td ng-bind="item.name" data-mobile-label="Name"></td>
+						<td tt-table-tooltip ng-bind="item.description" data-mobile-label="Description"></td>
+						<td class="date" ng-bind="item.dateFrom | date" data-mobile-label="Available From"></td>
+						<td class="date" ng-bind="item.dateTo | date" data-mobile-label="Available To"></td>
+						<td class="icons">
+							<a class="glyphicon glyphicon-edit" ng-click="example.confirm(); $event.stopPropagation();" ng-if="item.items"></a>
+							<a class="divider" ng-if="item.items"></a>
+							<a class="glyphicon glyphicon-trash" ng-click="example.confirm(); $event.stopPropagation();" ng-if="item.items"></a>
+							<a class="divider" ng-if="item.items"></a>
+							<a class="glyphicon glyphicon-chevron-right" ng-class="{'rotate-right':item._meta.expanded}" ng-if="item.items"></a>
+						</td>
+					</tr>
+					<tr class="expanding-row" ng-if="item.items">
+						<td colspan="{{tableCtrl.colspan}}">
+							<div uib-collapse="!item._meta.expanded">
+								<table class="table">
+									<thead></thead>
+									<!-- table sub items -->
+									<tbody>
+										<tr>
+											<td colspan="{{tableCtrl.colspan}}">
+												<uib-tabset>
+													<uib-tab heading="Summary" ng-if="item.items.summary">
+														<div class="panel-body">
+															<span class="text-muted">{{item.items.summary}}</span>
+														</div>
+													</uib-tab>
+													<uib-tab heading="Products" ng-if="item.items.products">
+														<table class="table">
+															<thead>
+																<tr>
+																	<th class="icons-checkbox"></th>
+																	<th tt-table-tooltip>Code</th>
+																	<th tt-table-tooltip>Item 1</th>
+																	<th tt-table-tooltip>Item 2</th>
+																	<th></th>
+																	<th></th>
+																	<th></th>
+																	<th class="icons"></th>
+																</tr>
+															</thead>
+															<!-- table sub items -->
+															<tbody ng-repeat="product in item.items.products">
+																<tr>
+																	<td class="icons-checkbox empty"></td>
+																	<td ng-bind="product.code" data-mobile-label="Code"></td>
+																	<td ng-bind="product.item1" data-mobile-label="Item 1"></td>
+																	<td tt-table-tooltip ng-bind="product.item2" data-mobile-label="Item 2"></td>
+																	<td class="empty"></td>
+																	<td class="empty"></td>
+																	<td class="empty"></td>
+																	<td class="icons empty"></td>
+																</tr>
+															</tbody>
+														</table>
+													</uib-tab>
+													<uib-tab heading="Servivces" ng-if="item.items.services">
+														<table class="table">
+															<thead>
+																<tr>
+																	<th class="icons-checkbox"></th>
+																	<th tt-table-tooltip>Code</th>
+																	<th tt-table-tooltip>Item 1</th>
+																	<th tt-table-tooltip>Item 2</th>
+																	<th></th>
+																	<th></th>
+																	<th></th>
+																	<th class="icons"></th>
+																</tr>
+															</thead>
+															<!-- table sub items -->
+															<tbody ng-repeat="service in item.items.services">
+																<tr>
+																	<td class="icons-checkbox empty"></td>
+																	<td ng-bind="service.code" data-mobile-label="Code"></td>
+																	<td ng-bind="service.item1" data-mobile-label="Item 1"></td>
+																	<td tt-table-tooltip ng-bind="service.item2" data-mobile-label="Item 2"></td>
+																	<td class="empty"></td>
+																	<td class="empty"></td>
+																	<td class="empty"></td>
+																	<td class="icons empty"></td>
+																</tr>
+															</tbody>
+														</table>
+													</uib-tab>
+												</uib-tabset>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+				<tbody ng-if="tableCtrl.tableModel.length === 0 && !example.isLoading">
+					<tr>
+						<td colspan="{{tableCtrl.colspan}}">
+							<div class="panel-body">
+								No items
+							</div>
+						</td>
+					</tr>
+				</tbody>
+				<tfoot ng-if="tableCtrl.enablePagination">
+					<tr>
+						<td colspan="{{tableCtrl.colspan}}">
+							<tt-table-pagination />
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+		<div class="panel-body">
+			More panel content
+		</div>
+		<div class="panel-footer">
+			Panel footer
+		</div>
+	</div>
+</div>
+
+<script src="../../../../../jquery/jquery.js"></script>
+<script src="../../../../../angular/angular.js"></script>
+<script src="../../../../../angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="../../../../../angular-animate/angular-animate.js"></script>
+<script src="../../../../../angular-strap/dist/angular-strap.js"></script>
+<script src="../../../../../angular-strap/dist/angular-strap.tpl.js"></script>
+<script src="../../../../../angular-smart-table/dist/smart-table.js"></script>
+<script src="../../../../../angular-translate/angular-translate.js"></script>
+
+<script type="text/javascript" src="../../ttui-table.js"></script>
+<script type="text/javascript" src="../../ttui-table.tpl.js"></script>
+<script type="text/javascript" src="./table-example-controller.js"></script>
+<script type="text/javascript" src="./table-example-resource.js"></script>
+<script type="text/javascript" src="./table-example-config.js"></script>
+<script type="text/javascript" src="app.js"></script>
+
+</body>
+</html>

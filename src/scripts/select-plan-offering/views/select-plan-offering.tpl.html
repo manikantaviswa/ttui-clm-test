@@ -55,7 +55,8 @@
 					</tr>
 				</thead>
 				<tbody ng-repeat="items in offeringData track by $index">
-					<tr ng-class="{'active':items.selected}" ng-click="items.expanded=!offering.expanded;">
+					{{items._meta.selected}}
+					<tr ng-class="{'active':items._meta.selected}" ng-click="tableCtrl.toggleExpanded(items)">
 						<td ng-bind="::items.name" data-mobile-label="Offering"></td>
 						<td ng-bind="::items.charges.sumOfOTC | currency : items.currency.code "></td>
 						<td ng-bind="::items.charges.sumOfRC | currency  : items.currency.code"></td>
@@ -64,8 +65,16 @@
 							 translate="Select">Select</a>
 							<a class="list-group-item-link" href ng-if="items.selected" ng-click="unselectOffering(items); $event.stopPropagation();"
 							 translate="Unselect">Unselect</a>
+							 <a class="glyphicon glyphicon-chevron-right" href ng-if="!items.selected" ng-class="{'rotate-right':items._meta.expanded}"></a>
 						</td>
 					</tr>
+					<tr class="expanding-row" ng-if="item.items">
+							<td colspan="{{tableCtrl.colspan}}">
+								<div uib-collapse="!item._meta.expanded">
+									</div>
+									</td>
+					</tr>
+	
 				</tbody>
 				<!-- <tfoot>
 					<tr>

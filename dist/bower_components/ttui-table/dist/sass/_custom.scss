@@ -1,0 +1,729 @@
+/*
+	* Replace svg style attributes and encode to base64 data url
+	* @src: svg file
+	* @keyValues: key-values to replace as map
+	*
+	* Usage:
+	* background: svg-to-base64-data-url-with-replace('node.svg', (stroke:$hierarchy-tree-node-stroke)) .5em 0em no-repeat;
+	*
+	* base64EncodeReplace impl. in Gruntfile.js
+*/
+
+@function svg-to-base64-data-url-with-replace($src, $keyValues...) {
+	/* stringify keyValues and handle in js (for now...) */
+	$output: unquote('url(data:image/svg+xml;base64,' + base64EncodeReplace($src, inspect($keyValues)) + ')');
+	@return $output;
+}
+
+.ttui-table {
+
+	.currency {
+		text-align: right;
+	}
+
+	.date {
+		text-align: center;
+	}
+
+	.icons {
+		min-width: 8%;
+		text-align: center;
+		white-space: nowrap;
+
+		.glyphicon {
+			color: $tt-table-icon;
+			transition: color .3s, transform .5s;
+
+			&.active {
+				color: $tt-table-icon-active;
+			}
+		}
+		.glyphicon.glyphicon-remove {
+			top: 2px;
+		}
+
+		.glyphicon.glyphicon-chevron-right.rotate-right {
+			transform: rotate(90deg);
+		}
+	}
+
+	.icons-checkbox {
+		text-align: center;
+		min-width: 5%;
+
+		.glyphicon {
+			color: $tt-table-icon;
+			transition: color .3s, transform .5s;
+			vertical-align: middle;
+			display: inline;
+
+			&.active {
+				color: $tt-table-icon-active;
+			}
+
+			/* increase 'hit area' */
+			padding: 10px;
+			margin: -10px;
+		}
+
+		&.th {
+			.glyphicon {
+				color: black;
+			}
+		}
+	}
+
+	.table-checkbox {
+		cursor: pointer;
+		text-decoration: none;
+	}
+
+	.ellipsis {
+		text-overflow: ellipsis;
+
+		/* Required for text-overflow to do anything */
+		white-space: pre;
+		overflow: hidden;
+		max-width: 100px;
+	}
+
+	.has-selected {
+		color: $tt-table-icon-active;
+	}
+
+	.filter-indicator {
+		font-size: 10px;
+		float: right;
+		position: relative;
+		top: 7px;
+
+		&.active {
+			color: $tt-table-icon-active;
+		}
+	}
+
+	.loading,
+	.loading-remove-active {
+		transition: opacity 0.35s ease 0s;
+		opacity: .2;
+		pointer-events: none;
+	}
+
+	.loading-remove-active {
+		opacity: 1;
+	}
+
+	.st-sort-ascent:before {
+		content: '\25B2';
+		color: $tt-table-icon-active;
+	}
+
+	.st-sort-descent:before {
+		content: '\25BC';
+		color: $tt-table-icon-active;
+	}
+
+	.table {
+		border-collapse: separate;
+		margin-bottom: 0;
+
+		thead > tr > th {
+			vertical-align: middle;
+			border-bottom: 0;
+		}
+
+		thead:first-child > tr:first-child > th {
+			border-top: 1px solid #ddd;
+		}
+	}
+
+	/* override collapse default animation */
+	.collapsing {
+		-webkit-transition: all 0.35s ease 0s;
+		-o-transition: all 0.35s ease 0s;
+		transition: all 0.35s ease 0s;
+	}
+	/* --- */
+
+	&.ttui-table {
+		margin-top: 0;
+		margin-bottom: 0;
+		border-collapse: separate;
+		
+		transition: opacity 0.35s ease 0s;
+		opacity: 0;
+		/*left: 100%; slide in
+		position: relative;*/
+	}
+
+	&.ttui-table.show {
+		display: table !important;
+		opacity: 1;
+		/*left: 0;*/
+	}
+
+	&.ttui-table > thead {
+		background: $tt-table-head-bg;
+
+		tr > th {
+			border-bottom: 0;
+			outline: none;
+		}
+	}
+
+	&.ttui-table > thead.table-extra-header {
+		
+		background: transparent;
+		
+		tr th {
+			vertical-align: bottom;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+
+		.table-extra-header-left {
+
+			width: 50%;
+			display: inline-block;
+
+			a {
+				margin-right: 5px;
+				outline: none;
+				color: black;
+			}
+
+			.label {
+				display: inline-block;
+				line-height: 1.66;
+				background: #ddd;
+				margin-bottom: 5px;
+			}
+		}
+
+		.table-extra-header-right {
+			width: 50%;
+			display: inline-block;
+			margin-right: -100%;
+			text-align: right;
+		}
+	}
+
+	&.ttui-table > tfoot > tr > td {
+		background: $tt-table-head-bg;
+		vertical-align: middle;
+	}
+
+	&.ttui-table > tbody > tr > td,
+	&.ttui-table > thead > tr > th {
+		vertical-align: middle;
+
+		&:first-child {
+		/* prevent jumping when adding expanded */
+			border-left: 2px solid transparent;
+		}
+
+		&.expanded {
+			border-left: 2px solid $tt-table-row-active;
+		}
+
+		&.add-pointer {
+			cursor: pointer;
+		}
+	}
+
+	&.ttui-table > tbody > tr > td > a {
+		outline: none;
+		text-decoration: none;
+	}
+
+	&.ttui-table > tbody > tr .icons {
+
+		& > a.divider {
+			padding-right: 5px;
+		}
+	}
+
+	&.ttui-table > tbody > tr:not(.expanding-row):hover .icons,
+	&.ttui-table > tbody > tr:not(.expanding-row).active .icons,
+	&.ttui-table > tbody > tr:not(.expanding-row):hover .icons-checkbox,
+	&.ttui-table > tbody > tr:not(.expanding-row).active .icons-checkbox {
+		
+		& > a {
+			background-color: transparent;
+			color: $tt-table-icon-active;
+		}
+
+		& tt-table-checkbox > a {
+			color: $tt-table-icon-active;
+		}
+	}
+
+	&.ttui-table > tbody > tr.totals-row {
+
+		background: transparent;
+
+		&:hover {
+			background: transparent;
+		}
+
+		& td {
+			border-top: 2px solid $tt-table-icon-active;
+		}
+	}
+
+	&.ttui-table > tbody > tr.expanding-row > td {
+
+		td:first-child {
+			padding: 0;
+		}
+
+		padding: 0;
+		border-top: 0;
+		border-left: 2px solid mix($tt-table-row-active, #fff, 50%);
+
+		.table {
+			border-top: 1px solid #c8c8c8;
+			border-bottom: 1px solid #c8c8c8;
+		}
+
+		.table > thead {
+			background: $tt-table-expanding-head-bg;
+			border-top: 0;
+			vertical-align: middle;
+		}
+
+		.table > thead > tr > th {
+			font-size: 12px;
+			font-weight: 600;
+		}
+
+		.table > tbody > tr > td {
+			font-size: 12px;
+			border-top: 0;
+		}
+
+		.table > tbody {
+			background: $tt-table-expanding-bg;
+		}
+
+		.table > tbody > tr > td .nav {
+			padding-top: 20px;
+		}
+
+		.nav-tabs {
+
+			border-bottom: 1px solid #c8c8c8;
+			margin: 0;
+
+			// angular-bootstrap 1.x
+			li.uib-tab {
+
+				div {
+					background-color: $tt-table-nav-tabs-bg;
+					color: $tt-table-nav-tabs-link-color;
+					border: none;
+					font-weight: 700;
+					border-radius: 2px 2px 0px 0px;
+					line-height: 1;
+
+					&:hover {
+						border: none;
+						background-color: $tt-table-nav-tabs-active-link-hover-bg;
+					}
+				}
+
+				&.active > div {
+					&,
+					&:hover,
+					&:focus {
+						background-color: $tt-table-nav-tabs-active-link-hover-bg;
+						bottom: 4px;
+						border-top: 4px solid $tt-table-nav-tabs-active-link-hover-bg;
+						margin-bottom: -4px;
+					}
+				}
+			}
+		}
+
+		.tab-content {
+
+			.tab-pane {
+				
+				text-align: left;
+				min-height: 100px;
+
+				ul {
+					margin-bottom: 0;
+
+					li {
+						margin-left: -10px;
+					}
+				}
+
+				.table {
+					
+					border-top: 0;
+					border-bottom: 0;
+
+					thead:first-child > tr:first-child > th {
+						border-top: 0;
+					}
+
+
+				}
+
+			}
+		}
+	}
+
+	&.ttui-table > tbody > tr.active > td {
+		
+		transition: background 0.35s ease 0s;
+		background: mix($tt-table-row-active, #fff, 20%);
+
+		&:first-child {
+			border-left: 2px solid $tt-table-row-active;
+		}
+	}
+
+	/* custom table header dropdown */
+	.dropdown {
+
+		input {
+			border-color: #ccc;
+			border: 1px solid #d9d9d9;
+			border-radius: 3px;
+			color: #111;
+			outline: none;
+			font-weight: normal;
+			width: auto;
+		}
+
+		&.is-open {
+			background: #fff;
+			border-left: 1px solid #ccc;
+			border-right: 1px solid #ccc;
+			border-bottom: 0 !important;
+		}
+
+		&:hover:not(.is-open) {
+			background: lighten($tt-table-head-bg, 2%);
+		}
+
+		.dropdown-menu {
+			margin: 0;
+			border-top: 0;
+			border-radius: 0;
+			padding: 15px 15px 10px 15px;
+			left: -1px;
+			box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+
+			li > a {
+				&:hover {
+					background: transparent;
+				}
+			}
+
+			.form-control {
+				display: inline;
+			}
+		}
+	}
+
+	/* responsive table */
+	@media screen and (max-width: 767px) {
+
+		.ellipsis {
+			text-overflow: ellipsis;
+
+			/* Required for text-overflow to do anything */
+			white-space: pre;
+			overflow: hidden;
+			max-width: 100%;
+		}
+
+		&.ttui-table {
+			border: 0;
+			
+		}
+
+		&.ttui-table thead {
+			display: none;
+		}
+
+		&.ttui-table tfoot tr {
+			td:first-child {
+				display: inline-block;
+				width: 100%;
+			}
+		}
+
+		&.ttui-table tr {
+			margin-bottom: 0;
+			display: block;
+		}
+
+		&.ttui-table td {
+			display: block;
+			text-align: right;
+		}
+
+		&.ttui-table td:last-child {
+			border-bottom: 0;
+		}
+
+		&.ttui-table td:before {
+			content: attr(data-mobile-label);
+			float: left;
+			text-transform: uppercase;
+			font-weight: 700;
+		}
+
+		&.ttui-table tbody tr td {
+			&.expanded {
+				border-left: 2px solid transparent;
+			}
+		}
+
+		&.ttui-table .icons,
+		&.ttui-table .icons-checkbox {
+			width: 100%;
+			white-space: nowrap;
+		}
+
+		&.ttui-table > tbody > tr.expanding-row > td {
+			padding: 0;
+		}
+
+		&.ttui-table > tbody > tr.expanding-row > td tbody tr td {
+			border-bottom: 1px solid #eee;
+		}
+
+		&.ttui-table > tbody > tr.active > td {
+			&:first-child {
+				border-left: 0;
+			}
+		}
+
+		&.ttui-table > tbody > tr.totals-row {
+			border-top: 2px solid $tt-table-icon-active;
+
+			& td {
+				border-top: none;
+			}
+		}
+
+		.empty {
+			display: none !important;
+		}
+	}
+}
+
+// can be removed later
+.table.table-borderless td,
+.table.table-borderless th {
+	border-top: 0;
+}
+
+.ttui-table-pagination {
+
+	margin: 0;
+	display: block;
+
+	> li {
+		> a,
+		> span {
+			border: none;
+			font-weight: 700;
+			text-transform: uppercase;
+			font-size: 11px;
+			padding: 0px 5px;
+
+			&.clear-hover {
+				&:hover {
+					background: transparent;
+					color: $tt-table-icon-active;
+				}
+			}
+		}
+	}
+}
+
+.table-filter-content {
+	
+	white-space: nowrap;
+	color: #000;
+	font-weight: normal;
+
+	.icon-group {
+		border: 1px solid #D9D9D9;
+		padding: 5px;
+		position: relative;
+		top: 1px;
+		border-radius: 3px;
+		color: #aaa;
+		padding-right: 7px;
+
+		.glyphicon {
+			margin-right: -3px;
+			margin-left: -3px;
+			font-size: 11px;
+		}
+	}
+
+	.glyphicon.glyphicon-search {
+		color: #ccc;
+		left: -25px;
+	}
+
+	.table-checkbox {
+		text-decoration: none;
+		top: 3px;
+	}
+
+	a {
+		text-decoration: none;
+		outline: none;
+	}
+
+	hr {
+		margin-bottom: 5px;
+		margin-left: -8px;
+		margin-right: -8px;
+	}
+
+	.active-filter-reverse {
+		color: $tt-table-icon-active;
+	}
+
+	.table-filter-items {
+		height: auto;
+		max-height: 143px;
+		overflow-y: auto;
+		overflow-x: hidden;
+
+		.filter-item {
+
+			padding: 3px 5px;
+
+			&:nth-child(2n) {
+				background: #f8f8f8;
+			}
+
+			& span {
+				position: relative;
+				top: -2px;
+				left: 5px;
+				display: inline-block;
+				width: 86%;
+			}
+		}
+	}
+
+	input::-ms-clear {
+		display: none;
+	}
+
+	li {
+		padding-bottom: 8px;
+	}
+
+	li:last-child {
+		padding-top: 10px;
+		font-weight: normal;
+		padding-bottom: 0;
+	}
+
+	.divider {
+		padding: 0;
+		margin: 0;
+		margin-left: -15px;
+		margin-right: -15px;
+	}
+
+	.ok-button {
+		position: absolute;
+		right: 15px;
+	}
+}
+
+.table-tooltip {
+
+	.tooltip-inner {
+		background: $tt-table-tooltip-bg !important;
+		border-radius: 3px;
+		font-size: 13px;
+		text-align: left;
+		padding: 5px 10px;
+		box-shadow: 5px 5px 10px #ccc;
+	}
+
+	.tooltip-arrow {
+		border-top-color: $tt-table-tooltip-bg !important;
+	}
+
+	/* hide tooltip in mobile */
+	@media screen and (max-width: 650px) {
+
+		.tooltip-inner {
+			display: none;
+		}
+
+		.tooltip-arrow {
+			display: none;
+		}
+	}
+}
+
+/* to panels */
+.table-no-padding {
+	padding: 0 !important;
+}
+
+.ttui-table-checkbox-checked:before {
+	height: 17px;
+	width: 17px;
+	top: 0;
+	left: 0;
+	display: inline-block;
+	white-space: nowrap;
+	overflow: hidden;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	content: "\00a0";
+	// background: svg-to-base64-data-url-with-replace('checkbox-checked.svg', (stroke:$tt-table-check-color)) 0 0 no-repeat;
+	background: url('#{$ttui-table-img-path}checkbox-checked.svg') 0 0 no-repeat;
+}
+
+.ttui-table-checkbox-unchecked:before {
+	height: 17px;
+	width: 17px;
+	top: 0;
+	left: 0;
+	display: inline-block;
+	white-space: nowrap;
+	overflow: hidden;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	content: "\00a0";
+	// background: svg-to-base64-data-url-with-replace('checkbox-unchecked.svg', (stroke:#ccc)) 0 0 no-repeat;
+	background: url('#{$ttui-table-img-path}checkbox-unchecked.svg') 0 0 no-repeat;
+}
+
+.ttui-table-checkbox-unchecked-active:before {
+	height: 17px;
+	width: 17px;
+	top: 0;
+	left: 0;
+	display: inline-block;
+	white-space: nowrap;
+	overflow: hidden;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	content: "\00a0";
+	// background: svg-to-base64-data-url-with-replace('checkbox-unchecked.svg', (stroke:$tt-table-check-color)) 0 0 no-repeat;
+	background: url('#{$ttui-table-img-path}checkbox-unchecked-active.svg') 0 0 no-repeat;
+}

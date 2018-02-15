@@ -25,5 +25,6 @@ SelectPlanOfferingCtrl.$inject = [
     '$scope',
     '$parse',
     'SelectPlanOfferingService'
+  
 ]
 module.controller(SelectPlanOfferingCtrl.name, SelectPlanOfferingCtrl)
