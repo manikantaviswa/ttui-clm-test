@@ -6,7 +6,8 @@ function FeasibilitySearchService($parse) {
     return {
         getLocalities: getLocalities,
         getSubLocalities: getSubLocalities,
-        getStreets: getStreets
+        getStreets: getStreets,
+        getValidators: getValidators
     };
 
     function getLocalities(masterData) {
@@ -68,6 +69,26 @@ function FeasibilitySearchService($parse) {
         });
         return streets;
     }
+
+    function getValidators(config) {
+        return {
+            locality: {
+                required: false
+            },
+            subLocality: {
+                required: false
+            },
+            street: {
+                required: false
+            },
+            serviceNumber: {
+                required: true,
+                minLength: 10,
+                maxLength: 15
+            }
+        }
+    }
+
 }
 FeasibilitySearchService.$inject = ['$parse']
 module.service(FeasibilitySearchService.name, FeasibilitySearchService);

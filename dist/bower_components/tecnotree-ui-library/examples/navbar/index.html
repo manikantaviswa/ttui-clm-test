@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Navbar Template</title>
+
+    <link href="../../dist/css/tecnotree-ui-library.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class=" navbar-brand header-logo" href="#" tabindex="-1"><img src="../../dist/images/TC-logo-header.png" width="92" height="10" alt="logo"/></a>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a class="navbar-brand" href="" tabindex="-1">CLM</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="top-navbar">
+                <ul class="nav navbar-nav ">
+                    <li class="active"><a href="" tabindex="-1" translate="Customers">Customers</a></li>
+                    <li><a href="" tabindex="-1" translate="Product Catalogue" class="no-cursor">Product Catalogue</a>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right ">
+                    <li><a href="" tabindex="-1" translate="Search">Search</a></li>
+
+                    <li class="dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" tabindex="-1" bs-dropdown="dropdown">
+                            <span>John Smith</span>
+                            <span class="caret"></span>
+                        </a>
+
+                        <setup-panel ng-class="{show: showDropdown}"></setup-panel>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <nav class="navbar navbar-default statusbar" role="navigation" bs-affix>
+        <div class="container-fluid">
+            <h1 class="page-header show">Customers</h1>
+        </div>
+    </nav>
+
+    <!-- /page wrapper -->
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="../../dist/js/bootstrap.min.js"></script>
+</body>
+</html>

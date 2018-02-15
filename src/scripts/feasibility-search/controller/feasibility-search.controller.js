@@ -12,6 +12,7 @@ function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService
     $scope.streets = [];
 
     setInitialData();
+    $scope.validators = feasibilitySearchService.getValidators($scope.config);
 
     $scope.searchAddressFeasibility = function(isNumberSearch) {
         $scope.searchResult = null;
@@ -81,12 +82,14 @@ function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService
     }
 
     function setLocality() {
-        var locality = getItemByCode($scope.localities, $scope.model.locality.subLocality.locality.code);
+        var localityCode = $parse('model.locality.subLocality.locality.code')($scope);
+        var locality = getItemByCode($scope.localities, localityCode);
         $parse('model.locality.locality').assign($scope, locality);
     }
 
     function setSubLocality() {
-        var subLocality = getItemByCode($scope.subLocalities, $scope.model.locality.street.subLocality.code);
+        var subLocalityCode = $parse('model.locality.street.subLocality.code')($scope);
+        var subLocality = getItemByCode($scope.subLocalities, subLocalityCode);
         $parse('model.locality.subLocality').assign($scope, subLocality);
         setLocality();
     }

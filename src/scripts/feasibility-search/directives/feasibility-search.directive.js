@@ -13,7 +13,7 @@ module.directive('feasibilitySearch', function() {
         restrict: 'EA',
         scope: {
             model: '=',
-            // config: '=',
+            config: '=',
             masterData: '=',
             onSearch: '&'
         },
