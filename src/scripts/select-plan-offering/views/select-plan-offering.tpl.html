@@ -34,7 +34,7 @@
 							<!-- table actions -->
 							<span class="table-extra-header-right">
 								<a ng-show="tableCtrl.showActions()" class="btn btn-default" ng-click="example.executeAction(tableCtrl.getSelectionModel())"
-								 href>action 1</a>
+								    href>action 1</a>
 								<a ng-show="tableCtrl.showActions()" class="btn btn-default" href>action 2</a>
 								<a ng-show="tableCtrl.showActions()" class="btn btn-default" href>action 3</a>
 							</span>
@@ -75,12 +75,11 @@
 						<td translate="EMI">EMI</td>
 						<td>
 							<a class="list-group-item-link" href ng-if="items.selected" ng-click="items.selected = !items.selected; $event.stopPropagation();"
-							 translate="Select">Selected</a>
+							    translate="Select">Selected</a>
 							<a class="list-group-item-link" href ng-if="!items.selected" ng-click="items.selected = !items.selected; $event.stopPropagation();"
-							 translate="Select">Select</a>
+							    translate="Select">Select</a>
 						</td>
 						<td>
-							<!-- <a class="list-group-item-link" translate="Details" ng-click="items._meta.expanded=!items._meta.expanded;">Details</a> -->
 							<a class="list-group-item-link" translate="Details" ng-click="items._meta.expanded=!items._meta.expanded; getOfferingDetailsView()">Details</a>
 						</td>
 					</tr>
@@ -89,53 +88,32 @@
 
 						<td colspan="8">
 							<div uib-collapse="items._meta.expanded">
-								    <div class="col-sm-3">
-											<ul class="nav nav-list nav-stacked">
-													<li role="presentation" class="active" ng-repeat="tab in tabs">
-														<a href="#home" data-toggle="tab" translate="{{tab.title}}" >Home</a>
-													</li>
-													
-													<li role="presentation">
-														<a href="#profile" data-toggle="tab">Profile</a>
-													</li>
-													<li role="presentation">
-														<a href="#messages" data-toggle="tab">Messages</a>
-													</li>
-											</ul>
-									</div>
-									
 
-									<!-- Tab panes -->
-									<div class="col-sm-9">
-											<div class="tab-content">
-													<div class="tab-pane active" id="home">
-															<table class="table">
-																	<thead>
-																		<tr>																				
-																			<th translate={{items.details.summary}}>{{items.details.summary}}</th>
-																			<th translate="Variant">Variant</th>
-																			<th translate="Allowance">Allowance</th>
-																			<th st-sort="charges.sumOfRC" translate="Charges">Charges</th>
-																		</tr>
-																	</thead>
-																	<!-- table sub items -->
-																	<tbody>
-																		<tr ng-repeat="detail in items.details.products">
-																			<td ng-bind="detail.code" data-mobile-label="Code"></td>
-																			<td ng-bind="detail.item1" data-mobile-label="Item 1"></td>
-																			<td tt-table-tooltip ng-bind="detail.item2" data-mobile-label="Item 2"></td>
-																		</tr>
-																	</tbody>
-																</table>
-													</div>
-													<div class="tab-pane" id="profile">Profile Tab.</div>
-													<div class="tab-pane" id="messages">Messages Tab.</div>
-													<div class="tab-pane" id="settings">Settings Tab.</div>
-												</div>
-									</div>
-									
+								<div class="col-sm-3">
+									<ul class="nav nav-list nav-stacked">
+										<li role="presentation" ng-repeat="tab in tabs">
+											<a href="" ng-click="$parent.selected = (tab.title + $parent.$index);reach(111);" translate="{{tab.title}}">{{tab.title}}</a>
+										</li>
 
-							
+									</ul>
+								</div>
+
+
+								<!-- Tab panes -->
+								<div class="col-sm-9">
+									<div class="tab-content">
+										<div class="tab-pane" ng-repeat="tab in tabs " ng-class="{'show':$parent.selected == (tab.title + $parent.$index)}">
+											<div class="col-sm-9 col-offset-8">
+
+												<p>{{(tab.title + $parent.$index ) === 'tabNumber'}} {{tab.summary}} {{tab.title + $parent.$index}} </p>
+											</div>
+										</div>
+
+									</div>
+								</div>
+
+
+
 							</div>
 						</td>
 					</tr>
@@ -145,7 +123,7 @@
 					<tr>
 						<td colspan="8">
 							<div st-pagination="" st-items-by-page=10 st-displayed-pages=20 st-template="scripts/ttui-table/table-pagination.tpl.html"
-							 class="pull-right"></div>
+							    class="pull-right"></div>
 						</td>
 					</tr>
 				</tfoot>
