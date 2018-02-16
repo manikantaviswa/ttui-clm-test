@@ -1,12 +1,15 @@
 # Steps to follow
 
 Install node dependencies
-    npm install
+
+    npm i
     
 Install bower dependencies
+
     bower install
 
 Take grunt build
+
     grunt build
 
 
