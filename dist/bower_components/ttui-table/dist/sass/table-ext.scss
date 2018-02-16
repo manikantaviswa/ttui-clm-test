@@ -1,0 +1,18 @@
+//== Table
+//
+$tt-table-icon-active:			$brand-primary-red;
+$tt-table-head-bg:				#e4e4e4;
+$tt-table-expanding-head-bg:	#f1f1f1;
+$tt-table-expanding-bg:			#f8f8f8;
+$tt-table-icon:					#d9d9d9;
+$tt-table-row-active:			$brand-primary-red;
+$tt-table-tooltip-bg:			$brand-primary-blue;
+$tt-table-check-color:			$brand-primary-red;
+
+$tt-table-nav-tabs-bg:			$nav-tabs-bg;
+$tt-table-nav-tabs-link-color:	$nav-tabs-link-color;
+$tt-table-nav-tabs-active-link-hover-bg: $nav-tabs-active-link-hover-bg;
+
+$ttui-table-img-path:			"../images/" !default;
+
+@import "_custom.scss";

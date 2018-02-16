@@ -1,0 +1,139 @@
+.table.table-data-ttui + nav {
+	@include clearfix;
+	background-color: $pagination-bar-bg;
+	padding: #{$padding-small-horizontal};
+
+	.pagination {
+		@extend .pull-right;
+	}
+}
+
+.table.table-data-ttui {
+	border-top: 1px solid $table-border-top-color !important;
+	margin-bottom: 0;
+	border-radius: $table-border-radius;
+
+	> tbody > tr, > tr, > thead > tr {
+		> td:first-child, > th:first-child {
+			padding-left: $panel-body-padding;
+		}
+		> td:last-child, > th:last-child {
+			padding-right: $panel-body-padding;
+		}
+	}
+
+	> thead > tr > th {
+		background-color: $table-head-bg-color;
+		color: $table-head-color;
+		border-top: none !important;
+		border-right: none;
+		border-bottom: none;
+		font-weight: 600;
+
+		&.is-required {
+			&:after {
+				content: "*";
+				display: inline-block;
+				font-family: Calibri, sans-serif;
+				font-size: 18px;
+				color: $state-danger-text;
+				height: 15px;
+				vertical-align: -5px;
+				padding-left: 3px;
+				color: $state-danger-text-colored;
+			}
+		}
+
+		&:last-child {
+			border-right: none;
+		}
+
+		&.st-sort-descent, &.st-sort-ascent {
+			position: relative;
+
+			&:after {
+				position: absolute;
+				content: "";
+				width: 0;
+				height: 0;
+				border-left: 5px solid transparent;
+				border-right: 5px solid transparent;
+				border-bottom: 8px solid $table-sort-button-color;
+
+				top: 50%;
+				right: 9px;
+				margin-top: -4px;
+			}
+		}
+
+		&.st-sort-ascent:after {
+			border-top: 8px solid $table-sort-button-color;
+			border-bottom: none;
+		}
+	}
+
+	> tbody > tr > td {
+		border-top: 1px solid $table-data-separator !important;
+		border-bottom: 1px solid $table-data-separator !important;
+		border-right: 1px solid $table-data-separator;
+
+		&:last-child {
+			border-right: none !important;
+		}
+	}
+
+	> tfoot {
+		background-color: $light-gray-background;
+
+		> tr > td {
+			padding: 0;
+			border-bottom-left-radius: $table-border-radius;
+			border-bottom-right-radius: $table-border-radius;
+		}
+	}
+
+	// cell types
+	> tbody > tr, > tr, > thead > tr {
+		td.inner-table {
+			position: relative;
+			background-color: $table-inner-cell-bg-color;
+			padding: 0;
+
+			&:before {
+				content: "";
+				display: block;
+				height: 5px;
+				width: 100%;
+				top: 0;
+				left: 0;
+
+				box-shadow: 0 3px 10px -6px rgba(0, 0, 0, 0.7) inset, 0 -1px 0 0 rgba(0, 0, 0, 0.13);
+			}
+
+			&:after {
+				content: "";
+				display: block;
+				height: 5px;
+				width: 100%;
+				bottom: 0;
+				left: 0;
+
+				box-shadow: 0 -3px 10px -6px rgba(0, 0, 0, 0.7) inset, 0 1px 0 0 rgba(0, 0, 0, 0.13);
+			}
+		}
+	}
+
+	tr.inner-table-unfolded {
+		td {
+			background-color: $table-inner-cell-bg-color;
+			border-bottom-color: $table-inner-cell-border-bottom-color;
+
+		}
+	}
+
+	// inner tables
+
+	.table {
+		background: $table-inner-bg;
+	}
+}

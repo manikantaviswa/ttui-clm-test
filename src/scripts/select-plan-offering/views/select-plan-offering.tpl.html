@@ -21,7 +21,7 @@
 	}
 </style>
 
-<div class="col-md-12" style="padding: 0px;">
+<div class="col-md-12" style="padding: 0px;" ng-controller="SelectPlanOfferingCtrl as tabctrl">
 	<div class="panel panel-default">
 		<div class="panel-body table-no-padding">
 			<table tt-table st-table="offeringList" st-safe-src="plansList" st-items-by-page="10" class="table table-hover ttui-table">
@@ -89,30 +89,32 @@
 						<td colspan="8">
 							<div uib-collapse="items._meta.expanded">
 
-								<div class="col-sm-3">
-									<ul class="nav nav-list nav-stacked">
-										<li role="presentation" ng-repeat="tab in tabs">
-											<a href="" ng-click="$parent.selected = (tab.title + $parent.$index);reach(111);" translate="{{tab.title}}">{{tab.title}}</a>
-										</li>
-
-									</ul>
-								</div>
-								<!-- Tab panes -->
-								<div class="col-sm-9">
-									<div class="tab-content">
-										<div class="tab-pane" ng-repeat="tab in tabs " ng-class="{'show':$parent.selected == (tab.title + $parent.$index)}">
-											<div class="col-sm-9 col-offset-8">
-
-												<p>{{(tab.title + $parent.$index ) === 'tabNumber'}} {{tab.summary}} {{tab.title + $parent.$index}} </p>
-											</div>
+									<div class="col-sm-3">
+											<ul class="nav nav-list nav-stacked">
+													<li role="presentation" ng-repeat="tab in tabs">
+														<a href="" ng-click="$parent.selected = ($parent.$index); reach(111);" translate="{{tab.title}}">{{tab.title}}</a>
+													</li>
+			
+												</ul>
 										</div>
-
+										<!-- Tab panes -->
+										<div class="col-sm-9" >
+												
+												<div ng-class="{'show': $parent.selected == '0'}">
+														<h4>Tab 1</h4>
+												   </div>
+												   <div ng-class="{'show': $parent.selected == '1'}">
+														<h4>Tab 2</h4>
+												   </div>
+												   <div ng-class="{'show': $parent.selected == '2'}">
+														<h4>Tab 3</h4>
+												   </div>
+		
+										
+		
+		
+		
 									</div>
-								</div>
-
-
-
-							</div>
 						</td>
 					</tr>
 

@@ -1,0 +1,127 @@
+.container-fluid {
+	padding-left: $grid-gutter-width;
+	padding-right: $grid-gutter-width;
+}
+
+.container-main {
+	@extend .container-fluid;
+}
+
+html, body {
+	height: 100%;
+}
+
+body [ng-click], [st-sort] {
+	cursor: pointer;
+}
+
+::selection {
+	background: $selection-color;
+}
+
+.page-wrapper {
+	min-height: 100%;
+	margin-bottom: -$navbar-height;
+
+	&:after {
+		content: "";
+		display: block;
+		height: $navbar-height;
+	}
+}
+
+.equal-col {
+	display: table;
+	width: 100%;
+
+	> [class*="col-md"] {
+		float: none;
+		display: table-cell;
+		vertical-align: top;
+	}
+}
+
+.separate {
+	margin-top: $grid-gutter-height;
+}
+
+.section-complementary {
+	padding-right: 0;
+	position: relative;
+
+	> div {
+		background: $section-complementary-bg;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: ($grid-gutter-width / 2);
+		right: 0;
+	}
+
+	> .panel-complementary {
+		border-right: none;
+	}
+
+}
+
+.section-main {
+	padding-left: 0;
+
+	> .panel-default {
+		border-left: none;
+	}
+}
+
+#rightsidenav {
+	position: fixed;
+	right: $rightsidenav-right;
+	top: $rightsidenav-top;
+	z-index: 999;
+
+	ul {
+		position:absolute;
+		top:0;
+		right:0;
+		list-style-type: none;
+		padding: 0px;
+		margin: 0px;
+		display:table;
+		transform: rotate(-90deg) translateX(0) translateY(-100%);
+		transform-origin: top right;
+
+		[dir=rtl] &{
+			transform: rotate(-90deg) translateY(0) translateX(-100%);
+			transform-origin: top left;
+		}
+
+		li {
+			list-style: none;
+			white-space: nowrap;
+			display:table-cell;
+			min-height: $rightsidenav-min-height;
+			height: $rightsidenav-height;
+			min-width: $rightsidenav-min-width;
+			width: $rightsidenav-width;
+
+			a {
+				background: none repeat scroll 0 0 $rightsidenav-bg-color;
+				border-radius: $border-radius-large $border-radius-large 0 0;
+				color: $rightsidenav-color;
+				display: block;
+				font-size: $font-size-large;
+				font-weight: $rightsidenav-font-weight;
+				text-align: center;
+				padding: $padding-rightsidenav-vertical $padding-rightsidenav-horizontal;
+				text-decoration: none;
+
+				&:hover {
+					background: none repeat scroll 0 0 $accent-color;
+				}
+
+				[dir=rtl] &{
+					border-radius: 0 0 $border-radius-large $border-radius-large;
+				}
+			}
+		}
+	}
+}
