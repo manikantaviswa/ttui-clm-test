@@ -133,7 +133,7 @@ function SelectPlanOfferingCtrl($scope, $parse, selectPlanOfferingService) {
 
 			}, offering);
 		});
-		debugger;
+		
 	}
 
      var setSelectedVariantAllowance = function (selectedOffer) {
@@ -167,10 +167,10 @@ function SelectPlanOfferingCtrl($scope, $parse, selectPlanOfferingService) {
     }
 	this.setInitialState();
 	$scope.getOfferingDetailsView = function () {
-		debugger;
+		
 		$scope.tabs = []
 		$scope.offeringData.map(function (offerDetails, $index) {
-			debugger;
+			
 			$scope.tabs = $parse('details')(offerDetails);
 		})
 	}
