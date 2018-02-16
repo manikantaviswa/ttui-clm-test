@@ -16,42 +16,32 @@ angular.module('TT-UI-CLM.FeasibilitySearch', [
 // Source: src/scripts/feasibility-search/controller/feasibility-search.controller.js
 var module = angular.module('TT-UI-CLM.FeasibilitySearch.Controllers.FeasibilitySearchCtrl', [
     'TT-UI-CLM.FeasibilitySearch.Services.FeasibilitySearchService',
-    'CLM-UI.Utils.Spinner',
     'TT-UI-CLM.FeasibilitySearch.Services.SearchFeasibilityAPIService',
 ]);
 
-function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService, SearchFeasibilityAPIService) {
+function FeasibilitySearchCtrl($scope, $parse, feasibilitySearchService, SearchFeasibilityAPIService) {
     $scope.localities = [];
     $scope.subLocalities = [];
     $scope.streets = [];
 
     setInitialData();
 
-    $scope.searchAddressFeasibility = function(isNumberSearch) {
-        $scope.searchResult = null;
-        var searchResult = {};
-        Spinner.inner.show();
-        if (isNumberSearch) {
-            var req = { serviceNumber: $scope.model.serviceNumber };
-            searchResult.serviceNumberSearch = true;
-        } else {
-            var req = $scope.model.locality;
-            searchResult.localitySearch = true;
-        }
-        SearchFeasibilityAPIService(req).then(function(res) {
-            searchResult = angular.merge(res.feasibilityDetails, {
-                locality: $parse('model.locality.locality.name')($scope),
-                subLocality: $parse('model.locality.subLocality.name')($scope),
-                street: $parse('model.locality.street.name')($scope)
-            }, searchResult);
-
-            $scope.onSearch({$result: searchResult});
-            $scope.searchResult = searchResult;
-            Spinner.inner.hide();
+    $scope.searchAddressFeasibility = function() {
+        $scope.onSearch({$result: $scope.model});
+        new SearchFeasibilityAPIService().sendRequest(null).then(function(res) {
+            console.log(res);
         }).catch(function(err) {
-            Spinner.inner.hide();            
             console.log(err);
         });
+        $scope.searchResult = {
+            locality: $scope.model.locality.name,
+            subLocality: $scope.model.subLocality.name,
+            street: $scope.model.street.name,
+            feasibility: '',
+            mdf: '8689809485',
+            cabinet : '8689809485',
+            fdp:  null
+        }
     };
 
     $scope.onSelectLocality = function(item, model) {
@@ -79,29 +69,29 @@ function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService
     }
     
     function setSubLocalities(clearSubLocality) {
-        var selectedLocality = $parse('model.locality.locality')($scope);
+        var selectedLocality = $parse('model.locality')($scope);
         $scope.subLocalities = feasibilitySearchService.getSubLocalities($scope.localities, selectedLocality);
         if (clearSubLocality) {
-            $parse('model.locality.subLocality').assign($scope, null);
+            $parse('model.subLocality').assign($scope, null);
         }
     }
     
     function setStreets(clearStreet) {
-        var selectedSubLocality = $parse('model.locality.subLocality')($scope);
+        var selectedSubLocality = $parse('model.subLocality')($scope);
         $scope.streets = feasibilitySearchService.getStreets($scope.subLocalities, selectedSubLocality);
         if (clearStreet) {
-            $parse('model.locality.street').assign($scope, null);
+            $parse('model.street').assign($scope, null);
         }
     }
 
     function setLocality() {
-        var locality = getItemByCode($scope.localities, $scope.model.locality.subLocality.locality.code);
-        $parse('model.locality.locality').assign($scope, locality);
+        var locality = getItemByCode($scope.localities, $scope.model.subLocality.locality.code);
+        $parse('model.locality').assign($scope, locality);
     }
 
     function setSubLocality() {
-        var subLocality = getItemByCode($scope.subLocalities, $scope.model.locality.street.subLocality.code);
-        $parse('model.locality.subLocality').assign($scope, subLocality);
+        var subLocality = getItemByCode($scope.subLocalities, $scope.model.street.subLocality.code);
+        $parse('model.subLocality').assign($scope, subLocality);
         setLocality();
     }
 
@@ -119,9 +109,7 @@ function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService
 FeasibilitySearchCtrl.$inject = [
     '$scope',
     '$parse',
-    'Spinner',
-    'FeasibilitySearchService',
-    'SearchFeasibilityAPIService'
+    'FeasibilitySearchService'
 ];
 module.controller(FeasibilitySearchCtrl.name, FeasibilitySearchCtrl);
 
@@ -142,6 +130,7 @@ module.directive('feasibilitySearch', function() {
             model: '=',
             // config: '=',
             masterData: '=',
+            // permissions: '=',
             onSearch: '&'
         },
         controller: 'FeasibilitySearchCtrl',
@@ -152,7 +141,6 @@ module.directive('feasibilitySearch', function() {
 
 // Source: src/scripts/feasibility-search/services/feasibility-search.api.service.js
 var module = angular.module('TT-UI-CLM.FeasibilitySearch.Services.SearchFeasibilityAPIService', [
-    'TT-UI.Common'
 ]);
 
 module.constant('API_CONFIG', {
@@ -163,21 +151,19 @@ module.constant('API_CONFIG', {
 
 function SearchFeasibilityAPIService($q, $parse, Api, ResourceFactory, API_CONFIG) {
 
-    var prepareRequest = function(payload) {
+    var prepareRequest = function(msisdn) {
         var requestData = {
-            feasibilityCheck: {
-                serviceNumber: $parse('serviceNumber')(payload),
-                locality: $parse('locality.name')(payload),
-                subLocality: $parse('subLocality.name')(payload),
-                street: $parse('street.name')(payload)
+            'service':{
+                'key': 'MSISDN',
+                'value': msisdn
             }
         };
         return requestData;
     };
 
-    var sendRequest = function(payload){
+    var sendRequest = function(msisdn){
         var apiService = ResourceFactory(Api.getUrl(), API_CONFIG.API_URL, API_CONFIG.API_METHOD);
-        return apiService.fetch(prepareRequest(payload)).$promise;
+        return apiService.fetch(prepareRequest(msisdn)).$promise;
     };
 
     var getErrors = function(response) {
@@ -195,8 +181,8 @@ function SearchFeasibilityAPIService($q, $parse, Api, ResourceFactory, API_CONFI
         return result;
     };
 
-    return function(payload) {
-        return sendRequest(payload)
+    return function(msisdn) {
+        return sendRequest(msisdn)
             .then(getErrors)
             .then(getData);
     };

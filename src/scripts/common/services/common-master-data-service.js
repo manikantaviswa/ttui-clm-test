@@ -55,6 +55,7 @@
 		};
 
 		var getCustomerSubCategory = function(customerType, customerCategory) {
+			debugger;
 			return CustomerSubCategoryLoaderFactory('customerType', 'customerCategory')
 				.load({}, {customerType: customerType, customerCategory: customerCategory});
 

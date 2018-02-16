@@ -1,87 +1,87 @@
 <!-- ng-model naming we have to decide -->
 <div class="panel-body forms-ttui row">
-
-  <form class="form-horizontal">
-    <div class="col-sm-4">
-      <label translate="Registration of Service">Registration of Service</label>
-      <div class="form-group">
-        <label class="control-label col-sm-4" for="service">Service:</label>
-        <div class="col-sm-8">
-          <select class="form-control" id="service" ng-model="searchofferingModel.offering.ProductType" ng-options="service.code as service.name for service in services">
-            <option value="">Select</option>
-          </select>
+  
+    <form class="form-horizontal">
+      <div class="col-sm-4">
+        <label translate="Registration of Service">Registration of Service</label>
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="service">Service:</label>
+          <div class="col-sm-8">
+            <select class="form-control" id="service" ng-model="searchofferingModel.offering.ProductType" ng-options="service.code as service.name for service in services">
+              <option value="">Select</option>
+            </select>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="technology">Technology:</label>
+          <div class="col-sm-8">
+            <select class="form-control" id="technology" ng-model="searchofferingModel.offering.Technology" ng-options="technology.code as technology.name for technology in technologies">
+              <option value="">Select</option>
+            </select>
+          </div>
         </div>
       </div>
-
-      <div class="form-group">
-        <label class="control-label col-sm-4" for="technology">Technology:</label>
-        <div class="col-sm-8">
-          <select class="form-control" id="technology" ng-model="searchofferingModel.offering.Technology" ng-options="technology.code as technology.name for technology in technologies">
-            <option value="">Select</option>
-          </select>
+  
+      <div class="col-sm-4">
+        <label>For Customer</label>
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="category">Category:</label>
+          <div class="col-sm-8">
+            <select class="form-control" id="customer-category" ng-model="searchofferingModel.offering.CustomerCategory" ng-options="customerCategory.code as customerCategory.name for customerCategory in customerCategories"
+              ng-change="getCustomerSubCategory(searchofferingModel.offering.CustomerCategory)">
+              <option value="">Select</option>
+            </select>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="subcategory">Subcategory:</label>
+          <div class="col-sm-8">
+            <select class="form-control" id="customer-subcategory" ng-model="searchofferingModel.offering.CustomerSubCategory" ng-options="subCategory.code as subCategory.name for subCategory in subCategory">
+              <option value="">Select</option>
+            </select>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="Nationality">Nationality:</label>
+          <div class="col-sm-8">
+            <select class="form-control" id="Nationality" ng-model="searchofferingModel.offering.Nationality" ng-options="nationality.code as nationality.name for nationality in nationalities"
+              ng-change="goo()">
+              <option value="">Select</option>
+            </select>
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="col-sm-4">
-      <label>For Customer</label>
-      <div class="form-group">
-        <label class="control-label col-sm-4" for="category">Category:</label>
-        <div class="col-sm-8">
-          <select class="form-control" id="customer-category" ng-model="searchofferingModel.offering.CustomerCategory" ng-options="customerCategory.code as customerCategory.name for customerCategory in customerCategories"
-            ng-change="getCustomerSubCategory(searchofferingModel.offering.CustomerCategory)">
-            <option value="">Select</option>
-          </select>
+  
+      <div class="col-sm-4">
+        <label>Plan Details</label>
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="business-type">Business Type:</label>
+          <div class="col-sm-8">
+            <select class="form-control" id="business-type" ng-model="searchofferingModel.offering.BusinessType" ng-options="businessType.code as businessType.name  for businessType in businessTypes">
+              <option value="">Select</option>
+            </select>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="plan">Plan:</label>
+          <div class="col-sm-8">
+            <select class="form-control" id="plan" ng-model="searchofferingModel.offering.plan" ng-options="plan.code as plan.name for plan in plans">
+              <option value="">Select</option>
+            </select>
+          </div>
         </div>
       </div>
-
-      <div class="form-group">
-        <label class="control-label col-sm-4" for="subcategory">Subcategory:</label>
-        <div class="col-sm-8">
-          <select class="form-control" id="customer-subcategory" ng-model="searchofferingModel.offering.CustomerSubCategory" ng-options="subCategory.code as subCategory.name for subCategory in subCategory">
-            <option value="">Select</option>
-          </select>
-        </div>
+  
+      <div class="col-sm-12">
+        <button type="button" class="btn btn-primary btn-lg pull-right" data-role="action" data-action="submit" ng-click="searchOffering(searchofferingModel)"
+          translate="Search"> Search
+        </button>
       </div>
-
-      <div class="form-group">
-        <label class="control-label col-sm-4" for="Nationality">Nationality:</label>
-        <div class="col-sm-8">
-          <select class="form-control" id="Nationality" ng-model="searchofferingModel.offering.Nationality" ng-options="nationality.code as nationality.name for nationality in nationalities"
-            ng-change="goo()">
-            <option value="">Select</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-sm-4">
-      <label>Plan Details</label>
-      <div class="form-group">
-        <label class="control-label col-sm-4" for="business-type">Business Type:</label>
-        <div class="col-sm-8">
-          <select class="form-control" id="business-type" ng-model="searchofferingModel.offering.BusinessType" ng-options="businessType.code as businessType.name  for businessType in businessTypes">
-            <option value="">Select</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="control-label col-sm-4" for="plan">Plan:</label>
-        <div class="col-sm-8">
-          <select class="form-control" id="plan" ng-model="searchofferingModel.offering.plan" ng-options="plan.code as plan.name for plan in plans">
-            <option value="">Select</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-sm-12">
-      <button type="button" class="btn btn-primary btn-lg pull-right" data-role="action" data-action="submit" ng-click="searchOffering(searchofferingModel)"
-        translate="Search"> Search
-      </button>
-    </div>
-
-  </form>
-
-</div>
+  
+    </form>
+  
+  </div>
