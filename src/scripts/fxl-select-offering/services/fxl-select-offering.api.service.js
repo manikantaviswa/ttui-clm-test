@@ -1,29 +1,21 @@
 'use strict';
 
-var module = angular.module('TT-UI-CLM.FxlSelectOffering.Services.FxlSelectOfferingAPIService', [
+var module = angular.module('TT-UI-CLM.FxlSelectOffering.Services.ListOfFxlPlansRequestAPIService', [
 ]);
 
 module.constant('API_CONFIG', {
-    API_URL: 'clm-reg/rest/dataservice/1/CLM/1/FeasibilityCheck/json/query',
+    API_URL: 'upc/rest/dataservice/1/UPC/1.2/ListOfFxlPlansRequest/json/query',
     API_METHOD: 'PUT',
     RESPONSE_ERROR_JSON_PATH: 'response.errors.error'
 });
 
-/*function SearchFeasibilityAPIService($q, $parse, Api, ResourceFactory, API_CONFIG) {
+function ListOfFxlPlansRequestAPIService($q, $parse, Api, ResourceFactory, API_CONFIG) {
 
-    var prepareRequest = function(msisdn) {
-        var requestData = {
-            'service':{
-                'key': 'MSISDN',
-                'value': msisdn
-            }
-        };
-        return requestData;
-    };
 
-    var sendRequest = function(msisdn){
-        var apiService = ResourceFactory(Api.getUrl(), API_CONFIG.API_URL, API_CONFIG.API_METHOD);
-        return apiService.fetch(prepareRequest(msisdn)).$promise;
+
+    var sendRequest = function(requestPayload){
+        var apiService = ResourceFactory(Api.getUpcUrl(), API_CONFIG.API_URL, API_CONFIG.API_METHOD);
+        return apiService.fetch(requestPayload).$promise;
     };
 
     var getErrors = function(response) {
@@ -41,14 +33,13 @@ module.constant('API_CONFIG', {
         return result;
     };
 
-    return function(msisdn) {
-        return sendRequest(msisdn)
+    return function(requestPayload) {
+        return sendRequest(requestPayload)
             .then(getErrors)
             .then(getData);
     };
 
 }
 
-SearchFeasibilityAPIService.$inject = ['$q', '$parse', 'Api', 'ResourceFactory', 'API_CONFIG'];
-module.factory(SearchFeasibilityAPIService.name, SearchFeasibilityAPIService);
-*/
+ListOfFxlPlansRequestAPIService.$inject = ['$q', '$parse', 'Api', 'ResourceFactory', 'API_CONFIG'];
+module.factory(ListOfFxlPlansRequestAPIService.name, ListOfFxlPlansRequestAPIService);
