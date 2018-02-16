@@ -1,11 +1,14 @@
-# ttui-clm-test
+# Steps to follow
 
-npm install
+Install node dependencies
+    npm install
+    
+Install bower dependencies
+    bower install
 
-bower bower install
+Take grunt build
+    grunt build
 
-grunt build
 
-
-after building open /src select html component file
+After building open /src select html component file.
 
