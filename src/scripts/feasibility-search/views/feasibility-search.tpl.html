@@ -5,43 +5,43 @@
                 <strong translate="Enter exact address of installation to check feasibility">Enter exact address of installation to check feasibility</strong>
             </p>
             <div class="col-sm-6">
-                <div class="form-group" ng-class="{'is-required': validators.locality.required, 'has-error': (localitySearch.locality.$dirty && localitySearch.locality.$error.required)}">
+                <div class="form-group" ng-class="{'is-required': isRequired('locality'), 'has-error': requiredValidity('localitySearch', 'locality', model.locality.locality.code)}">
                     <label for="lacality" class="col-sm-4 control-label" translate="Locality">Locality</label>
                     <div class="control-content col-sm-8">
-                        <ui-select id="city" name="locality" ng-attr-required="{{validators.locality.required}}" theme="bootstrap"
+                        <ui-select id="city" name="locality" ng-attr-required="{{isRequired('locality')}}" theme="bootstrap"
                             ng-model="model.locality.locality" append-to-body="true" on-select="onSelectLocality($event, $item)">
                             <ui-select-match placeholder="Select / Search Localities">{{$select.selected.name}}</ui-select-match>
                             <ui-select-choices repeat="locality in localities | filter: $select.search">
                                 <span ng-bind-html="locality.name | highlight: $select.search"></span>
                             </ui-select-choices>
                         </ui-select>
-                        <span class="help-block" ng-show="localitySearch.locality.$dirty && localitySearch.locality.$error.required"> This field is required </span>
+                        <span class="help-block" ng-show="requiredValidity('localitySearch', 'locality', model.locality.locality.code)"> This field is required </span>
                     </div>
                 </div>
-                <div class="form-group" ng-class="{'is-required': validators.subLocality.required, 'has-error': (localitySearch.subLocality.$dirty && localitySearch.subLocality.$error.required)}">
+                <div class="form-group" ng-class="{'is-required': isRequired('subLocality'), 'has-error': requiredValidity('localitySearch', 'subLocality', model.locality.subLocality.code)}">
                     <label for="lacality" class="col-sm-4 control-label" translate="Sub Locality">Sub Locality</label>
                     <div class="control-content col-sm-8">
-                        <ui-select id="city" name="subLocality" ng-attr-required="validators.subLocality.required" theme="bootstrap"
+                        <ui-select id="city" name="subLocality" ng-attr-required="{{isRequired('subLocality')}}" theme="bootstrap"
                             ng-model="model.locality.subLocality" append-to-body="true" on-select="onSelectSubLocality($event, $item)">
                             <ui-select-match placeholder="Select / Search Sub Localities">{{$select.selected.name}}</ui-select-match>
                             <ui-select-choices repeat="sl in subLocalities | filter: $select.search">
                                 <span ng-bind-html="sl.name | highlight: $select.search"></span>
                             </ui-select-choices>
                         </ui-select>
-                        <span class="help-block" ng-show="localitySearch.subLocality.$dirty && localitySearch.subLocality.$error.required"> This field is required </span>
+                        <span class="help-block" ng-show="requiredValidity('localitySearch', 'subLocality', model.locality.subLocality.code)"> This field is required </span>
                     </div>
                 </div>
-                <div class="form-group" ng-class="{'is-required': validators.street.required, 'has-error': (localitySearch.street.$dirty && localitySearch.street.$error.required)}">
+                <div class="form-group" ng-class="{'is-required': isRequired('street'), 'has-error': requiredValidity('localitySearch', 'street', model.locality.street.code)}">
                     <label for="street" class="col-sm-4 control-label" translate="Street">Street</label>
                     <div class="control-content col-sm-8">
-                        <ui-select id="city" name="street" ng-attr-required="validators.street.required" theme="bootstrap"
+                        <ui-select id="city" name="street" ng-attr-required="{{isRequired('street')}}" theme="bootstrap"
                             ng-model="model.locality.street" append-to-body="true" on-select="onSelectStreet($event, $item)">
                             <ui-select-match placeholder="Select / Search Street">{{$select.selected.name}}</ui-select-match>
                             <ui-select-choices repeat="st in streets | filter: $select.search">
                                 <span ng-bind-html="st.name | highlight: $select.search"></span>
                             </ui-select-choices>
                         </ui-select>
-                        <span class="help-block" ng-show="localitySearch.street.$dirty && localitySearch.street.$error.required"> This field is required </span>
+                        <span class="help-block" ng-show="requiredValidity('localitySearch', 'street', model.locality.street.code)"> This field is required </span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -78,11 +78,11 @@
                 <strong translate="Enter your Fixed line or your Neighbour's Fixed Line Number">Enter your Fixed line or your Neighbour's Fixed Line Number</strong>
             </p>
             <div class="col-sm-6">
-                <div class="form-group" ng-class="{'is-required': validators.serviceNumber.required, 'has-error': (serviceNumSearch.serviceNumber.$dirty && serviceNumSearch.locality.$error.required)}">
+                <div class="form-group" ng-class="{'is-required': isRequired('serviceNumber'), 'has-error': requiredValidity('serviceNumSearch', 'serviceNumber', model.serviceNumber)}">
                     <label class="col-sm-4 control-label" translate="Service Number">Service Number</label>
                     <div class="control-content col-sm-8">
-                        <input type="text" name="serviceNumber" ng-model="model.serviceNumber" ng-attr-required="{{validators.serviceNumber.required}}" class="form-control">
-                        <span class="help-block" ng-show="serviceNumSearch.serviceNumber.$dirty && serviceNumSearch.serviceNumber.$error.required"> This field is required </span>
+                        <input type="text" name="serviceNumber" ng-model="model.serviceNumber" ng-attr-required="{{isRequired('serviceNumber')}}" class="form-control">
+                        <span class="help-block" ng-show="requiredValidity('serviceNumSearch', 'serviceNumber', model.serviceNumber)"> This field is required </span>
                     </div>
                 </div>
                 

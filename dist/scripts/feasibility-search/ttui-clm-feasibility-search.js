@@ -69,6 +69,16 @@ function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService
         setSubLocality();
     };
 
+    $scope.isRequired = function(field) {
+        return $parse('validators.' + field + '.required')($scope);
+    };
+
+    $scope.requiredValidity = function(subForm, field, modelVal) {
+        var showValidators = $parse(subForm + '.' + field + '.$dirty')($scope) || $parse(subForm + '.$submitted')($scope);
+        var hasReqError = $parse(subForm + '.' + field + '.$error.required')($scope);
+        return $scope.isRequired(field) && showValidators && (hasReqError || !modelVal);
+    };
+
     function setInitialData() {
         setLocalities();
         setSubLocalities();
@@ -80,7 +90,7 @@ function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService
     }
     
     function setSubLocalities(clearSubLocality) {
-        var selectedLocality = $parse('model.locality.locality')($scope);
+        var selectedLocality = $parse('model.locality.locality.code')($scope);
         $scope.subLocalities = feasibilitySearchService.getSubLocalities($scope.localities, selectedLocality);
         if (clearSubLocality) {
             $parse('model.locality.subLocality').assign($scope, null);
@@ -88,7 +98,7 @@ function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService
     }
     
     function setStreets(clearStreet) {
-        var selectedSubLocality = $parse('model.locality.subLocality')($scope);
+        var selectedSubLocality = $parse('model.locality.subLocality.code')($scope);
         $scope.streets = feasibilitySearchService.getStreets($scope.subLocalities, selectedSubLocality);
         if (clearStreet) {
             $parse('model.locality.street').assign($scope, null);
@@ -98,14 +108,18 @@ function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService
     function setLocality() {
         var localityCode = $parse('model.locality.subLocality.locality.code')($scope);
         var locality = getItemByCode($scope.localities, localityCode);
-        $parse('model.locality.locality').assign($scope, locality);
+        if (locality) {
+            $parse('model.locality.locality').assign($scope, locality);
+        }
     }
 
     function setSubLocality() {
         var subLocalityCode = $parse('model.locality.street.subLocality.code')($scope);
         var subLocality = getItemByCode($scope.subLocalities, subLocalityCode);
-        $parse('model.locality.subLocality').assign($scope, subLocality);
-        setLocality();
+        if (subLocality) {
+            $parse('model.locality.subLocality').assign($scope, subLocality);
+            setLocality();
+        }
     }
 
     function getItemByCode(list, code) {
@@ -222,7 +236,7 @@ function FeasibilitySearchService($parse) {
     };
 
     function getLocalities(masterData) {
-        var localities = [];
+        var localities;
         var localitiesList = $parse('localities.locality')(masterData);
         if (localitiesList && localitiesList.length) {
             var localitiesObj = {};
@@ -245,6 +259,10 @@ function FeasibilitySearchService($parse) {
             localities = localitiesList.map(function(loc) {
                 return angular.merge({}, loc, localitiesObj[loc.code]);
             });
+            localities.splice(0, 0, {
+                name: 'Choose Locality',
+                code: ''
+            });
         }
         return localities;
     }
@@ -252,7 +270,7 @@ function FeasibilitySearchService($parse) {
     function getSubLocalities(localities, locality) {
         var subLocalities = [];
         localities.forEach(function(loc) {
-            if (!locality || (locality && loc.code === locality.code)) {
+            if (!locality || (loc.code === locality)) {
                 var sls = $parse('subLocalities.subLocality')(loc);
                 if (sls && sls.length) {
                     sls.forEach(function(sl) {
@@ -262,13 +280,17 @@ function FeasibilitySearchService($parse) {
                 }
             }
         });
+        subLocalities.splice(0, 0, {
+            name: 'Choose Sub Locality',
+            code: ''
+        });
         return subLocalities;
     }
 
     function getStreets(subLocalities, subLocality) {
         var streets = [];
         subLocalities.forEach(function(sl) {
-            if(!subLocality || (subLocality && subLocality.code === sl.code)) {
+            if(!subLocality || (subLocality === sl.code)) {
                 var sts = $parse('streets.street')(sl);
                 if(sts && sts.length) {
                     sts.forEach(function(st) {
@@ -278,19 +300,23 @@ function FeasibilitySearchService($parse) {
                 }
             }
         });
+        streets.splice(0, 0, {
+            name: 'Choose Street',
+            code: ''
+        });
         return streets;
     }
 
     function getValidators(config) {
         return {
             locality: {
-                required: false
+                required: true
             },
             subLocality: {
-                required: false
+                required: true
             },
             street: {
-                required: false
+                required: true
             },
             serviceNumber: {
                 required: true,

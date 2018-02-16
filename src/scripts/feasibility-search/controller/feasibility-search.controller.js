@@ -55,6 +55,16 @@ function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService
         setSubLocality();
     };
 
+    $scope.isRequired = function(field) {
+        return $parse('validators.' + field + '.required')($scope);
+    };
+
+    $scope.requiredValidity = function(subForm, field, modelVal) {
+        var showValidators = $parse(subForm + '.' + field + '.$dirty')($scope) || $parse(subForm + '.$submitted')($scope);
+        var hasReqError = $parse(subForm + '.' + field + '.$error.required')($scope);
+        return $scope.isRequired(field) && showValidators && (hasReqError || !modelVal);
+    };
+
     function setInitialData() {
         setLocalities();
         setSubLocalities();
@@ -66,7 +76,7 @@ function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService
     }
     
     function setSubLocalities(clearSubLocality) {
-        var selectedLocality = $parse('model.locality.locality')($scope);
+        var selectedLocality = $parse('model.locality.locality.code')($scope);
         $scope.subLocalities = feasibilitySearchService.getSubLocalities($scope.localities, selectedLocality);
         if (clearSubLocality) {
             $parse('model.locality.subLocality').assign($scope, null);
@@ -74,7 +84,7 @@ function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService
     }
     
     function setStreets(clearStreet) {
-        var selectedSubLocality = $parse('model.locality.subLocality')($scope);
+        var selectedSubLocality = $parse('model.locality.subLocality.code')($scope);
         $scope.streets = feasibilitySearchService.getStreets($scope.subLocalities, selectedSubLocality);
         if (clearStreet) {
             $parse('model.locality.street').assign($scope, null);
@@ -84,14 +94,18 @@ function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService
     function setLocality() {
         var localityCode = $parse('model.locality.subLocality.locality.code')($scope);
         var locality = getItemByCode($scope.localities, localityCode);
-        $parse('model.locality.locality').assign($scope, locality);
+        if (locality) {
+            $parse('model.locality.locality').assign($scope, locality);
+        }
     }
 
     function setSubLocality() {
         var subLocalityCode = $parse('model.locality.street.subLocality.code')($scope);
         var subLocality = getItemByCode($scope.subLocalities, subLocalityCode);
-        $parse('model.locality.subLocality').assign($scope, subLocality);
-        setLocality();
+        if (subLocality) {
+            $parse('model.locality.subLocality').assign($scope, subLocality);
+            setLocality();
+        }
     }
 
     function getItemByCode(list, code) {
