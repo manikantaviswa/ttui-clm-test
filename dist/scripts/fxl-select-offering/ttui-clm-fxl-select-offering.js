@@ -31,7 +31,6 @@ module.controller(FxlSelectOfferingCtrl.name, FxlSelectOfferingCtrl);
 var module = angular.module('TT-UI-CLM.FxlSelectOffering.Directives.SelectOffering', ['TT-UI-CLM.FxlSelectOffering.Controllers.FxlSelectOfferingCtrl', 'TT-UI-CLM.FxlSelectOffering.Services.FxlSelectOfferingService', 'TT-UI-CLM.FxlSelectOffering.Tpl']);
 module.directive('selectOffering', selectOfferingDetail)
 function selectOfferingDetail() {
-    debugger;
     var directive = {
         restrict: 'EA',
         replace: true,

@@ -74,7 +74,7 @@
 	}
 </style>
 
-<div class="col-md-12" style="padding: 0px;">
+<div class="col-md-12" style="padding: 0px;" ng-controller="SelectPlanOfferingCtrl as tabctrl">
 	<div class="panel panel-default">
 		<div class="panel-body table-no-padding">
 			<table tt-table st-table="offeringList" st-safe-src="plansList" st-items-by-page="10" class="table ttui-table">
@@ -87,7 +87,7 @@
 							<!-- table actions -->
 							<span class="table-extra-header-right">
 								<a ng-show="tableCtrl.showActions()" class="btn btn-default" ng-click="example.executeAction(tableCtrl.getSelectionModel())"
-								    href>action 1</a>
+								 href>action 1</a>
 								<a ng-show="tableCtrl.showActions()" class="btn btn-default" href>action 2</a>
 								<a ng-show="tableCtrl.showActions()" class="btn btn-default" href>action 3</a>
 							</span>
@@ -128,9 +128,9 @@
 						<td translate="EMI">EMI</td>
 						<td>
 							<a class="list-group-item-link" href ng-if="items.selected" ng-click="items.selected = !items.selected; $event.stopPropagation();"
-							    translate="Select">Selected</a>
+							 translate="Select">Selected</a>
 							<a class="list-group-item-link" href ng-if="!items.selected" ng-click="items.selected = !items.selected; $event.stopPropagation();"
-							    translate="Select">Select</a>
+							 translate="Select">Select</a>
 						</td>
 						<td>
 							<a class="list-group-item-link" translate="Details" ng-click="items._meta.expanded=!items._meta.expanded; getOfferingDetailsView()">Details</a>
