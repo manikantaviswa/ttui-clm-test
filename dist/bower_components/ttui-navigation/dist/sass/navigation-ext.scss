@@ -1,0 +1,20 @@
+//== Navigation
+//
+//##
+$navigation-text-color: 					white;
+$navigation-bg-color: 						$primary-1-color;
+$navigation-tip-color: 						$primary-2-color;
+$navigation-menu-icon-color: 				white;
+$navigation-menu-highlight-color: 			$primary-2-color;
+$navigation-menu-divider-color: 			$gray-dark;
+
+$navigation-mobile-menu-button-color: 		white;
+
+$navigation-dropdown-menu-bg-color: 		$gray-dark;
+$navigation-dropdown-menu-text-color: 		white;
+
+$navigation-statusbar-bg:					$primary-1-color;
+$navigation-statusbar-header-color:			white;
+
+@import "_animations.scss";
+@import "_custom.scss";

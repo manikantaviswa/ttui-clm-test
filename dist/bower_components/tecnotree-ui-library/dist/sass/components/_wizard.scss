@@ -1,0 +1,189 @@
+.wizard-bar {
+	position: relative;
+	z-index:10;
+	background-color: $wizard-bar-background;
+	height: $wizard-bar-height;
+}
+
+.statusbar.affix + .container-main {
+
+	& .wizard-bar {
+		position: fixed;
+		top: $navbar-height;
+		width: 100%;
+
+		box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.5);
+
+		padding-left:   $grid-gutter-width;
+		padding-right:  $grid-gutter-width;
+
+		margin-left:  - $grid-gutter-width;
+		margin-right: - $grid-gutter-width;
+
+		& + div {
+			margin-top: $wizard-bar-height;
+		}
+	}
+}
+
+.wizard {
+	counter-reset: wizard;
+	list-style-type: none;
+	margin: 20px 0;
+	padding: 0;
+	width: 100%;
+	min-height: 28px;
+
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	> .step {
+		position: relative;
+		margin: 0;
+		padding: 0;
+
+		vertical-align: middle;
+		padding-left: 33px;
+
+		flex: 1;
+
+		&:last-child {
+			flex: none;
+
+			span {
+				padding-right: 0;
+			}
+		}
+
+		span {
+			background-color: $body-bg;
+			padding-right: 7px;
+			display: inline;
+			line-height: 1.2;
+			float: left;
+		}
+
+		// Circle
+		&:before {
+			display: inline-block;
+			counter-increment: wizard;
+			content: counters(wizard, ".") " ";
+
+			width: 28px;
+			height: 28px;
+			line-height: 28px;
+
+			text-align: center;
+			border-radius: 100%;
+			font-size: $font-size-large;
+			font-weight: bold;
+
+			position: absolute;
+			top: 50%;
+			left: 0;
+			margin-top: -14px;
+		}
+
+		// Line
+		&:after {
+			content: "";
+			display: inline-block;
+			height: 2px;
+			position: absolute;
+			background-color: $wizard-axis-color;
+			left: 33px;
+			right: 5px;
+			top: 50%;
+			z-index: -1;
+
+
+			&:last-child {
+				display: none;
+			}
+		}
+
+		// Step done
+		& {
+			span {
+				color: $accent-color;
+			}
+
+			&:before, &:after {
+				background-color: $accent-color;
+				color: $text-inverted-color;
+			}
+		}
+
+		// Current step
+		&.current {
+			span {
+				font-weight: bold;
+				color: $accent-color;
+			}
+
+			&:before {
+				background-color: $accent-color;
+				color: $text-inverted-color;
+			}
+
+			&:after {
+				background-color: $wizard-step-bg-color;
+			}
+		}
+
+		// Next steps
+		&.current ~ .step {
+			span {
+				color: $text-color;
+			}
+
+			&:before {
+				color: #4D4F53;
+				background-color: $gray-middle;
+			}
+
+			&:after {
+				background-color: $wizard-step-bg-color;
+			}
+		}
+
+		&.disabled {
+			span {
+				font-weight: bold;
+				color: $gray-middle !important;
+			}
+
+			&:before {
+				background-color: $gray-middle !important;
+				color: $body-bg !important;
+			}
+		}
+	}
+}
+
+.wizard-nav {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.5);
+	z-index: 100;
+
+	background-color: $wizard-nav-bg-color;
+
+	padding: 15px #{floor($grid-gutter-width/2)};
+
+	.btn {
+		display: inline-block;
+		margin-right: 20px;
+
+		&.pull-right {
+			margin-right: 0;
+			margin-left: 20px;
+		}
+	}
+
+	.wizard-nav-inline-block {
+		display: inline !important;
+	}
+}

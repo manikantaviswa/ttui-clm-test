@@ -25,7 +25,9 @@ function SelectPlanOfferingCtrl($scope, $parse, selectPlanOfferingService) {
 		var offering = $parse('masterData.response.body')($scope);
 		var items = [{
 				summary: "My T 100 M comes with detfult Essential  bouquet offering, and a choice of 3 other bouquets at a diferential price to choose from (this is the offering description). With upto 500 channels and 100 GB of data.",
-				title: "inclusionsAllowance",
+				title: "inclusions Allowance",
+				id:0,
+				code:"inclusionsAllowance",
 				inclusionsAllowance: [{
 						code: 1212331,
 						item1: 'Item 1 product name',
@@ -40,7 +42,9 @@ function SelectPlanOfferingCtrl($scope, $parse, selectPlanOfferingService) {
 			},
 			{
 				summary: 'My T 200 M comes with detfult Essential  bouquet offering, and a choice of 3 other bouquets at a diferential price to choose from (this is the offering description). With upto 500 channels and 100 GB of data.',
-				title: "equipments",
+				title: "Equipments",
+				id:1,
+				code:"equipments",
 				equipments: [{
 						code: 1212331,
 						item1: 'Item 1 product name',
@@ -55,7 +59,9 @@ function SelectPlanOfferingCtrl($scope, $parse, selectPlanOfferingService) {
 			},
 			{
 				summary: 'My T 300 M comes with detfult Essential  bouquet offering, and a choice of 3 other bouquets at a diferential price to choose from (this is the offering description). With upto 500 channels and 100 GB of data.',
-				title: "charges",
+				title: "Charges",
+				id:2,
+				code:"charges",
 				charges: [{
 						code: 1212331,
 						item1: 'Item 1 product name',
@@ -70,7 +76,9 @@ function SelectPlanOfferingCtrl($scope, $parse, selectPlanOfferingService) {
 			},
 			{
 				summary: 'My T 100 M comes with detfult Essential  bouquet offering, and a choice of 3 other bouquets at a diferential price to choose from (this is the offering description). With upto 500 channels and 100 GB of data.',
-				title: "contracts Penalty",
+				title: "Contracts Penalty",
+				id:3,
+				code:"contractsPenalty",
 				contractsPenalty: [{
 						code: 1212331,
 						item1: 'Item 1 product name',
@@ -86,6 +94,8 @@ function SelectPlanOfferingCtrl($scope, $parse, selectPlanOfferingService) {
 			{
 				summary: 'My T 100 M comes with detfult Essential  bouquet offering, and a choice of 3 other bouquets at a diferential price to choose from (this is the offering description). With upto 500 channels and 100 GB of data.',
 				title: "EMI Plans",
+				id:4,
+				code:"EMIPlans",
 				EMIPlans: [{
 						code: 1212331,
 						item1: 'Item 1 product name',
