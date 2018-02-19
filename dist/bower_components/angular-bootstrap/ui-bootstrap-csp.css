@@ -3,6 +3,7 @@
 .ng-animate.item:not(.left):not(.right) {
   -webkit-transition: 0s ease-in-out left;
   transition: 0s ease-in-out left
+<<<<<<< HEAD
 }
 .uib-tab > div {
   position: relative;
@@ -50,4 +51,6 @@
 .nav-pills > .uib-tab.active > div:hover {
   color: #fff;
   background-color: #337ab7;
+=======
+>>>>>>> 564af596c4f4832d8b5fdd614b8c6396d85be8f1
 }

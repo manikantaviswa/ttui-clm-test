@@ -11,9 +11,16 @@
     "license": "MIT",
     "ignore": [],
     "description": "Native AngularJS (Angular) directives for Bootstrap.",
+<<<<<<< HEAD
     "version": "1.0.3",
     "main": ["./ui-bootstrap-tpls.js"],
     "dependencies": {
         "angular": ">=1.4.0"
+=======
+    "version": "0.13.4",
+    "main": ["./ui-bootstrap-tpls.js"],
+    "dependencies": {
+        "angular": ">=1.3.0"
+>>>>>>> 564af596c4f4832d8b5fdd614b8c6396d85be8f1
     }
 }

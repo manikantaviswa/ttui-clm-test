@@ -1,7 +1,6 @@
 'use strict';
 
 var module = angular.module('TT-UI-CLM.FeasibilitySearch.Services.SearchFeasibilityAPIService', [
-    'TT-UI.Common'
 ]);
 
 module.constant('API_CONFIG', {
@@ -12,21 +11,19 @@ module.constant('API_CONFIG', {
 
 function SearchFeasibilityAPIService($q, $parse, Api, ResourceFactory, API_CONFIG) {
 
-    var prepareRequest = function(payload) {
+    var prepareRequest = function(msisdn) {
         var requestData = {
-            feasibilityCheck: {
-                serviceNumber: $parse('serviceNumber')(payload),
-                locality: $parse('locality.name')(payload),
-                subLocality: $parse('subLocality.name')(payload),
-                street: $parse('street.name')(payload)
+            'service':{
+                'key': 'MSISDN',
+                'value': msisdn
             }
         };
         return requestData;
     };
 
-    var sendRequest = function(payload){
+    var sendRequest = function(msisdn){
         var apiService = ResourceFactory(Api.getUrl(), API_CONFIG.API_URL, API_CONFIG.API_METHOD);
-        return apiService.fetch(prepareRequest(payload)).$promise;
+        return apiService.fetch(prepareRequest(msisdn)).$promise;
     };
 
     var getErrors = function(response) {
@@ -44,8 +41,8 @@ function SearchFeasibilityAPIService($q, $parse, Api, ResourceFactory, API_CONFI
         return result;
     };
 
-    return function(payload) {
-        return sendRequest(payload)
+    return function(msisdn) {
+        return sendRequest(msisdn)
             .then(getErrors)
             .then(getData);
     };

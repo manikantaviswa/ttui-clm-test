@@ -15,6 +15,7 @@ module.directive('feasibilitySearch', function() {
             model: '=',
             config: '=',
             masterData: '=',
+            // permissions: '=',
             onSearch: '&'
         },
         controller: 'FeasibilitySearchCtrl',

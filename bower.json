@@ -14,7 +14,7 @@
     "tecnotree-ui-library": "git@git.tecnotree.com:tec_common/ui-lib.git#0.6.24.19",
     "angular-ui-calendar": "^1.0.2",
     "ttui-table": "http://git.tecnotree.com/tec_common/ttui-table.git#^0.1.1",
-    "ttui-navigation": "https://git.tecnotree.com/tec_common/ttui-navigation.git#0.0.33",   
+    "ttui-navigation": "https://git.tecnotree.com/tec_common/ttui-navigation.git#0.0.33",
     "angular-bootstrap-calendar": "^1.0.0"
   },
   "resolutions": {

@@ -448,6 +448,7 @@ var module = angular.module('TT-UI-CLM.Common.Services.CommonMasterDataUtil', [
 		};
 
 		var getCustomerSubCategory = function(customerType, customerCategory) {
+			debugger;
 			return CustomerSubCategoryLoaderFactory('customerType', 'customerCategory')
 				.load({}, {customerType: customerType, customerCategory: customerCategory});
 
