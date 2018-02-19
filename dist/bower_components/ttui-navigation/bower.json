@@ -1,0 +1,32 @@
+{
+	"name": "ttui-navigation",
+	"version": "0.0.33",
+	"main": [
+		"dist/css/navigation.css",
+		"dist/sass/navigation.scss",
+		"dist/scripts/ttui-navigation.js"
+	],
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"src",
+		"package.json",
+		"Gruntfile.js",
+		"karma.conf.js"
+	],
+	"dependencies": {
+		"jquery": "~2.0.3",
+		"bootstrap-sass-official": "~3.3.4",
+		"angular": "~1.4.8",
+		"angular-ui-router": "0.2.14",
+		"angular-bootstrap": "~1.0.0",
+		"angular-animate": "~1.4.8"
+	},
+	"devDependencies": {
+		"angular-mocks": "~1.4.8"
+	},
+	"resolutions": {
+		"angular": "~1.4.8"
+	}
+}
