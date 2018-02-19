@@ -12,6 +12,7 @@ angular.module('TT-UI-CLM.SelectPlanOffering',[
     'TT-UI-CLM.SelectPlanOffering.Directives.SelectPlanOffering',
 ])
 
+
 // Source: src/scripts/select-plan-offering/controller/select-plan-offering.controller.js
 var module = angular.module('TT-UI-CLM.SelectPlanOffering.Controllers.SelectPlanOfferingCtrl', [
     'TT-UI-CLM.SelectPlanOffering.Services.SelectPlanOfferingService',
@@ -336,24 +337,5 @@ function SelectOfferingPlanAPIService($q, $parse, Api, ResourceFactory, API_CONF
 SelectOfferingPlanAPIService.$inject = ['$q', '$parse', 'Api', 'ResourceFactory', 'API_CONFIG'];
 module.factory(SelectOfferingPlanAPIService.name, SelectOfferingPlanAPIService);
 
-
-// Source: src/scripts/select-plan-offering/services/select-plan-offering.service.js
-var module = angular.module('TT-UI-CLM.SelectPlanOffering.Services.SelectPlanOfferingService', [])
-function SelectPlanOfferingService($parse) {
-    return {
-        getOfferings: getOfferings
-    }
-
-    function getOfferings(masterData) {
-        var offeringList = [];
-        masterData.map(function (data, key) {
-            offeringList.push($parse('offering')(data));
-        });
-        return offeringList;
-    }
-}
-
-SelectPlanOfferingService.$inject = ['$parse'];
-module.service(SelectPlanOfferingService.name, SelectPlanOfferingService)
 return angular;
 })(window, window.angular);

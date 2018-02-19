@@ -16,52 +16,16 @@ angular.module('TT-UI-CLM.FeasibilitySearch', [
 // Source: src/scripts/feasibility-search/controller/feasibility-search.controller.js
 var module = angular.module('TT-UI-CLM.FeasibilitySearch.Controllers.FeasibilitySearchCtrl', [
     'TT-UI-CLM.FeasibilitySearch.Services.FeasibilitySearchService',
-<<<<<<< HEAD
-    'CLM-UI.Utils.Spinner',
-    'TT-UI-CLM.FeasibilitySearch.Services.SearchFeasibilityAPIService',
-]);
-
-function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService, SearchFeasibilityAPIService) {
-=======
     'TT-UI-CLM.FeasibilitySearch.Services.SearchFeasibilityAPIService',
 ]);
 
 function FeasibilitySearchCtrl($scope, $parse, feasibilitySearchService, SearchFeasibilityAPIService) {
->>>>>>> 564af596c4f4832d8b5fdd614b8c6396d85be8f1
     $scope.localities = [];
     $scope.subLocalities = [];
     $scope.streets = [];
 
     setInitialData();
-<<<<<<< HEAD
     $scope.validators = feasibilitySearchService.getValidators($scope.config);
-
-    $scope.searchAddressFeasibility = function(isNumberSearch) {
-        $scope.searchResult = null;
-        var searchResult = {};
-        Spinner.inner.show();
-        if (isNumberSearch) {
-            var req = { serviceNumber: $scope.model.serviceNumber };
-            searchResult.serviceNumberSearch = true;
-        } else {
-            var req = $scope.model.locality;
-            searchResult.localitySearch = true;
-        }
-        SearchFeasibilityAPIService(req).then(function(res) {
-            searchResult = angular.merge(res.feasibilityDetails, {
-                locality: $parse('model.locality.locality.name')($scope),
-                subLocality: $parse('model.locality.subLocality.name')($scope),
-                street: $parse('model.locality.street.name')($scope)
-            }, searchResult);
-
-            $scope.onSearch({$result: searchResult});
-            $scope.searchResult = searchResult;
-            Spinner.inner.hide();
-        }).catch(function(err) {
-            Spinner.inner.hide();            
-            console.log(err);
-        });
-=======
 
     $scope.searchAddressFeasibility = function() {
         $scope.onSearch({$result: $scope.model});
@@ -79,7 +43,6 @@ function FeasibilitySearchCtrl($scope, $parse, feasibilitySearchService, SearchF
             cabinet : '8689809485',
             fdp:  null
         }
->>>>>>> 564af596c4f4832d8b5fdd614b8c6396d85be8f1
     };
 
     $scope.onSelectLocality = function(item, model) {
@@ -96,7 +59,6 @@ function FeasibilitySearchCtrl($scope, $parse, feasibilitySearchService, SearchF
         setSubLocality();
     };
 
-<<<<<<< HEAD
     $scope.isRequired = function(field) {
         return $parse('validators.' + field + '.required')($scope);
     };
@@ -107,8 +69,6 @@ function FeasibilitySearchCtrl($scope, $parse, feasibilitySearchService, SearchF
         return $scope.isRequired(field) && showValidators && (hasReqError || !modelVal);
     };
 
-=======
->>>>>>> 564af596c4f4832d8b5fdd614b8c6396d85be8f1
     function setInitialData() {
         setLocalities();
         setSubLocalities();
@@ -118,54 +78,24 @@ function FeasibilitySearchCtrl($scope, $parse, feasibilitySearchService, SearchF
     function setLocalities() {
         $scope.localities = feasibilitySearchService.getLocalities($scope.masterData);
     }
-    
+
     function setSubLocalities(clearSubLocality) {
-<<<<<<< HEAD
-        var selectedLocality = $parse('model.locality.locality.code')($scope);
-        $scope.subLocalities = feasibilitySearchService.getSubLocalities($scope.localities, selectedLocality);
-        if (clearSubLocality) {
-            $parse('model.locality.subLocality').assign($scope, null);
-=======
         var selectedLocality = $parse('model.locality')($scope);
         $scope.subLocalities = feasibilitySearchService.getSubLocalities($scope.localities, selectedLocality);
         if (clearSubLocality) {
             $parse('model.subLocality').assign($scope, null);
->>>>>>> 564af596c4f4832d8b5fdd614b8c6396d85be8f1
         }
     }
-    
+
     function setStreets(clearStreet) {
-<<<<<<< HEAD
-        var selectedSubLocality = $parse('model.locality.subLocality.code')($scope);
-        $scope.streets = feasibilitySearchService.getStreets($scope.subLocalities, selectedSubLocality);
-        if (clearStreet) {
-            $parse('model.locality.street').assign($scope, null);
-=======
         var selectedSubLocality = $parse('model.subLocality')($scope);
         $scope.streets = feasibilitySearchService.getStreets($scope.subLocalities, selectedSubLocality);
         if (clearStreet) {
             $parse('model.street').assign($scope, null);
->>>>>>> 564af596c4f4832d8b5fdd614b8c6396d85be8f1
         }
     }
 
     function setLocality() {
-<<<<<<< HEAD
-        var localityCode = $parse('model.locality.subLocality.locality.code')($scope);
-        var locality = getItemByCode($scope.localities, localityCode);
-        if (locality) {
-            $parse('model.locality.locality').assign($scope, locality);
-        }
-    }
-
-    function setSubLocality() {
-        var subLocalityCode = $parse('model.locality.street.subLocality.code')($scope);
-        var subLocality = getItemByCode($scope.subLocalities, subLocalityCode);
-        if (subLocality) {
-            $parse('model.locality.subLocality').assign($scope, subLocality);
-            setLocality();
-        }
-=======
         var locality = getItemByCode($scope.localities, $scope.model.subLocality.locality.code);
         $parse('model.locality').assign($scope, locality);
     }
@@ -174,7 +104,6 @@ function FeasibilitySearchCtrl($scope, $parse, feasibilitySearchService, SearchF
         var subLocality = getItemByCode($scope.subLocalities, $scope.model.street.subLocality.code);
         $parse('model.subLocality').assign($scope, subLocality);
         setLocality();
->>>>>>> 564af596c4f4832d8b5fdd614b8c6396d85be8f1
     }
 
     function getItemByCode(list, code) {
@@ -191,13 +120,7 @@ function FeasibilitySearchCtrl($scope, $parse, feasibilitySearchService, SearchF
 FeasibilitySearchCtrl.$inject = [
     '$scope',
     '$parse',
-<<<<<<< HEAD
-    'Spinner',
-    'FeasibilitySearchService',
-    'SearchFeasibilityAPIService'
-=======
     'FeasibilitySearchService'
->>>>>>> 564af596c4f4832d8b5fdd614b8c6396d85be8f1
 ];
 module.controller(FeasibilitySearchCtrl.name, FeasibilitySearchCtrl);
 
@@ -216,14 +139,9 @@ module.directive('feasibilitySearch', function() {
         restrict: 'EA',
         scope: {
             model: '=',
-<<<<<<< HEAD
             config: '=',
             masterData: '=',
-=======
-            // config: '=',
-            masterData: '=',
             // permissions: '=',
->>>>>>> 564af596c4f4832d8b5fdd614b8c6396d85be8f1
             onSearch: '&'
         },
         controller: 'FeasibilitySearchCtrl',
@@ -234,10 +152,6 @@ module.directive('feasibilitySearch', function() {
 
 // Source: src/scripts/feasibility-search/services/feasibility-search.api.service.js
 var module = angular.module('TT-UI-CLM.FeasibilitySearch.Services.SearchFeasibilityAPIService', [
-<<<<<<< HEAD
-    'TT-UI.Common'
-=======
->>>>>>> 564af596c4f4832d8b5fdd614b8c6396d85be8f1
 ]);
 
 module.constant('API_CONFIG', {
@@ -248,35 +162,19 @@ module.constant('API_CONFIG', {
 
 function SearchFeasibilityAPIService($q, $parse, Api, ResourceFactory, API_CONFIG) {
 
-<<<<<<< HEAD
-    var prepareRequest = function(payload) {
-        var requestData = {
-            feasibilityCheck: {
-                serviceNumber: $parse('serviceNumber')(payload),
-                locality: $parse('locality.name')(payload),
-                subLocality: $parse('subLocality.name')(payload),
-                street: $parse('street.name')(payload)
-=======
     var prepareRequest = function(msisdn) {
         var requestData = {
             'service':{
                 'key': 'MSISDN',
                 'value': msisdn
->>>>>>> 564af596c4f4832d8b5fdd614b8c6396d85be8f1
             }
         };
         return requestData;
     };
 
-<<<<<<< HEAD
-    var sendRequest = function(payload){
-        var apiService = ResourceFactory(Api.getUrl(), API_CONFIG.API_URL, API_CONFIG.API_METHOD);
-        return apiService.fetch(prepareRequest(payload)).$promise;
-=======
     var sendRequest = function(msisdn){
         var apiService = ResourceFactory(Api.getUrl(), API_CONFIG.API_URL, API_CONFIG.API_METHOD);
         return apiService.fetch(prepareRequest(msisdn)).$promise;
->>>>>>> 564af596c4f4832d8b5fdd614b8c6396d85be8f1
     };
 
     var getErrors = function(response) {
@@ -294,13 +192,8 @@ function SearchFeasibilityAPIService($q, $parse, Api, ResourceFactory, API_CONFI
         return result;
     };
 
-<<<<<<< HEAD
-    return function(payload) {
-        return sendRequest(payload)
-=======
     return function(msisdn) {
         return sendRequest(msisdn)
->>>>>>> 564af596c4f4832d8b5fdd614b8c6396d85be8f1
             .then(getErrors)
             .then(getData);
     };
@@ -318,20 +211,12 @@ function FeasibilitySearchService($parse) {
     return {
         getLocalities: getLocalities,
         getSubLocalities: getSubLocalities,
-<<<<<<< HEAD
         getStreets: getStreets,
         getValidators: getValidators
     };
 
     function getLocalities(masterData) {
         var localities;
-=======
-        getStreets: getStreets
-    };
-
-    function getLocalities(masterData) {
-        var localities = [];
->>>>>>> 564af596c4f4832d8b5fdd614b8c6396d85be8f1
         var localitiesList = $parse('localities.locality')(masterData);
         if (localitiesList && localitiesList.length) {
             var localitiesObj = {};
@@ -354,13 +239,10 @@ function FeasibilitySearchService($parse) {
             localities = localitiesList.map(function(loc) {
                 return angular.merge({}, loc, localitiesObj[loc.code]);
             });
-<<<<<<< HEAD
             localities.splice(0, 0, {
                 name: 'Choose Locality',
                 code: ''
             });
-=======
->>>>>>> 564af596c4f4832d8b5fdd614b8c6396d85be8f1
         }
         return localities;
     }
@@ -368,11 +250,7 @@ function FeasibilitySearchService($parse) {
     function getSubLocalities(localities, locality) {
         var subLocalities = [];
         localities.forEach(function(loc) {
-<<<<<<< HEAD
             if (!locality || (loc.code === locality)) {
-=======
-            if (!locality || (locality && loc.code === locality.code)) {
->>>>>>> 564af596c4f4832d8b5fdd614b8c6396d85be8f1
                 var sls = $parse('subLocalities.subLocality')(loc);
                 if (sls && sls.length) {
                     sls.forEach(function(sl) {
@@ -382,24 +260,17 @@ function FeasibilitySearchService($parse) {
                 }
             }
         });
-<<<<<<< HEAD
         subLocalities.splice(0, 0, {
             name: 'Choose Sub Locality',
             code: ''
         });
-=======
->>>>>>> 564af596c4f4832d8b5fdd614b8c6396d85be8f1
         return subLocalities;
     }
 
     function getStreets(subLocalities, subLocality) {
         var streets = [];
         subLocalities.forEach(function(sl) {
-<<<<<<< HEAD
             if(!subLocality || (subLocality === sl.code)) {
-=======
-            if(!subLocality || (subLocality && subLocality.code === sl.code)) {
->>>>>>> 564af596c4f4832d8b5fdd614b8c6396d85be8f1
                 var sts = $parse('streets.street')(sl);
                 if(sts && sts.length) {
                     sts.forEach(function(st) {
@@ -409,7 +280,6 @@ function FeasibilitySearchService($parse) {
                 }
             }
         });
-<<<<<<< HEAD
         streets.splice(0, 0, {
             name: 'Choose Street',
             code: ''
@@ -436,10 +306,6 @@ function FeasibilitySearchService($parse) {
         }
     }
 
-=======
-        return streets;
-    }
->>>>>>> 564af596c4f4832d8b5fdd614b8c6396d85be8f1
 }
 FeasibilitySearchService.$inject = ['$parse']
 module.service(FeasibilitySearchService.name, FeasibilitySearchService);

@@ -7,12 +7,6 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
   "use strict";
 
 
-// Source: src/scripts/slot-picker/index.js
-angular.module('TT-UI-CLM.SlotPicker', [
-    'TT-UI-CLM.SlotPicker.Directives.SlotPicker',
-]);
-
-
 // Source: src/scripts/slot-picker/controller/slot-picker.controller.js
 var module = angular.module('TT-UI-CLM.SlotPicker.Controllers.SlotPickerCtrl', []);
 
@@ -91,29 +85,6 @@ SlotPickerCtrl.$inject = [
     'uiCalendarConfig'
 ];
 module.controller(SlotPickerCtrl.name, SlotPickerCtrl);
-
-
-// Source: src/scripts/slot-picker/directives/slot-picker.directive.js
-var module = angular.module('TT-UI-CLM.SlotPicker.Directives.SlotPicker', [
-    'TT-UI-CLM.SlotPicker.Controllers.SlotPickerCtrl',
-    'TT-UI-CLM.SlotPicker.Tpl',
-    'ui.calendar',
-//    'ui.bootstrap'
-]);
-
-module.directive('slotPicker', function() {
-    return {
-        restrict: 'EA',
-        scope: {
-            model: '=',
-            // config: '=',
-            masterData: '=',
-            onSearch: '&'
-        },
-        controller: 'SlotPickerCtrl',
-        templateUrl: 'scripts/slot-picker/views/slot-picker.tpl.html'
-    };
-});
 
 return angular;
 })(window, window.angular);

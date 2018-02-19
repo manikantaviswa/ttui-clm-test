@@ -77,41 +77,28 @@ var module = angular.module('TT-UI-CLM.FxlSelectOffering.Directives.SelectOfferi
     'TT-UI-CLM.FxlSelectOffering.Controllers.FxlSelectOfferingCtrl',
     'TT-UI-CLM.FxlSelectOffering.Services.FxlSelectOfferingService',
     'TT-UI-CLM.FxlSelectOffering.Tpl'
-   
+
 ]);
 
 module.directive('selectOffering', selectOfferingDetail)
-<<<<<<< HEAD
-function selectOfferingDetail() {
-    var directive = {
-        restrict: 'EA',
-        replace: true,
-        scope: {
-            masterData: '='
-        },
-        controller: 'FxlSelectOfferingCtrl',
-        templateUrl: 'scripts/fxl-select-offering/views/fxl-select-offering.tpl.html'
-    };
-    return directive;
-}
-=======
 
     function selectOfferingDetail() {
         debugger;
         var directive = {
             restrict: 'EA',
             replace: true,
-            scope: { 
-              masterData: '='
+            scope: {
+                searchofferingModel: '=',
+                masterData: '=',
+                onSearch: '='
             },
               controller: 'FxlSelectOfferingCtrl',
               templateUrl: 'scripts/fxl-select-offering/views/fxl-select-offering.tpl.html',
-           
+
         };
         return directive;
     }
 
->>>>>>> 564af596c4f4832d8b5fdd614b8c6396d85be8f1
 
 
 // Source: src/scripts/fxl-select-offering/services/fxl-select-offering-services.js

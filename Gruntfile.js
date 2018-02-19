@@ -1,14 +1,15 @@
 module.exports = function(grunt) {
 	'use strict';
- 
+
 	var moduleFilePrefix = 'ttui-clm-';
- 
+
 	var modules = {
-	   'fxl-select-offering': 'TT-UI-CLM.FxlSelectOffering.Tpl',	   
+	   'fxl-select-offering': 'TT-UI-CLM.FxlSelectOffering.Tpl',
 	   'feasibility-search': 'TT-UI-CLM.FeasibilitySearch.Tpl',
+	   'select-plan-offering': 'TT-UI-CLM.SelectPlanOffering.Tpl',
 	   'select-number': 'TT-UI-CLM.SelectNumber.Tpl'
 	};
- 
+
 	grunt.initConfig({
 	   jshint: {
 		  scripts: {
@@ -17,13 +18,13 @@ module.exports = function(grunt) {
 			 ]
 		  }
 	   },
- 
+
 	   clean: {
 		  dist: 'dist',
 		  server: '.tmp',
 		  removeNgTemplates: ['src/scripts/**/*.tpl.js']
 	   },
- 
+
 	   copy: {
 		  dist: {
 			 expand: true,
@@ -37,7 +38,7 @@ module.exports = function(grunt) {
 			 ]
 		  }
 	   },
- 
+
 	   concat: {
 		  dist: {
 			 options: {
@@ -48,19 +49,19 @@ module.exports = function(grunt) {
 				   '}\n\n' +
 				   '(function (window, angular, undefined) {\n' +
 				   '  "use strict";\n\n',
- 
+
 				footer:
 				   '\n'+
 				   'return angular;\n'+
 				   '})(window, window.angular);\n',
- 
+
 				sourceMap: false, // uglify does this
- 
+
 				process: function(src, filepath) {
 				   return '\n// Source: ' + filepath + '\n' + src.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
 				}
 			 },
- 
+
 			 files: [
 				{
 				  expand: true,
@@ -79,7 +80,7 @@ module.exports = function(grunt) {
 				}
 			 ]
 		  },
- 
+
 		  library: {
 			 options: {},
 			 files: [{
@@ -90,7 +91,7 @@ module.exports = function(grunt) {
 			 }]
 		  }
 	   },
- 
+
 	   uglify: {
 		  dist: {
 			 options: {
@@ -110,7 +111,7 @@ module.exports = function(grunt) {
 			 }]
 		  }
 	   },
- 
+
 	   ngtemplates: {
 		  dist: {
 			 options: {
@@ -121,7 +122,7 @@ module.exports = function(grunt) {
 				},
 					 prefix: 'scripts',
 				bootstrap: function(moduleName, script) {
- 
+
 				   var header =
 								 '/* commonjs package manager support (eg componentjs) */\n' +
 								 'if (typeof module !== "undefined" && typeof exports !== "undefined" && module.exports === exports){\n' +
@@ -130,13 +131,13 @@ module.exports = function(grunt) {
 								 '(function (window, angular, undefined) {\n' +
 								 '  "use strict";\n\n'+
 					  'angular.module(\''+moduleName+'\',[]).run([\'$templateCache\', function($templateCache) {\n';
- 
- 
+
+
 				   var footer =
 					  '}]);\n'+
 							 'return angular;\n'+
 							 '})(window, window.angular);\n';
- 
+
 				   var cwd = grunt.template.process('app');
 				   script = script.replace(new RegExp(cwd, 'g'), '');
 				   script = script.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
@@ -170,13 +171,13 @@ module.exports = function(grunt) {
 		  }
 	   }
 	});
- 
+
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-angular-templates');
- 
+
 	grunt.registerTask('build', [
 		'clean',
 		'concat:dist',
@@ -187,4 +188,3 @@ module.exports = function(grunt) {
 	    'clean:removeNgTemplates'
 	]);
  };
- 

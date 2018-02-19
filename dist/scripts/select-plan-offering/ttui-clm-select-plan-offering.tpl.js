@@ -6,7 +6,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 (function (window, angular, undefined) {
   "use strict";
 
-angular.module('TT-UI-CLM.SelectPlanOffering.Tpl',[]).run(['$templateCache', function($templateCache) {
+angular.module('undefined',[]).run(['$templateCache', function($templateCache) {
 $templateCache.put('scripts/select-plan-offering/views/select-plan-offering.tpl.html',
     "<style>/* Style the tab content */\r" +
     "\n" +
