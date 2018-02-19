@@ -10,28 +10,36 @@ function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService
     $scope.localities = [];
     $scope.subLocalities = [];
     $scope.streets = [];
+    $scope.form = {
+        localitySearch: {},
+        serviceNumSearch: {}
+    };
 
-    setInitialData();
     $scope.validators = feasibilitySearchService.getValidators($scope.config);
 
     $scope.searchAddressFeasibility = function(isNumberSearch) {
         $scope.searchResult = null;
         var searchResult = {};
-        Spinner.inner.show();
+        var req;
+        $parse('form.localitySearch.$valid')($scope);
         if (isNumberSearch) {
-            var req = { serviceNumber: $scope.model.serviceNumber };
+            if ($parse('form.serviceNumSearch.$invalid')($scope)) {
+                $scope.form.serviceNumSearch.$setSubmitted();
+                return;
+            }
+            req = { serviceNumber: $scope.model.serviceNumber };
             searchResult.serviceNumberSearch = true;
         } else {
-            var req = $scope.model.locality;
+            if ($parse('form.localitySearch.$invalid')($scope)) {
+                $scope.form.localitySearch.$setSubmitted();
+                return;
+            }
+            req = $scope.model.locality;
             searchResult.localitySearch = true;
         }
+        Spinner.inner.show();
         SearchFeasibilityAPIService(req).then(function(res) {
-            searchResult = angular.merge(res.feasibilityDetails, {
-                locality: $parse('model.locality.locality.name')($scope),
-                subLocality: $parse('model.locality.subLocality.name')($scope),
-                street: $parse('model.locality.street.name')($scope)
-            }, searchResult);
-
+            searchResult = angular.merge(res.feasibilityDetails, $scope.model, searchResult);
             $scope.onSearch({$result: searchResult});
             $scope.searchResult = searchResult;
             Spinner.inner.hide();
@@ -60,8 +68,8 @@ function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService
     };
 
     $scope.requiredValidity = function(subForm, field, modelVal) {
-        var showValidators = $parse(subForm + '.' + field + '.$dirty')($scope) || $parse(subForm + '.$submitted')($scope);
-        var hasReqError = $parse(subForm + '.' + field + '.$error.required')($scope);
+        var showValidators = $parse(subForm + '.' + field + '.$dirty')($scope.form) || $parse(subForm + '.$submitted')($scope.form);
+        var hasReqError = $parse(subForm + '.' + field + '.$error.required')($scope.form);
         return $scope.isRequired(field) && showValidators && (hasReqError || !modelVal);
     };
 
@@ -69,22 +77,28 @@ function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService
         setLocalities();
         setSubLocalities();
         setStreets();
+        if(angular.isDefined($parse('model.serviceNumber')($scope))) {
+            $scope.searchAddressFeasibility(true);
+        } if (angular.isDefined($parse('model.locality.street')($scope))) {
+            $scope.searchAddressFeasibility(false);            
+        }
     }
+    setInitialData();    
 
     function setLocalities() {
         $scope.localities = feasibilitySearchService.getLocalities($scope.masterData);
     }
-    
+
     function setSubLocalities(clearSubLocality) {
-        var selectedLocality = $parse('model.locality.locality.code')($scope);
+        var selectedLocality = $parse('model.locality.locality')($scope);
         $scope.subLocalities = feasibilitySearchService.getSubLocalities($scope.localities, selectedLocality);
         if (clearSubLocality) {
             $parse('model.locality.subLocality').assign($scope, null);
         }
     }
-    
+
     function setStreets(clearStreet) {
-        var selectedSubLocality = $parse('model.locality.subLocality.code')($scope);
+        var selectedSubLocality = $parse('model.locality.subLocality')($scope);
         $scope.streets = feasibilitySearchService.getStreets($scope.subLocalities, selectedSubLocality);
         if (clearStreet) {
             $parse('model.locality.street').assign($scope, null);
@@ -92,18 +106,18 @@ function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService
     }
 
     function setLocality() {
-        var localityCode = $parse('model.locality.subLocality.locality.code')($scope);
-        var locality = getItemByCode($scope.localities, localityCode);
+        var subLocalityObj = getItemByCode($scope.subLocalities, $parse('model.locality.subLocality')($scope));
+        var locality = getItemByCode($scope.localities, $parse('locality.code')(subLocalityObj));
         if (locality) {
-            $parse('model.locality.locality').assign($scope, locality);
+            $parse('model.locality.locality').assign($scope, locality.code);
         }
     }
 
     function setSubLocality() {
-        var subLocalityCode = $parse('model.locality.street.subLocality.code')($scope);
-        var subLocality = getItemByCode($scope.subLocalities, subLocalityCode);
+        var streetObj = getItemByCode($scope.streets, $parse('model.locality.street')($scope));
+        var subLocality = getItemByCode($scope.subLocalities, $parse('subLocality.code')(streetObj))
         if (subLocality) {
-            $parse('model.locality.subLocality').assign($scope, subLocality);
+            $parse('model.locality.subLocality').assign($scope, subLocality.code);
             setLocality();
         }
     }
