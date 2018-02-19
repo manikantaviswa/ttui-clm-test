@@ -13,17 +13,31 @@ function SlotPickerCtrl($scope, $compile, uiCalendarConfig) {
   
   $scope.colors = ['#ccc', '#ffa500', '#65abff', '#008000',];
   $scope.colorMeaning = ['No Slots', 'Morning Slots Free', 'Afternoon Slots Free', 'Both the slots are free']
-  function getColor() {
-    return $scope.colors[Math.floor((Math.random() * $scope.colors.length)-1)];
+  function getSlots() {
+    return Math.floor(Math.random() * ($scope.colors.length));
   }
 
   for(var i=0; i<90; i++) {
+    var slots = getSlots();
+    console.log(slots);
+    var slotObjs = [];
+    switch(slots) {
+      case 1: 
+        slotObjs = [{time: '10:00 AM to 12:30 AM', free: 2}]
+        break;
+      case 2: 
+        slotObjs = [{time: '02:00 AM to 4:30 AM', free: 3}]
+        break;
+      case 3:
+        slotObjs = [{time: '10:00 AM to 12:30 AM', free: 1}, {time: '02:00 AM to 4:30 AM', free: 5}]
+    };
     $scope.slots.push({
       title: 'Slot',
       allDay: true,
       start: new Date(y, m, d+i),
       rendering: 'background',
-      backgroundColor: getColor()
+      backgroundColor: $scope.colors[slots],
+      freeSlots: slotObjs
     });
   }
 
@@ -37,7 +51,7 @@ function SlotPickerCtrl($scope, $compile, uiCalendarConfig) {
       start: date.toDate(),
       rendering: 'background',
       backgroundColor: 'dodgerblue',
-      slots: filtered
+      freeSlots: filtered[0].freeSlots
     }];
     console.log(filtered);
   };
