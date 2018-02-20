@@ -16,6 +16,14 @@
 		padding-right: 0;
 	}
 
+	.bt-1x {
+		border-top: 1px solid #ddd;
+	}
+
+	.pt-5x {
+		padding-top: 5px;
+	}
+
 	.tabcontent {
 		float: left;
 		padding: 0px 12px;
@@ -24,10 +32,6 @@
 		border-left: none;
 		height: auto;
 		border-top: 1px solid #ccc
-	}
-
-	.tablist {
-		margin-top: 80px;
 	}
 
 	.table-list {
@@ -40,28 +44,43 @@
 		width: 100%;
 	}
 
-	.table-list li.list-group-item{
-		border:none;
+	.table-list li.list-group-item {
+		border: none;
 		border-bottom: 1px solid #ddd;
 	}
-	
-	.prodcutSummary {
-		border-bottom: 1px solid #ccc;
+
+	.show-table {
+		display: table
 	}
-		.equipment-table.table>tbody>tr>td{
-			border-top:none;
-		}
-		.charges-table.table>tbody>tr>td,
-		.contractsPenalty-table.table>tbody>tr>td,
-		.charges-table.table>tbody>tr>th,
-		.EMIPlan-tabl.table>tbody>tr>td{
-          border-top:none;
-		}
-		
-		.charges-table.table>tbody>tr>th.border-top{
-		  border-top:1px solid #ddd;
-		}
-		
+
+	.selectOffering table>tbody>tr.expanding-row.show-row {
+		display: table-row
+	}
+
+	;
+	.ttui-table.ttui-table>tbody>tr.expanding-row>td .table>tbody {
+		background: transparent !important;
+	}
+
+	.selectOffering table>tbody>tr.expanding-row.show-row .table {
+		background: transparent !important;
+	}
+
+	.equipment-table.table>tbody>tr>td {
+		border-top: none;
+	}
+
+	.charges-table.table>tbody>tr>td,
+	.contractsPenalty-table.table>tbody>tr>td,
+	.charges-table.table>tbody>tr>th,
+	.EMIPlan-tabl.table>tbody>tr>td {
+		border-top: none;
+	}
+
+	.charges-table.table>tbody>tr>th.border-top {
+		border-top: 1px solid #ddd;
+	}
+
 
 	/* Style the tab */
 
@@ -72,22 +91,31 @@
 		width: 20%;
 		height: auto;
 	}
+
+	.selectOffering table.ttui-table.table.show {
+		display: table !important;
+	}
+
+	.selectOffering table>tbody>tr.expanding-row {
+		display: none;
+	}
 </style>
 
-<div class="col-md-12" style="padding: 0px;" ng-controller="SelectPlanOfferingCtrl as tabctrl">
+<div class="col-md-12 selectOffering" style="padding: 0px;">
+
 	<div class="panel panel-default">
 		<div class="panel-body table-no-padding">
-			<table tt-table st-table="offeringList" st-safe-src="plansList" st-items-by-page="10" class="table ttui-table">
+			<table tt-table st-table="offeringData" st-items-by-page="10" class="ttui-table table">
 				<thead class="table-extra-header">
 					<tr>
-						<th colspan="8">
+						<th colspan="{{tableCtrl.colspan}}">
 							<span class="table-extra-header-left">
 								<tt-table-filter-tags tags="tableCtrl.tableState.search.predicateObject"></tt-table-filter-tags>
 							</span>
 							<!-- table actions -->
 							<span class="table-extra-header-right">
 								<a ng-show="tableCtrl.showActions()" class="btn btn-default" ng-click="example.executeAction(tableCtrl.getSelectionModel())"
-								 href>action 1</a>
+								    href>action 1</a>
 								<a ng-show="tableCtrl.showActions()" class="btn btn-default" href>action 2</a>
 								<a ng-show="tableCtrl.showActions()" class="btn btn-default" href>action 3</a>
 							</span>
@@ -101,10 +129,18 @@
 						<!-- <th uib-dropdown is-open="dropdownCtrl.isOpen" auto-close="disabled" tt-table-dropdown path="column.path" set-filters="column.filters">
 							<tt-table-text-tooltip text="'Offering'" uib-dropdown-toggle></tt-table-text-tooltip>
 						</th> -->
-						<th translate="Offerings">Offerings</th>
+						<th uib-dropdown tt-table-dropdown is-open="dropdownCtrl.isOpen" disable-auto-filters="true" auto-close="disabled" path="'offering'"
+						    set-filters="codeFilters">
+							<tt-table-text-tooltip text="'Offerings'" uib-dropdown-toggle></tt-table-text-tooltip>
+						</th>
+
 						<th translate="Variant">Variant</th>
 						<th translate="Allowance">Allowance</th>
-						<th st-sort="charges.sumOfRC" translate="Charges">Charges</th>
+
+						<th uib-dropdown tt-table-dropdown is-open="dropdownCtrl.isOpen" disable-auto-filters="true" auto-close="disabled" path="'charges.sumOfRC'"
+						    set-filters="codeFilters">
+							<tt-table-text-tooltip text="'Charges'" uib-dropdown-toggle></tt-table-text-tooltip>
+						</th>
 						<th></th>
 						<th></th>
 						<th></th>
@@ -121,43 +157,40 @@
 								<option value="">Select</option>
 							</select>
 						</td>
-						<td ng-bind="items.allowanceDescription" data-mobile-label="Allowance">
-						</td>
+						<td ng-bind="items.allowanceDescription" data-mobile-label="Allowance"></td>
 						<td ng-bind="::items.offering.charges.sumOfRC | currency  : items.offering.currency.code"></td>
 						<td translate="%">%</td>
 						<td translate="EMI">EMI</td>
 						<td>
-							<a class="list-group-item-link" href ng-if="items.selected" ng-click="items.selected = !items.selected; $event.stopPropagation();"
-							 translate="Select">Selected</a>
+							<a class="list-group-item-link" href ng-if="items.selected" ng-click="items.selected = items.selected; $event.stopPropagation();"
+							    translate="Selected">Selected</a>
 							<a class="list-group-item-link" href ng-if="!items.selected" ng-click="items.selected = !items.selected; $event.stopPropagation();"
-							 translate="Select">Select</a>
+							    translate="Select">Select</a>
 						</td>
 						<td>
 							<a class="list-group-item-link" translate="Details" ng-click="items._meta.expanded=!items._meta.expanded; getOfferingDetailsView()">Details</a>
 						</td>
 					</tr>
 
-					<tr class="expanding-row" ng-class="{'hide':!items._meta.expanded}">
-
-						<td colspan="8">
-							<div uib-collapse="items._meta.expanded">
-
-								<div class="col-sm-3 tablist plr-0">
+					<tr class="expanding-row" ng-class="{'show-row':items._meta.expanded}">
+						<td colspan="{{tableCtrl.colspan}}">
+							<div class="col-sm-12" uib-collapse="!items._meta.expanded">
+								<div class="col-sm-12 pr-0" ng-repeat="(key, val) in tabs" ng-show="key == $parent.tabId">
+									<p class="col-sm-9 col-sm-offset-3 prodcutSummary">{{val.summary}}</p>
+								</div>
+								<div class="col-sm-3 tablist plr-0 pt-5x bt-1x">
 									<ul class="nav nav-list nav-stacked">
-										<li role="presentation" ng-init= "$parent.selected = 'inclusionsAllowance0'" ng-repeat="tab in tabs" ng-class="{'active':$parent.selected == (tab.code + $parent.$index)}">
-											<a href="" ng-click="$parent.selected = (tab.code + $parent.$index);reach(111);" translate="{{tab.title}}">{{tab.title}}</a>
+										<li role="presentation" ng-repeat="tab in tabs track by $index" ng-class="{'active': $index == $parent.tabId}">
+											<a href ng-click="setTab($parent.$index,$event);" translate="{{tab.title}}">{{tab.title}}</a>
 										</li>
-
 									</ul>
 								</div>
 
-
-								<!-- Tab panes -->
-								<div class="col-sm-9 plr-0">
-									<div class="tab-content">										
-										<div class="tab-pane" ng-init= "$parent.selected = 'inclusionsAllowance0'"  ng-repeat="(key, val) in tabs" ng-class="{'show':$parent.selected == (val.code + $parent.$index)}">
-												<div class="col-sm-12 pr-0">
-												<p class="prodcutSummary">{{val.summary}}</p>
+								<div class="col-sm-9 plr-0 pt-5x bt-1x">
+									<div class="tab-content">
+										<div class="tab-pane" ng-repeat="(key, val) in tabs" ng-class="{'show': key == $parent.tabId}">
+											<div class="col-sm-12 pr-0">
+												<!-- <p class="prodcutSummary">{{val.summary}}</p> -->
 
 												<div class="col-sm-12 plr-0" ng-show="key == 0">
 													<ul class="list-group table-list">
@@ -224,7 +257,7 @@
 														</tr>
 														<tr>
 															<td>Insatallation Charge</td>
-															<td>MUR 100.00</td>															
+															<td>MUR 100.00</td>
 														</tr>
 
 														<tr>
@@ -305,22 +338,26 @@
 									</div>
 								</div>
 							</div>
+						</td>
+					</tr>
+
+				</tbody>
+
+
+				<tfoot ng-if="tableCtrl.enablePagination">
+					<tr>
+						<td colspan="8">
+							<tt-table-pagination />
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="row panel-body" ng-if="offeringData == 0">
+				<div class="col-xs-12" translate="To see eligible plans list you need to select plan first">
+					To see eligible plans list you need to select plan first
+				</div>
+			</div>
 		</div>
-		</td>
-		</tr>
-
-		</tbody>
-		<tfoot>
-			<tr>
-				<td colspan="8">
-					<div st-pagination="" st-items-by-page=10 st-displayed-pages=20 st-template="scripts/ttui-table/table-pagination.tpl.html"
-					    class="pull-right"></div>
-				</td>
-			</tr>
-		</tfoot>
-
-		</table>
 	</div>
-</div>
 
 </div>

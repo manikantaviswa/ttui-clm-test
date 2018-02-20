@@ -13,6 +13,7 @@ module.directive('selectPlanOffering',function(){
         restrict:'EA',
         templateUrl:'scripts/select-plan-offering/views/select-plan-offering.tpl.html',
         controller:'SelectPlanOfferingCtrl',
+        controllerAs: 'selectOffering',
         scope:{
             model: '=',
             masterData: '=',
