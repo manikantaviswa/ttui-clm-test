@@ -1,10 +1,15 @@
 'use strict';
 
 var module = angular.module('TT-UI-CLM.SelectPlanOffering.Controllers.SelectPlanOfferingCtrl', [
-
+    'smart-table',
+    'TT-UI.Table',
+    'ttui-table.tpl',
+    'uib/template/modal/window.html',
+    'uib/template/modal/backdrop.html',
+    'ui.bootstrap.modal'
 ])
 
-function SelectPlanOfferingCtrl($scope, $parse) {
+function SelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa) {
     $scope.selectedVariant = {
         code: ""
     };
@@ -49,6 +54,13 @@ function SelectPlanOfferingCtrl($scope, $parse) {
             selectedOffer.code === offer.offering.code ? offer.selected = !offer.selected : "";
         });
         Spinner.inner.show();
+         SelectOfferingPlanAPIService(req).then(function(res) {
+             debugger
+             Spinner.inner.hide();
+         }).catch(function(err) {
+             Spinner.inner.hide();
+             console.log(err);
+        });
     }
 
 	$scope.getOfferingDetailsView = function () {
@@ -60,21 +72,19 @@ function SelectPlanOfferingCtrl($scope, $parse) {
 		})
 	}
 
-	this.tabId = 0;
+	$scope.tabId = 0;
 
-	this.setTab = function (tabId) {
-
-		this.tabId = tabId;
+	$scope.setTab = function (tabId, $event) {
+		debugger
+		$scope.tabId = tabId;
+        $event.stopPropagation();
 	};
-
-	this.isSet = function (tabId) {
-		return this.tabId === tabId;
-	};
-
 }
 
 SelectPlanOfferingCtrl.$inject = [
 	'$scope',
-	'$parse'
+    '$parse',
+    '$timeout',
+    '$uibModal',
 ]
 module.controller(SelectPlanOfferingCtrl.name, SelectPlanOfferingCtrl)
