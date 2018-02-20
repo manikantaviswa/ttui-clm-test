@@ -18,8 +18,6 @@ function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService
     $scope.validators = feasibilitySearchService.getValidators($scope.config);
 
     $scope.searchAddressFeasibility = function(isNumberSearch) {
-        $scope.searchResult = null;
-        var searchResult = {};
         var req;
         $parse('form.localitySearch.$valid')($scope);
         if (isNumberSearch) {
@@ -28,18 +26,20 @@ function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService
                 return;
             }
             req = { serviceNumber: $scope.model.serviceNumber };
-            searchResult.serviceNumberSearch = true;
+            $scope.model.serviceNumberSearch = true;
+            delete $scope.model.localitySearch;
         } else {
             if ($parse('form.localitySearch.$invalid')($scope)) {
                 $scope.form.localitySearch.$setSubmitted();
                 return;
             }
             req = $scope.model.locality;
-            searchResult.localitySearch = true;
+            $scope.model.localitySearch = true;
+            delete $scope.model.serviceNumberSearch;
         }
         Spinner.inner.show();
         SearchFeasibilityAPIService(req).then(function(res) {
-            searchResult = angular.merge(res.feasibilityDetails, $scope.model, searchResult);
+            var searchResult = angular.merge({}, $scope.model, res.feasibilityDetails);
             $scope.onSearch({$result: searchResult});
             $scope.searchResult = searchResult;
             Spinner.inner.hide();
