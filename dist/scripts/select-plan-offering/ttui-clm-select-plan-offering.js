@@ -12,45 +12,22 @@ angular.module('TT-UI-CLM.SelectPlanOffering',[
     'TT-UI-CLM.SelectPlanOffering.Directives.SelectPlanOffering',
 ])
 
+
 // Source: src/scripts/select-plan-offering/controller/select-plan-offering.controller.js
 var module = angular.module('TT-UI-CLM.SelectPlanOffering.Controllers.SelectPlanOfferingCtrl', [
-	'TT-UI-CLM.SelectPlanOffering.Services.SelectPlanOfferingService',
-	'smart-table',
-	'TT-UI.Table',
-	'ttui-table.tpl',
-	'uib/template/modal/window.html',
-	'uib/template/modal/backdrop.html',
-	'ui.bootstrap.modal'
-	//  'TT-UI-CLM.SelectPlanOffering.Services.SelectOfferingPlanAPIService',
+
 ])
 
-function SelectPlanOfferingCtrl($scope, $parse, selectPlanOfferingService, $timeout, $uibModal) {
-	$scope.offeringData = [];
-	$scope.selectedVariant = {
-		code: ""
-	};
-	$scope.selectAllowance = "";
+function SelectPlanOfferingCtrl($scope, $parse) {
+    $scope.selectedVariant = {
+        code: ""
+    };
+    $scope.selectAllowance = "";
 
-    this.setInitialState = function () {
-        this.getOfferings();
-    }
 
-    this.getOfferings = function () {
-        this.setSelectOfferings();
-        //this.setAllowanceDescription();
-    }
 
-    this.setSelectOfferings = function () {
-        var offering = $parse('masterData.response.body')($scope);
-
-        $scope.offeringData = offering.map(function (offering) {
-            return angular.extend({}, {
-                selected: false
-            }, offering);
-        });
-    }
     this.setAllowanceDescription = function () {
-        var offering = $parse('masterData.response.body')($scope);
+        var offering = $scope.offeringData;
 
         $scope.offeringData = offering.map(function (offer) {
             return angular.extend({}, {
@@ -64,170 +41,61 @@ function SelectPlanOfferingCtrl($scope, $parse, selectPlanOfferingService, $time
         setSelectedVariantAllowance(selectedOffer);
 	}
 
-	this.setSelectOfferings = function () {
 
-		var offering = $parse('masterData.response.body')($scope);
-		var items = [{
-				summary: "My T 100 M comes with detfult Essential  bouquet offering, and a choice of 3 other bouquets at a diferential price to choose from (this is the offering description). With upto 500 channels and 100 GB of data.",
-				title: "inclusions Allowance",
-				id: 0,
-				code: "inclusionsAllowance",
-				inclusionsAllowance: [{
-						code: 1212331,
-						item1: 'Item 1 product name',
-						item2: 'Item 2 product name'
-					},
-					{
-						code: 122212331,
-						item1: 'Item 3 product name',
-						item2: 'Item 4 product name'
-					}
-				],
-			},
-			{
-				summary: 'My T 200 M comes with detfult Essential  bouquet offering, and a choice of 3 other bouquets at a diferential price to choose from (this is the offering description). With upto 500 channels and 100 GB of data.',
-				title: "Equipments",
-				id: 1,
-				code: "equipments",
-				equipments: [{
-						code: 1212331,
-						item1: 'Item 1 product name',
-						item2: 'Item 2 product name'
-					},
-					{
-						code: 122212331,
-						item1: 'Item 3 product name',
-						item2: 'Item 4 product name'
-					}
-				],
-			},
-			{
-				summary: 'My T 300 M comes with detfult Essential  bouquet offering, and a choice of 3 other bouquets at a diferential price to choose from (this is the offering description). With upto 500 channels and 100 GB of data.',
-				title: "Charges",
-				id:2,
-				code:"charges",
-				charges: [{
-						code: 1212331,
-						item1: 'Item 1 product name',
-						item2: 'Item 2 product name'
-					},
-					{
-						code: 122212331,
-						item1: 'Item 3 product name',
-						item2: 'Item 4 product name'
-					}
-				],
-			},
-			{
-				summary: 'My T 100 M comes with detfult Essential  bouquet offering, and a choice of 3 other bouquets at a diferential price to choose from (this is the offering description). With upto 500 channels and 100 GB of data.',
-				title: "Contracts Penalty",
-				id: 3,
-				code: "contractsPenalty",
-				contractsPenalty: [{
-						code: 1212331,
-						item1: 'Item 1 product name',
-						item2: 'Item 2 product name'
-					},
-					{
-						code: 122212331,
-						item1: 'Item 3 product name',
-						item2: 'Item 4 product name'
-					}
-				],
-			},
-			{
-				summary: 'My T 100 M comes with detfult Essential  bouquet offering, and a choice of 3 other bouquets at a diferential price to choose from (this is the offering description). With upto 500 channels and 100 GB of data.',
-				title: "EMI Plans",
-				id: 4,
-				code: "EMIPlans",
-				EMIPlans: [{
-						code: 1212331,
-						item1: 'Item 1 product name',
-						item2: 'Item 2 product name'
-					},
-					{
-						code: 122212331,
-						item1: 'Item 3 product name',
-						item2: 'Item 4 product name'
-					}
-				]
-			}
-		];
+     var setSelectedVariantAllowance = function (selectedOffer) {
+        var selectedVariant = $scope.selectedVariant.code;
+        var offeringData = $scope.offeringData;
+        $scope.offeringData.map(function (offer) {
+            if (selectedOffer.code === offer.offering.code) {
+                var allowance = $parse('allowances.allowance')(offer.offering)
+                allowance.find(function (obj) {
+                    obj.product.code === selectedVariant ? offer.allowanceDescription = obj.dedicatedAccounts.dedicatedAccount[0].description : "";
+                });
+            }
 
-		$scope.offeringData = offering.map(function (offering) {
-			return angular.extend({}, {
-				selected: false,
-				details: items,
-				allowanceDescription: offering.offering.allowances.allowance[0].dedicatedAccounts.dedicatedAccount[0].description
+        });
+    }
 
-			}, offering);
-		});
+    $scope.selectOffering = function (offer) {
+        var selectedVariant = $scope.selectedVariant.code;
+        var offeringData = $scope.offeringData;
+        $scope.offeringData.map(function (offer) {
+            selectedOffer.code === offer.offering.code ? offer.selected = !offer.selected : "";
+        });
+        Spinner.inner.show();
+    }
 
-	}
-
-	var setSelectedVariantAllowance = function (selectedOffer) {
-		var selectedVariant = $scope.selectedVariant.code;
-		var offeringData = $scope.offeringData;
-		$scope.offeringData.map(function (offer) {
-			if (selectedOffer.code === offer.offering.code) {
-				var allowance = $parse('allowances.allowance')(offer.offering)
-				allowance.find(function (obj) {
-					obj.product.code === selectedVariant ? offer.allowanceDescription = obj.dedicatedAccounts.dedicatedAccount[0].description : "";
-				});
-			}
-
-		});
-	}
-
-	$scope.selectOffering = function (offer) {
-		var selectedVariant = $scope.selectedVariant.code;
-		var offeringData = $scope.offeringData;
-		$scope.offeringData.map(function (offer) {
-			selectedOffer.code === offer.offering.code ? offer.selected = !offer.selected : "";
-		});
-		Spinner.inner.show();
-		// SelectOfferingPlanAPIService(req).then(function(res) {
-		//     
-		//     Spinner.inner.hide();
-		// }).catch(function(err) {
-		//     Spinner.inner.hide();            
-		//     console.log(err);
-		// });
-	}
-	this.setInitialState();
 	$scope.getOfferingDetailsView = function () {
-		
+
 		$scope.tabs = []
 		$scope.offeringData.map(function (offerDetails, $index) {
-			
+
 			$scope.tabs = $parse('details')(offerDetails);
 		})
 	}
 
-	$scope.tabId = 0;
+	this.tabId = 0;
 
-	$scope.setTab = function (tabId, $event) {
+	this.setTab = function (tabId) {
 
-		$scope.tabId = tabId;
-		$event.stopPropagation();
+		this.tabId = tabId;
+	};
+
+	this.isSet = function (tabId) {
+		return this.tabId === tabId;
 	};
 
 }
 
 SelectPlanOfferingCtrl.$inject = [
 	'$scope',
-	'$parse',
-	'SelectPlanOfferingService',
-	'$timeout',
-	'$uibModal',
+	'$parse'
 ]
 module.controller(SelectPlanOfferingCtrl.name, SelectPlanOfferingCtrl)
 
 // Source: src/scripts/select-plan-offering/directives/select-plan-offering.directive.js
 var module = angular.module('TT-UI-CLM.SelectPlanOffering.Directives.SelectPlanOffering',[
     'TT-UI-CLM.SelectPlanOffering.Controllers.SelectPlanOfferingCtrl',
-    'TT-UI-CLM.SelectPlanOffering.Services.SelectPlanOfferingService',
-   // 'TT-UI-CLM.SelectPlanOffering.Services.SelectOfferingPlanAPIService',
     'TT-UI-CLM.SelectPlanOffering.Tpl',
     'ngSanitize'
 ])
@@ -237,9 +105,8 @@ module.directive('selectPlanOffering',function(){
         restrict:'EA',
         templateUrl:'scripts/select-plan-offering/views/select-plan-offering.tpl.html',
         controller:'SelectPlanOfferingCtrl',
-        controllerAs: 'selectOffering',
         scope:{
-            model: '=',
+            offeringData: '=',
             masterData: '=',
         }
     }
@@ -341,24 +208,5 @@ function SelectOfferingPlanAPIService($q, $parse, Api, ResourceFactory, API_CONF
 SelectOfferingPlanAPIService.$inject = ['$q', '$parse', 'Api', 'ResourceFactory', 'API_CONFIG'];
 module.factory(SelectOfferingPlanAPIService.name, SelectOfferingPlanAPIService);
 
-
-// Source: src/scripts/select-plan-offering/services/select-plan-offering.service.js
-var module = angular.module('TT-UI-CLM.SelectPlanOffering.Services.SelectPlanOfferingService', [])
-function SelectPlanOfferingService($parse) {
-    return {
-        getOfferings: getOfferings
-    }
-
-    function getOfferings(masterData) {
-        var offeringList = [];
-        masterData.map(function (data, key) {
-            offeringList.push($parse('offering')(data));
-        });
-        return offeringList;
-    }
-}
-
-SelectPlanOfferingService.$inject = ['$parse'];
-module.service(SelectPlanOfferingService.name, SelectPlanOfferingService)
 return angular;
 })(window, window.angular);
