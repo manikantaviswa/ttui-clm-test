@@ -83,7 +83,7 @@
 
 	<div class="panel panel-default">
 		<div class="panel-body table-no-padding">
-			<table tt-table st-table="offeringList" st-safe-src="plansList" st-items-by-page="10" class="ttui-table table">
+			<table ng-if="offeringData.length > 0" tt-table st-table="offeringList" st-safe-src="plansList" st-items-by-page="1" class="ttui-table table">
 				<thead class="table-extra-header">
 					<tr>
 						<th colspan="{{tableCtrl.colspan}}">
