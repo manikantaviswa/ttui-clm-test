@@ -16,9 +16,9 @@ function SearchFeasibilityAPIService($q, $parse, Api, ResourceFactory, API_CONFI
         var requestData = {
             feasibilityCheck: {
                 serviceNumber: $parse('serviceNumber')(payload),
-                locality: $parse('locality.name')(payload),
-                subLocality: $parse('subLocality.name')(payload),
-                street: $parse('street.name')(payload)
+                locality: $parse('locality')(payload),
+                subLocality: $parse('subLocality')(payload),
+                street: $parse('street')(payload)
             }
         };
         return requestData;
