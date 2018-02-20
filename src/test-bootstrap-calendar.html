@@ -29,15 +29,19 @@
                 background-color: transparent;
             }
             mwl-calendar .cal-month-box .cal-month-day {
-                width: 100px;
+                width: 50px;
                 border-radius: 100%;
                 text-align: center;
-                padding: 30px 0;
+                padding: 15px 0;
                 margin: 0;
+                font-size: 0.8rem;
+            }
+            mwl-calendar .cal-month-day {
+                 height: 50px;
             }
             mwl-calendar .cal-month-box .cal-month-day:hover {
-                background-color: #f9f9f9;
-            }
+                background-color: #ddd;
+            }           
             
             mwl-calendar .cal-month-box .cal-month-day.cal-day-open {
                 background-color: #e0e0e0;
@@ -66,57 +70,167 @@
                 border: 0px none;
                 margin-bottom: 5px;
                 border-radius: 100%;
+                margin-left: 19px;
+                margin-top: -2px;
             }
             mwl-calendar [class*="cal-cell"]:hover {
                 background-color: transparent;
             }
+            mwl-calendar .cal-year-box [class*="span"],
+            mwl-calendar .cal-month-box [class*="cal-cell"] {
+                min-height: 60px;
+                position: relative;
+            }
+            mwl-calendar .cal-month-box .cal-row-head [class*="cal-cell"] {
+                border: none;
+                overflow: hidden;
+                min-height: unset;
+                text-overflow: ellipsis;
+                font-size: 1.2rem;
+            }
+            mwl-calendar .cal-day-today {
+                 background-color: #a0a0a0;
+            }
+            mwl-calendar .cal-day-today span[data-cal-date] {
+                color: #fff;
+            }
+            mwl-calendar span[data-cal-date]{
+                opacity: 0.9;
+            }
+.clm-Calender{
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.clm-Calender .btn-primary.active.focus,
+.clm-Calender .btn-primary.active:focus, 
+.clm-Calender .btn-primary.active:hover, 
+.clm-Calender .btn-primary:active.focus, 
+.clm-Calender .btn-primary:active:focus, 
+.clm-Calender .btn-primary:active:hover, 
+.clm-Calender .open>.dropdown-toggle.btn-primary.focus, 
+.clm-Calender .open>.dropdown-toggle.btn-primary:focus, 
+.clm-Calender .open>.dropdown-toggle.btn-primary:hover {
+    color: #9d9d9d;
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+}
+.clm-Calender .btn-primary {
+    color: #9d9d9d;
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+}
+.clm-Calender .form-control[disabled],
+.clm-Calender .form-control[readonly],
+.clm-Calender fieldset[disabled] .form-control {
+    background-color: transparent;
+    opacity: 1;
+    border: none;
+    box-shadow: none;
+    text-align: center;
+    font-weight:600;
+}
+.event-Details{
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.current-day{ font-size:2.05rem;}
+.current-date{font-size:2.05rem;}
+.pl-0{padding-left:0;}
+.pr-0{padding-right:0;}
+.event-list{
+     margin-top: 3.5rem;
+}
+.event-list .list-group{
+    margin-top: 3.5rem;
+}
+.event-list .list-group .list-group-item{
+    border:none;
+    font-size: 1.2rem;
+    font-weight: 600;
+
+    }
+
         </style>
     </head>
     <body ng-app="calendarApp" class="container" ng-controller="KitchenSinkCtrl as vm">
-        <div class="row">
-            <div class="col-md-6 text-center">
-                <div class="input-group text-center">
-                    <span class="input-group-btn">
-                        <button class="btn btn-primary" mwl-date-modifier
-                        date="vm.viewDate" decrement="vm.calendarView"
-                        ng-click="vm.cellIsOpen = false" type="button">
-                        <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;
-                    </button>
-                    </span>
-                    <input type="text" class="form-control" ng-model="vm.calendarTitle" readonly>
-                    <span class="input-group-btn">
-                        <button class="btn btn-primary" mwl-date-modifier
-                        date="vm.viewDate" increment="vm.calendarView"
-                        ng-click="vm.cellIsOpen = false" type="button">
-                        <span class="glyphicon glyphicon-chevron-right"></span>&nbsp;
-                    </button>
-                    </span>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="btn-group pull-right">
-                    <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'year'" ng-click="vm.cellIsOpen = false">Year</label>
-                    <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'month'" ng-click="vm.cellIsOpen = false">Month</label>
-                    <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'week'" ng-click="vm.cellIsOpen = false">Week</label>
-                    <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'day'" ng-click="vm.cellIsOpen = false">Day</label>
-                </div>
-            </div>
-        </div>
+       
+        <div class="col-sm-9">
+                <div class="col-sm-4 pr-0">
+                    <div class="col-sm-12 event-Details">
+                            <label class="current-Date col-sm-4">20th</label>
+                            <label class="current-day col-sm-4">Tuesday</label>
+                    </div>
+                    <div class="col-sm-12 pr-0 event-list">
+                            <ul class="list-group">
+                                    <li class="list-group-item">Event 1</li>
+                                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item">Morbi leo risus</li>
+                                    <li class="list-group-item">Porta ac consectetur ac</li>
+                                    <li class="list-group-item">Vestibulum at eros</li>
+                                  </ul>
 
-        <mwl-calendar
-            events="vm.events"
-            view="vm.calendarView"
-            view-title="vm.calendarTitle"
-            view-date="vm.viewDate"
-            on-event-click="vm.eventClicked(calendarEvent)"
-            on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
-            cell-is-open="vm.cellIsOpen"
-            day-view-start="06:00"
-            day-view-end="22:59"
-            day-view-split="30"
-            cell-auto-open-disabled="true"
-            on-timespan-click="vm.timespanClicked(calendarDate, calendarCell)">
-        </mwl-calendar>
+                    </div>
+                       
+                </div>  
+            <div class="col-sm-8 pl-0">
+                    <div class="col-md-12 text-center clm-Calender">
+                            <div class="col-sm-6 col-sm-offset-3 input-group text-center">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" mwl-date-modifier
+                                    date="vm.viewDate" decrement="vm.calendarView"
+                                    ng-click="vm.cellIsOpen = false" type="button">
+                                    <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;
+                                </button>
+                                </span>
+                                <input type="text" class="form-control" ng-model="vm.calendarTitle" readonly>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" mwl-date-modifier
+                                    date="vm.viewDate" increment="vm.calendarView"
+                                    ng-click="vm.cellIsOpen = false" type="button">
+                                    <span class="glyphicon glyphicon-chevron-right"></span>&nbsp;
+                                </button>
+                                </span>
+                            </div>
+                    </div>
+                    <mwl-calendar
+                    events="vm.events"
+                    view="vm.calendarView"
+                    view-title="vm.calendarTitle"
+                    view-date="vm.viewDate"
+                    on-event-click="vm.eventClicked(calendarEvent)"
+                    on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+                    cell-is-open="vm.cellIsOpen"
+                    day-view-start="06:00"
+                    day-view-end="22:59"
+                    day-view-split="30"
+                    cell-auto-open-disabled="true"
+                    on-timespan-click="vm.timespanClicked(calendarDate, calendarCell)">
+                    </mwl-calendar>
+                    <div class="col-md-12">
+                            <div class="pull-right">
+                                <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'year'" ng-click="vm.cellIsOpen = false">Year</label>
+                                <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'month'" ng-click="vm.cellIsOpen = false">Month</label>
+                                <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'week'" ng-click="vm.cellIsOpen = false">Week</label>
+                                <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'day'" ng-click="vm.cellIsOpen = false">Day</label>
+                            </div>
+                    </div>
+            </div>
+
+
+                                        
+
+                   
+
+       
+
+        </div>
+        
+
+        
 
         <script type="text/ng-template" id="modalContent.html">
             <div class="modal-header">
