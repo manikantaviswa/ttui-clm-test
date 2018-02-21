@@ -7,7 +7,7 @@ module.exports = function(grunt) {
 	   'fxl-select-offering': 'TT-UI-CLM.FxlSelectOffering.Tpl',	   
 	   'feasibility-search': 'TT-UI-CLM.FeasibilitySearch.Tpl',
 	   'select-number': 'TT-UI-CLM.SelectNumber.Tpl',
-	   'slot-picker': 'TT-UI-CLM.SlotPicker.Tpl',
+	   'appointment-slot-picker': 'TT-UI-CLM.AppointmentSlotPicker.Tpl',
 	   'select-plan-offering': 'TT-UI-CLM.SelectPlanOffering.Tpl'
 	};
  

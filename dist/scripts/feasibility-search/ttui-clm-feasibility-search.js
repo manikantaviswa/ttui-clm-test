@@ -186,8 +186,8 @@ var module = angular.module('TT-UI-CLM.FeasibilitySearch.Services.SearchFeasibil
     'TT-UI.Common'
 ]);
 
-module.constant('API_CONFIG', {
-    API_URL: 'clm-reg/rest/dataservice/1/CLM/1/FeasibilityCheck/json/query',
+module.constant('FEASIBILITY_CHECK_API_CONFIG', {
+    API_URL: 'clm-reg/rest/dataservice/:tenantId/CLM/:apiVersion/FeasibilityCheck/json/query',
     API_METHOD: 'PUT',
     RESPONSE_ERROR_JSON_PATH: 'response.errors.error'
 });
@@ -234,7 +234,7 @@ function SearchFeasibilityAPIService($q, $parse, Api, ResourceFactory, API_CONFI
 
 }
 
-SearchFeasibilityAPIService.$inject = ['$q', '$parse', 'Api', 'ResourceFactory', 'API_CONFIG'];
+SearchFeasibilityAPIService.$inject = ['$q', '$parse', 'Api', 'ResourceFactory', 'FEASIBILITY_CHECK_API_CONFIG'];
 module.factory(SearchFeasibilityAPIService.name, SearchFeasibilityAPIService);
 
 

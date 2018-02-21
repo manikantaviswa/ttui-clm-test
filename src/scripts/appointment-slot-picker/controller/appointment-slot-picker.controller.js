@@ -1,22 +1,10 @@
-/* commonjs package manager support (eg componentjs) */
-if (typeof module !== "undefined" && typeof exports !== "undefined" && module.exports === exports){
-  module.exports = '@@@@__SOURCE_FILENAME__';
-}
+'use strict';
 
-(function (window, angular, undefined) {
-  "use strict";
-
-
-// Source: src/scripts/slot-picker/index.js
-angular.module('TT-UI-CLM.SlotPicker', [
-    'TT-UI-CLM.SlotPicker.Directives.SlotPicker',
+var module = angular.module('TT-UI-CLM.AppointmentSlotPicker.Controllers.AppointmentSlotPickerCtrl', [
+  'TT-UI-CLM.AppointmentSlotPicker.Services.FetchAppointmentAPIService'
 ]);
 
-
-// Source: src/scripts/slot-picker/controller/slot-picker.controller.js
-var module = angular.module('TT-UI-CLM.SlotPicker.Controllers.SlotPickerCtrl', []);
-
-function SlotPickerCtrl($scope, $compile, uiCalendarConfig) {
+function AppointmentSlotPickerCtrl($scope, $compile, uiCalendarConfig, FetchAppointmentAPIService) {
   var date = new Date();
   var d = date.getDate();
   var m = date.getMonth();
@@ -59,6 +47,15 @@ function SlotPickerCtrl($scope, $compile, uiCalendarConfig) {
     var filtered = $scope.slots.filter(function(slot) {
       return moment(slot.start).format('DD-MMM-YYYY') === moment(date.toDate()).format('DD-MMM-YYYY')
     });
+
+    FetchAppointmentAPIService({
+      installationType: "building",
+      startDate: "2018-11-11T00:00:00.000Z",
+      endDate: "2018-11-13T00:00:00.000Z"
+    }).then(function(res) {
+      debugger;
+      this;
+    })
     $scope.selectedSlot = [{
       title: 'Selected',
       allDay: true,
@@ -85,35 +82,10 @@ function SlotPickerCtrl($scope, $compile, uiCalendarConfig) {
   $scope.eventSources = [$scope.slots, $scope.selectedSlot];
 }
 
-SlotPickerCtrl.$inject = [
+AppointmentSlotPickerCtrl.$inject = [
     '$scope',
     '$compile',
-    'uiCalendarConfig'
+    'uiCalendarConfig',
+    'FetchAppointmentAPIService'
 ];
-module.controller(SlotPickerCtrl.name, SlotPickerCtrl);
-
-
-// Source: src/scripts/slot-picker/directives/slot-picker.directive.js
-var module = angular.module('TT-UI-CLM.SlotPicker.Directives.SlotPicker', [
-    'TT-UI-CLM.SlotPicker.Controllers.SlotPickerCtrl',
-    'TT-UI-CLM.SlotPicker.Tpl',
-    'ui.calendar',
-//    'ui.bootstrap'
-]);
-
-module.directive('slotPicker', function() {
-    return {
-        restrict: 'EA',
-        scope: {
-            model: '=',
-            // config: '=',
-            masterData: '=',
-            onSearch: '&'
-        },
-        controller: 'SlotPickerCtrl',
-        templateUrl: 'scripts/slot-picker/views/slot-picker.tpl.html'
-    };
-});
-
-return angular;
-})(window, window.angular);
+module.controller(AppointmentSlotPickerCtrl.name, AppointmentSlotPickerCtrl);

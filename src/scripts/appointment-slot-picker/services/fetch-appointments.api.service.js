@@ -1,24 +1,23 @@
 'use strict';
 
-var module = angular.module('TT-UI-CLM.FeasibilitySearch.Services.SearchFeasibilityAPIService', [
+var module = angular.module('TT-UI-CLM.AppointmentSlotPicker.Services.FetchAppointmentAPIService', [
     'TT-UI.Common'
 ]);
 
-module.constant('FEASIBILITY_CHECK_API_CONFIG', {
-    API_URL: 'clm-reg/rest/dataservice/:tenantId/CLM/:apiVersion/FeasibilityCheck/json/query',
+module.constant('FETCH_APPOINTMENT_API_CONFIG', {
+    API_URL: 'clm-reg/rest/dataservice/:tenantId/CLM/:apiVersion/GetFreeAppointmentSlots/json/query',
     API_METHOD: 'PUT',
     RESPONSE_ERROR_JSON_PATH: 'response.errors.error'
 });
 
-function SearchFeasibilityAPIService($q, $parse, Api, ResourceFactory, API_CONFIG) {
+function FetchAppointmentAPIService($q, $parse, Api, ResourceFactory, API_CONFIG) {
 
     var prepareRequest = function(payload) {
         var requestData = {
-            feasibilityCheck: {
-                serviceNumber: $parse('serviceNumber')(payload),
-                locality: $parse('locality')(payload),
-                subLocality: $parse('subLocality')(payload),
-                street: $parse('street')(payload)
+            getAppointmentSlot: {
+                installationType: $parse('installationType')(payload),
+                startDate: $parse('startDate')(payload),
+                endDate: $parse('endDate')(payload)
             }
         };
         return requestData;
@@ -52,5 +51,5 @@ function SearchFeasibilityAPIService($q, $parse, Api, ResourceFactory, API_CONFI
 
 }
 
-SearchFeasibilityAPIService.$inject = ['$q', '$parse', 'Api', 'ResourceFactory', 'FEASIBILITY_CHECK_API_CONFIG'];
-module.factory(SearchFeasibilityAPIService.name, SearchFeasibilityAPIService);
+FetchAppointmentAPIService.$inject = ['$q', '$parse', 'Api', 'ResourceFactory', 'FETCH_APPOINTMENT_API_CONFIG'];
+module.factory(FetchAppointmentAPIService.name, FetchAppointmentAPIService);
