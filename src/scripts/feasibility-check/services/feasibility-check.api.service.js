@@ -1,6 +1,6 @@
 'use strict';
 
-var module = angular.module('TT-UI-CLM.FeasibilitySearch.Services.SearchFeasibilityAPIService', [
+var module = angular.module('TT-UI-CLM.FeasibilityCheck.Services.FeasibilityCheckAPIService', [
     'TT-UI.Common'
 ]);
 
@@ -10,7 +10,7 @@ module.constant('FEASIBILITY_CHECK_API_CONFIG', {
     RESPONSE_ERROR_JSON_PATH: 'response.errors.error'
 });
 
-function SearchFeasibilityAPIService($q, $parse, Api, ResourceFactory, API_CONFIG) {
+function FeasibilityCheckAPIService($q, $parse, Api, ResourceFactory, API_CONFIG) {
 
     var prepareRequest = function(payload) {
         var requestData = {
@@ -52,5 +52,5 @@ function SearchFeasibilityAPIService($q, $parse, Api, ResourceFactory, API_CONFI
 
 }
 
-SearchFeasibilityAPIService.$inject = ['$q', '$parse', 'Api', 'ResourceFactory', 'FEASIBILITY_CHECK_API_CONFIG'];
-module.factory(SearchFeasibilityAPIService.name, SearchFeasibilityAPIService);
+FeasibilityCheckAPIService.$inject = ['$q', '$parse', 'Api', 'ResourceFactory', 'FEASIBILITY_CHECK_API_CONFIG'];
+module.factory(FeasibilityCheckAPIService.name, FeasibilityCheckAPIService);

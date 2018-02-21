@@ -1,8 +1,8 @@
 'use strict';
 
-var module = angular.module('TT-UI-CLM.FeasibilitySearch.Services.FeasibilitySearchService', []);
+var module = angular.module('TT-UI-CLM.FeasibilityCheck.Services.FeasibilityCheckService', []);
 
-function FeasibilitySearchService($parse) {
+function FeasibilityCheckService($parse) {
     return {
         getLocalities: getLocalities,
         getSubLocalities: getSubLocalities,
@@ -102,5 +102,5 @@ function FeasibilitySearchService($parse) {
     }
 
 }
-FeasibilitySearchService.$inject = ['$parse']
-module.service(FeasibilitySearchService.name, FeasibilitySearchService);
+FeasibilityCheckService.$inject = ['$parse']
+module.service(FeasibilityCheckService.name, FeasibilityCheckService);

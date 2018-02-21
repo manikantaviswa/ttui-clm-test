@@ -1,47 +1,47 @@
 'use strict';
 
-var module = angular.module('TT-UI-CLM.FeasibilitySearch.Controllers.FeasibilitySearchCtrl', [
-    'TT-UI-CLM.FeasibilitySearch.Services.FeasibilitySearchService',
+var module = angular.module('TT-UI-CLM.FeasibilityCheck.Controllers.FeasibilityCheckCtrl', [
+    'TT-UI-CLM.FeasibilityCheck.Services.FeasibilityCheckService',
     'CLM-UI.Utils.Spinner',
-    'TT-UI-CLM.FeasibilitySearch.Services.SearchFeasibilityAPIService',
+    'TT-UI-CLM.FeasibilityCheck.Services.FeasibilityCheckAPIService',
 ]);
 
-function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService, SearchFeasibilityAPIService) {
+function FeasibilityCheckCtrl($scope, $parse, Spinner, feasibilityCheckService, FeasibilityCheckAPIService) {
     $scope.localities = [];
     $scope.subLocalities = [];
     $scope.streets = [];
     $scope.form = {
-        localitySearch: {},
-        serviceNumSearch: {}
+        localityCheck: {},
+        serviceNumCheck: {}
     };
 
-    $scope.validators = feasibilitySearchService.getValidators($scope.config);
+    $scope.validators = feasibilityCheckService.getValidators($scope.config);
 
-    $scope.searchAddressFeasibility = function(isNumberSearch) {
+    $scope.checkAddressFeasibility = function(isNumberCheck) {
         var req;
-        $parse('form.localitySearch.$valid')($scope);
-        if (isNumberSearch) {
-            if ($parse('form.serviceNumSearch.$invalid')($scope)) {
-                $scope.form.serviceNumSearch.$setSubmitted();
+        $parse('form.localityCheck.$valid')($scope);
+        if (isNumberCheck) {
+            if ($parse('form.serviceNumCheck.$invalid')($scope)) {
+                $scope.form.serviceNumCheck.$setSubmitted();
                 return;
             }
             req = { serviceNumber: $scope.model.serviceNumber };
-            $scope.model.serviceNumberSearch = true;
-            delete $scope.model.localitySearch;
+            $scope.model.serviceNumberCheck = true;
+            delete $scope.model.localityCheck;
         } else {
-            if ($parse('form.localitySearch.$invalid')($scope)) {
-                $scope.form.localitySearch.$setSubmitted();
+            if ($parse('form.localityCheck.$invalid')($scope)) {
+                $scope.form.localityCheck.$setSubmitted();
                 return;
             }
             req = $scope.model.locality;
-            $scope.model.localitySearch = true;
-            delete $scope.model.serviceNumberSearch;
+            $scope.model.localityCheck = true;
+            delete $scope.model.serviceNumberCheck;
         }
         Spinner.inner.show();
-        SearchFeasibilityAPIService(req).then(function(res) {
-            var searchResult = angular.merge({}, $scope.model, res.feasibilityDetails);
-            $scope.onSearch({$result: searchResult});
-            $scope.searchResult = searchResult;
+        FeasibilityCheckAPIService(req).then(function(res) {
+            var checkResult = angular.merge({}, $scope.model, res.feasibilityDetails);
+            $scope.onCheck({$result: checkResult});
+            $scope.checkResult = checkResult;
             Spinner.inner.hide();
         }).catch(function(err) {
             Spinner.inner.hide();            
@@ -78,20 +78,20 @@ function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService
         setSubLocalities();
         setStreets();
         if(angular.isDefined($parse('model.serviceNumber')($scope))) {
-            $scope.searchAddressFeasibility(true);
+            $scope.checkAddressFeasibility(true);
         } if (angular.isDefined($parse('model.locality.street')($scope))) {
-            $scope.searchAddressFeasibility(false);            
+            $scope.checkAddressFeasibility(false);            
         }
     }
     setInitialData();    
 
     function setLocalities() {
-        $scope.localities = feasibilitySearchService.getLocalities($scope.masterData);
+        $scope.localities = feasibilityCheckService.getLocalities($scope.masterData);
     }
 
     function setSubLocalities(clearSubLocality) {
         var selectedLocality = $parse('model.locality.locality')($scope);
-        $scope.subLocalities = feasibilitySearchService.getSubLocalities($scope.localities, selectedLocality);
+        $scope.subLocalities = feasibilityCheckService.getSubLocalities($scope.localities, selectedLocality);
         if (clearSubLocality) {
             $parse('model.locality.subLocality').assign($scope, null);
         }
@@ -99,7 +99,7 @@ function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService
 
     function setStreets(clearStreet) {
         var selectedSubLocality = $parse('model.locality.subLocality')($scope);
-        $scope.streets = feasibilitySearchService.getStreets($scope.subLocalities, selectedSubLocality);
+        $scope.streets = feasibilityCheckService.getStreets($scope.subLocalities, selectedSubLocality);
         if (clearStreet) {
             $parse('model.locality.street').assign($scope, null);
         }
@@ -133,11 +133,11 @@ function FeasibilitySearchCtrl($scope, $parse, Spinner, feasibilitySearchService
         return item;
     }
 }
-FeasibilitySearchCtrl.$inject = [
+FeasibilityCheckCtrl.$inject = [
     '$scope',
     '$parse',
     'Spinner',
-    'FeasibilitySearchService',
-    'SearchFeasibilityAPIService'
+    'FeasibilityCheckService',
+    'FeasibilityCheckAPIService'
 ];
-module.controller(FeasibilitySearchCtrl.name, FeasibilitySearchCtrl);
+module.controller(FeasibilityCheckCtrl.name, FeasibilityCheckCtrl);
