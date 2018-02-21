@@ -83,7 +83,7 @@
 
 	<div class="panel panel-default">
 		<div class="panel-body table-no-padding">
-			<table ng-if="offeringData.length > 0" tt-table st-table="offeringList" st-safe-src="plansList" st-items-by-page="1" class="ttui-table table">
+			<table ng-if="offeringData.length > 0" tt-table st-table="offeringDisplayedList" st-safe-src="offeringData" st-items-by-page="1" class="ttui-table table">
 				<thead class="table-extra-header">
 					<tr>
 						<th colspan="{{tableCtrl.colspan}}">
@@ -126,7 +126,7 @@
 					</tr>
 				</thead>
 
-				<tbody ng-repeat="items in offeringData track by $index">
+				<tbody ng-repeat="items in offeringDisplayedList track by $index">
 					<tr ng-class="{'active':items.selected}">
 						<td ng-bind="::items.offering.name" data-mobile-label="Offering"></td>
 						<td>
@@ -325,7 +325,11 @@
 				<tfoot ng-if="tableCtrl.enablePagination">
 					<tr>
 						<td colspan="8">
-							<tt-table-pagination />
+							<div st-pagination=""
+							st-items-by-page="1"
+							st-displayed-pages="1"
+							st-template="scripts/ttui-table/table-pagination.tpl.html"
+							class="pull-right"></div>
 						</td>
 					</tr>
 				</tfoot>

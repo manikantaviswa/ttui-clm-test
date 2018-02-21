@@ -15,7 +15,7 @@ module.directive('selectOffering', selectOfferingDetail)
             scope: {
                 searchofferingModel: '=',
                 masterData: '=',
-                onSearch: '='
+                onSearch: '=',
             },
               controller: 'FxlSelectOfferingCtrl',
               templateUrl: 'scripts/fxl-select-offering/views/fxl-select-offering.tpl.html',

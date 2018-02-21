@@ -5,7 +5,7 @@
       <div class="col-sm-4">
         <label translate="Registration of Service">Registration of Service</label>
         <div class="form-group">
-          <label class="control-label col-sm-4" for="service">Service:</label>
+          <label class="control-label col-sm-4" for="service" translate="Service">Service:</label>
           <div class="col-sm-8">
             <select class="form-control" id="service" ng-model="searchofferingModel.offering.ProductType" ng-options="service.code as service.name for service in services">
               <option value="">Select</option>
@@ -14,7 +14,7 @@
         </div>
 
         <div class="form-group">
-          <label class="control-label col-sm-4" for="technology">Technology:</label>
+          <label class="control-label col-sm-4" for="technology" translate="Technology">Technology:</label>
           <div class="col-sm-8">
             <select class="form-control" id="technology" ng-model="searchofferingModel.offering.Technology" ng-options="technology.code as technology.name for technology in technologies">
               <option value="">Select</option>
@@ -26,7 +26,7 @@
       <div class="col-sm-4">
         <label>For Customer</label>
         <div class="form-group">
-          <label class="control-label col-sm-4" for="category">Category:</label>
+          <label class="control-label col-sm-4" for="category" translate="Category">Category:</label>
           <div class="col-sm-8">
             <select class="form-control" id="customer-category" ng-model="searchofferingModel.offering.CustomerCategory" ng-options="customerCategory.code as customerCategory.name for customerCategory in customerCategories"
               ng-change="getCustomerCategory(searchofferingModel.offering.CustomerCategory)">
@@ -36,7 +36,7 @@
         </div>
 
         <div class="form-group">
-          <label class="control-label col-sm-4" for="subcategory">Subcategory:</label>
+          <label class="control-label col-sm-4" for="subcategory" translate="Sub Category">Sub Category:</label>
           <div class="col-sm-8">
             <select class="form-control" id="customer-subcategory" ng-model="searchofferingModel.offering.CustomerSubCategory" ng-options="subCategory.code as subCategory.name for subCategory in customerSubCategoryList">
               <option value="">Select</option>
@@ -45,7 +45,7 @@
         </div>
 
         <div class="form-group">
-          <label class="control-label col-sm-4" for="Nationality">Nationality:</label>
+          <label class="control-label col-sm-4" for="Nationality" translate="Nationality">Nationality:</label>
           <div class="col-sm-8">
             <select class="form-control" id="Nationality" ng-model="searchofferingModel.offering.Nationality" ng-options="nationality.code as nationality.name for nationality in nationalities"
               ng-change="goo()">
@@ -58,7 +58,7 @@
       <div class="col-sm-4">
         <label>Plan Details</label>
         <div class="form-group">
-          <label class="control-label col-sm-4" for="business-type">Business Type:</label>
+          <label class="control-label col-sm-4" for="business-type" translate="Business Type">Business Type:</label>
           <div class="col-sm-8">
             <select class="form-control" id="business-type" ng-model="searchofferingModel.offering.BusinessType" ng-options="businessType.code as businessType.name  for businessType in businessTypes">
               <option value="">Select</option>
@@ -67,7 +67,7 @@
         </div>
 
         <div class="form-group">
-          <label class="control-label col-sm-4" for="plan">Plan:</label>
+          <label class="control-label col-sm-4" for="plan" translate="Plan">Plan:</label>
           <div class="col-sm-8">
             <select class="form-control" id="plan" ng-model="searchofferingModel.offering.plan" ng-options="plan.code as plan.name for plan in plans">
               <option value="">Select</option>
