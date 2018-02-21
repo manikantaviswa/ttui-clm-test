@@ -11,7 +11,9 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 angular.module('TT-UI-CLM.CommonComponents', [
     'TT-UI-CLM.Common.Services.CommonMasterDataResults',
     'TT-UI-CLM.Common.Services.CommonMasterDataUtil',
-    'TT-UI-CLM.Common.Services.Config'
+    'TT-UI-CLM.Common.Services.Config',
+    'TT-UI-CLM.Common.Services.OfferingData',
+    'lodash'
 ]);
 
 
@@ -133,6 +135,290 @@ var module = angular.module('TT-UI-CLM.Common.Services.Config', [])
 		TELEPHONE_CATEGORIES: 'MASTER_TELEPHONE_CATEGORIES',
 		TELEPHONE_SELECTIONS: 'MASTER_TELEPHONE_SELECTIONS'
     });
+
+
+// Source: src/scripts/common/inventory/inventory-api-path.js
+
+angular.module('TT-UI-CLM.Common.Api.Inventory.CommonApiPath', [])
+
+		.constant('COMMON_INVENTORY_API_PATH', {
+			IMEI_BLOCK:    'BlockDongleRequest/json/',
+			IMEI_RELEASE:  'ReleaseDongleRequest/json/',
+			MSISDN_BLOCK:   'BlockNumber/json/query',
+			MSISDN_RELEASE:  'ReleaseNumber/json/query',
+			GET_SIM_DETAILS_API: 'GetSimDetailsBySIMNumberRequest/json/query',
+			GET_SIM_BY_KIT_API: 'GetSimDetailsByKitNumberRequest/json/query',
+			SIM_BLOCK: 'BlockSIMNumberRequest/json/',
+			SIM_RELEASE: 'ReleaseSIMNumberRequest/json/',
+			CORP_SIM_BLOCK: 'BlockMSISDNBulkRequest/json/1',
+			CORP_SIM_RELEASE: 'ReleaseMSISDBulkNRequest/json/1',
+			RESPONSE_JSON_PATH: 'simDetails.simDetail',
+			SUCCESS_RESPONSE: 'SUCCESS'
+		});
+
+
+
+// Source: src/scripts/common/inventory/inventory-request-api-fn.js
+
+var module = angular.module('TT-UI-CLM.Common.Api.Inventory.CommonInventoryRequestApi', [
+        'TT-UI-CLM.Common.Api.Utils.Assert',
+        'TT-UI-CLM.Common.Api.Inventory.CommonRequestInventory'
+	]);
+
+	function commonInventoryRequestApiFactory($q, Assert, commonRequestInventoryFn) {
+
+		function commonInventoryRequestApiFn(URL, model) {
+			//Assert.isDefined(model.serviceNumbers, 'Mandatory input number not given or empty.');
+			return commonRequestInventoryFn(URL , model).then(function(data){
+				return data;
+			}, function(error){
+				return $q.reject(error);
+			});
+		}
+
+		return commonInventoryRequestApiFn;
+	}
+
+    commonInventoryRequestApiFactory.$inject = ['$q', 'Assert', 'commonRequestInventoryFn'];
+
+	module.factory('commonInventoryRequestApiFn', commonInventoryRequestApiFactory);
+
+
+// Source: src/scripts/common/inventory/msisdn/get-mobile-details-by-msisdn-fn.js
+
+var module = angular.module('TT-UI-CLM.Common.Api.Inventory.Msisdn.GetMobileDetailsByMSISDN', [
+        'TT-UI-CLM.Common.Api.Utils.Assert',
+        'TT-UI-CLM.Common.Api.Inventory.CommonRequestInventory'
+	]);
+
+	function getMobileDetailsByMSISDNFactory($parse, Assert, commonRequestInventoryFn) {
+
+		var URL = 'GetAvailableNumbers/json/query';
+		var PAGE_SIZE = '10';
+		var RESPONSE_PATH = 'numbersList';
+
+		function getMobileDetailsByMSISDNFn(msisdn, model, pageNumber, pageSize) {
+			var request = prepareRequest(msisdn, model, pageNumber, pageSize);
+			return commonRequestInventoryFn(URL, request).then(function(response){
+                //var response = {"numbersList":[{"category":"NPOST","hlrNumber":"0","number":"52501115"},{"category":"NPOST","hlrNumber":"0","number":"52501116"}]};
+				return parseResponse(response);
+            });
+		}
+
+		function prepareRequest(msisdn, model, pageNumber,  pageSize) {
+			//console.log("model>>>>>>>>",model)
+			var commonRequestPayload = {
+				serviceType: model.serviceType,
+				subServiceType: model.subServiceType,
+				technology: model.technology,
+				businessType: model.businessType,
+				activatedVia: model.activatedVia,
+				category: 'NPOST',
+                serviceNumber: msisdn || '',
+				hlrNumber: 'MDF-01',
+				pageNumber: pageNumber || '1',
+				pageSize: pageSize || PAGE_SIZE
+			};
+			return commonRequestPayload;
+		}
+
+		var parseResponse = function(response){
+			return $parse(RESPONSE_PATH)(response);
+        };
+
+		return getMobileDetailsByMSISDNFn;
+	}
+
+	getMobileDetailsByMSISDNFactory.$inject = ['$parse', 'Assert', 'commonRequestInventoryFn'];
+
+	module.factory('getMobileDetailsByMSISDNFn', getMobileDetailsByMSISDNFactory);
+
+
+// Source: src/scripts/common/inventory/msisdn/get-mobile-details-by-reservation-token-fn.js
+
+var module = angular.module('TT-UI-CLM.Common.Api.Inventory.Msisdn.GetMobileDetailsByReservationToken', [
+        'TT-UI-CLM.Common.Api.Utils.Assert',
+        'TT-UI-CLM.Common.Api.Inventory.CommonRequestInventory'
+	]);
+
+	function getMobileDetailsByReservationTokenFactory($parse, Assert, commonRequestInventoryFn) {
+
+		var URL = 'GetMobileDetailsByReservationTokenRequest/json/query';
+		var RESPONSE_PATH = 'mobileNumbersList.mobileNumbers';
+		var PAGE_SIZE = '10';
+		var parseResponse;
+
+		function getMobileDetailsByReservationTokenFn(token, hlrNumber, pageNumber, msisdnNumber, pageSize) {
+			Assert.isDefined(token, 'Mandatory parameter `token` not given or empty.');
+
+			var request = prepareRequest(token, hlrNumber,  pageNumber, msisdnNumber, pageSize);
+			return commonRequestInventoryFn(URL, request).then(parseResponse);
+		}
+		parseResponse = $parse(RESPONSE_PATH);
+
+		function prepareRequest(token, hlrNumber,  pageNumber, msisdnNumber, pageSize) {
+			return {
+				resTokenNumber: token,
+				hlrNumber: hlrNumber || '',
+				pageNumber: pageNumber || '1',
+				pageSize: pageSize || PAGE_SIZE,
+				msisdn: msisdnNumber || ''
+			};
+		}
+
+		return getMobileDetailsByReservationTokenFn;
+	}
+
+	getMobileDetailsByReservationTokenFactory.$inject = ['$parse', 'Assert', 'commonRequestInventoryFn'];
+
+	module.factory('getMobileDetailsByReservationTokenFn', getMobileDetailsByReservationTokenFactory);
+
+
+// Source: src/scripts/common/inventory/request-inventory-fn.js
+
+var module = angular.module('TT-UI-CLM.Common.Api.Inventory.CommonRequestInventory', [
+		'TT-UI.Common',
+		'TT-UI.Common.Tpl',
+		'TT-UI.User'
+	]);
+
+	var COMMON_INVENTORY_SETTINGS = {
+		API_PATH: 'clm-reg/rest/dataservice/:tenantId/CLM/:apiVersion/',
+		API_METHOD: 'PUT',
+		RESPONSE_ERROR_JSON_PATH: 'response.errors.error'
+	};
+
+	function commonRequestInventoryFn($q, $parse, Api, ResourceFactory, CurrentUser, COMMON_INVENTORY_SETTINGS) {
+
+		var prepareRequest = function(apiPath, data) {
+			//console.log("data:::::",data);
+			var request = {
+				nms:{
+				},
+				path: apiPath
+			};
+			if (angular.isDefined(data)) {
+				request.nms.nms = data;
+			}
+			return $q.when(request);
+		};
+
+		var checkErrors = function(response) {
+			var errors = $parse(COMMON_INVENTORY_SETTINGS.RESPONSE_ERROR_JSON_PATH)(response);
+
+			if (angular.isArray(errors) && errors.length) {
+				return $q.reject(errors.map(function(error) {
+					return error.desc;
+				}));
+			}
+			return response;
+		};
+
+		var callApi = function(request) {
+			//console.log("request>>>>>>>>>",Api.getUrl(), COMMON_INVENTORY_SETTINGS.API_PATH + request.path, COMMON_INVENTORY_SETTINGS.API_METHOD)
+			return ResourceFactory(Api.getUrl(), COMMON_INVENTORY_SETTINGS.API_PATH + request.path, COMMON_INVENTORY_SETTINGS.API_METHOD).fetch(request.nms).$promise;
+		};
+
+		return function(apiPath, data) {
+			return prepareRequest(apiPath, data)
+				.then(callApi)
+				.then(checkErrors);
+		};
+	}
+
+    commonRequestInventoryFn.$inject = ['$q', '$parse', 'Api', 'ResourceFactory', 'CurrentUser', 'COMMON_INVENTORY_SETTINGS'];
+
+	module.constant('COMMON_INVENTORY_SETTINGS', COMMON_INVENTORY_SETTINGS);
+	module.factory(commonRequestInventoryFn.name, commonRequestInventoryFn);
+
+
+// Source: src/scripts/common/loaders/abstract-loader.js
+var module = angular.module('TT-UI-CLM.Common.Services.Loaders.AbstractLoader', []);
+
+	function AbstractLoaderFactory(){
+
+		var AbstractLoader = function(){};
+
+		AbstractLoader.prototype.load = function() {
+			throw new Error('load method must be implemented');
+		};
+
+		AbstractLoader.prototype.updateValues = function(ngModel, form, values){
+			if (angular.isUndefined(form.schema) || !angular.isArray(values)){
+				return;
+			}
+
+			form.titleMap = createTitleMap(values);
+			form.schema.enum = createEnumList(values, form.required);
+
+			if (ngModel.$invalid && ngModel.$error['tv4-1']) {
+				ngModel.$setValidity('tv4-1', true);
+			}
+		};
+
+		function createTitleMap(values){
+			return values.map(function(item){
+				return {
+					name: item.name,
+					value: item.code
+				};
+			});
+		}
+
+		function createEnumList(values, isRequired){
+			var list =  values.map(function(item){
+				return item.code;
+			});
+			if (!isRequired){
+				list.push(null);
+			}
+			return list;
+		}
+
+		return AbstractLoader;
+	}
+
+	module.factory('AbstractLoader', AbstractLoaderFactory);
+
+// Source: src/scripts/common/loaders/msisdn-prefix-loader.js
+var module = angular.module('TT-UI-CLM.Common.Services.Loaders.MSISDNPrefixLoader', [
+		'TT-UI.Common',
+        'TT-UI-CLM.Common.Services.Loaders.AbstractLoader',
+        'TT-UI-CLM.Common.Services.MSISDNPrefix'
+	]);
+
+	function MSISDNPrefixLoaderFactory($q, $parse, AbstractLoader, getMSISDNPrefixFn) {
+
+		var MSISDNPrefixLoader = function(serviceDetails){
+			this.serviceDetails = serviceDetails;
+			/*this.activatedViaPath = activatedVia;
+			this.msisdnCategoryPath = msisdnCategory;*/
+		};
+		/*MSISDNPrefixLoader.prototype = Object.create(AbstractLoader.prototype);
+		MSISDNPrefixLoader.prototype.constructor = MSISDNPrefixLoader;*/
+
+		MSISDNPrefixLoader.prototype.load = function(){
+			/*var msisdnCategory = values[this.msisdnCategoryPath];
+			var activatedVia = $parse(this.activatedViaPath)(formModel);*/
+			return getMSISDNPrefixFn(this.serviceDetails).then(this._getData.bind(this));
+		};
+
+		MSISDNPrefixLoader.prototype._getData = function(msisdnPrefixesData){
+			var result = [];
+			msisdnPrefixesData.forEach(function(msisdnPrefix){
+				result.push({'name': msisdnPrefix, 'code': msisdnPrefix});
+			});
+			return result;
+		};
+
+		return function(serviceDetails){
+			return new MSISDNPrefixLoader(serviceDetails);
+		};
+
+	}
+
+	MSISDNPrefixLoaderFactory.$inject = ['$q', '$parse', 'AbstractLoader', 'getMSISDNPrefixFn'];
+	module.factory('MSISDNPrefixLoader', MSISDNPrefixLoaderFactory);
 
 
 // Source: src/scripts/common/services/common-config.service.js
@@ -585,5 +871,1354 @@ function GetRegistrationDataService($parse) {
 }
 GetRegistrationDataService.$inject = ['$parse']
 module.service(GetRegistrationDataService.name, GetRegistrationDataService);
+
+// Source: src/scripts/common/services/lodashFactory.js
+angular.module('lodash', [])
+    .constant('_', window._);
+
+// Source: src/scripts/common/services/msisdn-prefix.js
+angular.module('TT-UI-CLM.Common.Services.MSISDNPrefix', [
+		'TT-UI.Common',
+		'TT-UI.Common.Tpl'
+	]);
+    module.constant('GET_MSISDN_PREFIX_CONFIG', {
+        API_URL: 'clm-reg/rest/dataservice/:tenantId/CLM/:apiVersion/GetNumberPrefix/json/query',
+        API_METHOD: 'PUT',
+        RESPONSE_ERROR_JSON_PATH: 'response.errors.error'
+    })
+
+	.factory('getMSISDNPrefixFn', ['$parse', 'Api', 'FormHelper', 'ResourceFactory', 'GET_MSISDN_PREFIX_CONFIG',  function($parse, Api, FormHelper, ResourceFactory, GET_MSISDN_PREFIX_CONFIG){
+
+		var getMSISDNPrefixFn = function(serviceDetails){
+
+			var request = prepare(serviceDetails);
+			return send(request).then(getErrors).then(getResponse);
+		};
+
+		function prepare(serviceDetails){
+			var request = {};
+
+			$parse('nms').assign(request, getServiceDetails(serviceDetails));
+			return request;
+		}
+
+		function getServiceDetails(serviceDetails){
+			return serviceDetails;
+
+		}
+
+        var getErrors = function(response) {
+
+            var errors = $parse(GET_MSISDN_PREFIX_CONFIG.RESPONSE_ERROR_JSON_PATH)(response);
+            if (angular.isArray(errors) && errors.length){
+                return $q.reject(errors.map(function(error) {
+                    return error.desc;
+                }));
+            }
+            var response = {"numberPrefix":["525", "570", "243","23234","2344","5353","75343"]};
+            return response;
+        };
+
+		var send = function(request){
+			var apiService = ResourceFactory(Api.getUrl(), GET_MSISDN_PREFIX_CONFIG.API_URL, GET_MSISDN_PREFIX_CONFIG.API_METHOD);
+			return apiService.fetch(request).$promise;
+		};
+
+		var getResponse = function(rawResponse){
+			return $parse('numberPrefix')(rawResponse);
+		};
+
+		return getMSISDNPrefixFn;
+	}]);
+
+// Source: src/scripts/common/services/msisdn.js
+angular.module('CLM-UI.Corporate.Services.MSISDN', [
+		'TT-UI.Common.Tpl'
+	])
+
+		.constant('MSISDN_SETTINGS', {
+			GET_MOBILE_NUMBERS_API:  'GetAvailableNumbers/json/query',
+			GET_BY_TOKEN_API:        'GetMobileDetailsByReservationTokenRequest/json/query',
+			BLOCK_API:               'BlockMSISDNRequest/json/',
+			RELEASE_API:             'ReleaseMSISDNRequest/json/',
+			BLOCK_CORP_API:          'BlockMSISDNBulkRequest/json/1',
+			RELEASE_CORP_API:        'ReleaseMSISDBulkNRequest/json/1',
+			SERVER_PAGE_SIZE:        100,
+			UI_PAGE_SIZE:            10,
+			RESPONSE_JSON_PATH:      'numbersList',
+			SUCCESS_RESPONSE:        'SUCCESS',
+			CACHE_ID:                'msisdnCache',
+			SELECTION_TYPE_AUTO:     'Automatic',
+			SELECTION_TYPE_MANUAL:   'Manual',
+			SELECTION_TYPE_RESERVED: 'Reserved',
+			PAGE_SIZE:        10
+		})
+
+		.factory('MSISDNNumberProvider', ['$q', '$cacheFactory', '$parse', 'commonRequestInventoryFn', 'MSISDN_SETTINGS', function($q, $cacheFactory, $parse, commonRequestInventoryFn, MSISDN_SETTINGS) {
+			var msisdnCache = $cacheFactory(MSISDN_SETTINGS.CACHE_ID, {number: 10});
+			var activeRequestsCache = {};
+			var lastQuery;
+			var isMoreButton = false;
+
+			var getQueryParams = function(msisdnCategory, msisdn) {
+				var page = 1;
+				// If we are requesting data with the same parameters,
+				// we increase page number and request next page, otherwise we reset to first page
+				if (lastQuery && isMoreButton &&
+					lastQuery.msisdnCategory === msisdnCategory &&
+					lastQuery.msisdn === msisdn) {
+					page = lastQuery.page + 1;
+				}
+
+				lastQuery = {
+					msisdnCategory: msisdnCategory,
+					msisdn: msisdn,
+					page: page
+				};
+				return lastQuery;
+			};
+
+			var createCacheKey = function(msisdnCategory, msisdn) {
+				return '' + msisdnCategory + '#' + msisdn;
+			};
+
+			return {
+				requestNextPage: function(serviceDetails) {
+					//var queryParams = getQueryParams(msisdnCategory, msisdn);
+
+					/*var nmsOptions = {
+						msisdnCategory: queryParams.msisdnCategory,
+						pageNumber: queryParams.page,
+						pageSize: pageSize || MSISDN_SETTINGS.SERVER_PAGE_SIZE,
+						msisdn: queryParams.msisdn || ''
+					};*/
+
+					return commonRequestInventoryFn(MSISDN_SETTINGS.GET_MOBILE_NUMBERS_API, serviceDetails).then(function(results) {
+						if (angular.isUndefined(results.mobileNumbersList)) {
+							return $q.reject('Missing mobile numbers');
+						}
+						return $parse(MSISDN_SETTINGS.RESPONSE_JSON_PATH)(results);
+					}, function(){
+						return $q.reject('Missing mobile numbers');
+					});
+				},
+
+				clearCache: function() {
+					msisdnCache.removeAll();
+				},
+
+				getData: function(serviceDetails, msisdn) {
+					var pageSize = $parse('pageSize')(serviceDetails);
+					var deferred = $q.defer();
+					//count = 0;
+					var cacheKey = createCacheKey($parse('category')(serviceDetails), msisdn);
+					delete msisdnCache[cacheKey];
+					activeRequestsCache[cacheKey] = this.requestNextPage(serviceDetails).then(function(response) {
+								/*var newData = (msisdnCache.get(cacheKey) || []).concat(response);*/
+								msisdnCache.put(cacheKey, response);
+								delete activeRequestsCache[cacheKey];
+								deferred.resolve(response);
+							}, function(error){
+								return deferred.resolve(error);
+							});
+					return deferred.promise;
+				},
+
+				getNext: function(msisdnCategory, msisdn) {
+					var deferred = $q.defer();
+					var cacheKey = createCacheKey(msisdnCategory, msisdn);
+					var data = (msisdnCache.get(cacheKey) || []);
+					if (data.length === 0){
+						this.isMoreButtonSelected(true);
+						return this.getData(msisdnCategory, msisdn).then(function(numbers) {
+							if (angular.isArray(numbers) && numbers.length){
+								return numbers.splice(0,  MSISDN_SETTINGS.UI_PAGE_SIZE);
+							} else {
+								return numbers;
+							}
+
+						});
+					}else {
+						delete msisdnCache[cacheKey];
+						var remainingNumbers;
+						if (data.length === MSISDN_SETTINGS.SERVER_PAGE_SIZE){
+							remainingNumbers = data.splice(MSISDN_SETTINGS.UI_PAGE_SIZE,  data.length - 1);
+						}else {
+							remainingNumbers = data;
+						}
+						msisdnCache.put(cacheKey, remainingNumbers);
+						deferred.resolve(remainingNumbers.splice(0,  MSISDN_SETTINGS.UI_PAGE_SIZE) || []);
+					}
+					return deferred.promise;
+				},
+
+				getNumbers: function(serviceDetails, msisdn) {
+					var cacheKey = createCacheKey($parse('category')(serviceDetails), msisdn);
+					this.isMoreButtonSelected(false);
+					var pageSize = $parse('pageSize')(serviceDetails);
+					return this.getData(serviceDetails, msisdn).then(function(response) {
+						if (angular.isArray(response) && response.length){
+							delete msisdnCache[cacheKey];
+							var numbers = angular.copy(response);
+							msisdnCache.put(cacheKey, numbers);
+							return response.splice(0,  MSISDN_SETTINGS.UI_PAGE_SIZE);
+						} else {
+							return response || [];
+						}
+
+					});
+				},
+				isMoreButtonSelected : function(more) {
+					return isMoreButton = more;
+				}
+			};
+		}])
+
+		.factory('MSISDN', ['$q', '$parse', 'MSISDNNumberProvider', 'commonRequestInventoryFn', 'MSISDN_SETTINGS', function($q, $parse, MSISDNNumberProvider, commonRequestInventoryFn, MSISDN_SETTINGS) {
+
+			var checkResponse = function(response) {
+				if (response !== MSISDN_SETTINGS.SUCCESS_RESPONSE) {
+					$q.reject('Missing response', response);
+				}
+				return response;
+			};
+
+			var checkIfNumberExist = function(number) {
+				if (!number) {
+					return $q.reject('Missing MSISDN number');
+				}
+				return $q.when(number);
+			};
+
+			var callBlockApi = function(number) {
+				return callBlockAndReleaseApi(number, MSISDN_SETTINGS.BLOCK_API);
+			};
+
+			var callReleaseApi = function(number) {
+				return callBlockAndReleaseApi(number, MSISDN_SETTINGS.RELEASE_API);
+			};
+
+			var callCorpBlockApi = function(numbers) {
+				return callCorpBlockAndReleaseApi(MSISDN_SETTINGS.BLOCK_CORP_API, numbers);
+			};
+
+			function callCorpReleaseApi(numbers) {
+				return callCorpBlockAndReleaseApi(MSISDN_SETTINGS.RELEASE_CORP_API, numbers);
+			}
+
+			function callBlockAndReleaseApi(number, type) {
+				return commonRequestInventoryFn(type + number).then(checkResponse);
+			}
+
+			var callCorpBlockAndReleaseApi = function(apiPath, numbers) {
+				var data = {
+					msisdnNumber : numbers
+				};
+				if (!_.isEmpty($parse('msisdnNumber[0]')(data))) {
+					return commonRequestInventoryFn(apiPath, data).then(checkResponse);
+				}
+			};
+
+			var prepareGetOneNumberRequest = function(serviceDetails){
+				/*if (!msisdnCategory){
+					return $q.reject('Missing MSISDN category');
+				}
+
+				return $q.when({
+					msisdnCategory: msisdnCategory,
+					msisdn: msisdnPrefix || '',
+					pageNumber: page || 1,
+					hlrNumber: hlrNumber,
+					pageSize: pageSize || 1
+				});*/
+
+				return serviceDetails;
+			};
+
+			var prepareGetByReservationTokenRequest = function(token, page) {
+				if (!token){
+					return $q.reject('Missing MSISDN Reservation Token');
+				}
+
+				return $q.when({
+					resTokenNumber: token,
+					hlrNumber: 1,
+					pageNumber: page || 1,
+					pageSize: MSISDN_SETTINGS.PAGE_SIZE || 1
+				});
+			};
+
+			var prepareGetByReservationMsisdnRequest = function(token, msisdn) {
+				if (!token){
+					return $q.reject('Missing MSISDN Reservation Token');
+				}
+
+				return $q.when({
+					resTokenNumber: token,
+					msisdn: msisdn,
+					hlrNumber: 1
+				});
+			};
+
+			var callGetByReservationToken = function(options){
+				return commonRequestInventoryFn(MSISDN_SETTINGS.GET_BY_TOKEN_API, options).then(function(response) {
+					var numberList = $parse(MSISDN_SETTINGS.RESPONSE_JSON_PATH)(response);
+					if (!angular.isArray(numberList)) {
+						return $q.reject('Missing mobile number');
+					}
+					return numberList;
+				});
+			};
+
+			var callGetMobileNumberApi = function(options){
+				return commonRequestInventoryFn(MSISDN_SETTINGS.GET_MOBILE_NUMBERS_API, options).then(function(response) {
+					var numberList = $parse(MSISDN_SETTINGS.RESPONSE_JSON_PATH)(response);
+					if (!angular.isArray(numberList)) {
+						return $q.reject('Missing mobile number');
+					}
+					return numberList;
+				});
+			};
+			var fetchFirstNumberFromList = function(numbers){
+				var firstNumber = numbers.shift();
+				if (angular.isUndefined(firstNumber.mobileNumber)){
+					return $q.reject('Missing mobile number');
+				}
+				return firstNumber;
+			};
+
+			return {
+
+				getNumberFromCategory : function(category, prefix, hlrNumber){
+					return prepareGetOneNumberRequest(category, prefix, 1, 1, hlrNumber)
+						.then(callGetMobileNumberApi)
+						.then(fetchFirstNumberFromList);
+				},
+
+				getNumbers: function(serviceDetails){
+					return prepareGetOneNumberRequest(serviceDetails)
+						.then(callGetMobileNumberApi);
+				},
+
+				getMoreItems: function(msisdnCategory, filter) {
+					return MSISDNNumberProvider.getNext(msisdnCategory, filter, MSISDN_SETTINGS.UI_PAGE_SIZE);
+				},
+
+				getNumberByReservation: function(token, page) {
+					return prepareGetByReservationTokenRequest(token, page)
+						.then(callGetByReservationToken);
+				},
+
+				getNumberByReservationMsisdn: function(token, msisdn) {
+					return prepareGetByReservationMsisdnRequest(token, msisdn)
+						.then(callGetByReservationToken);
+				},
+
+				blockNumber: function(number) {
+					return checkIfNumberExist(number).then(callBlockApi);
+				},
+
+				releaseNumber: function(number) {
+					return checkIfNumberExist(number).then(callReleaseApi);
+				},
+
+				blockNumbers: function(number) {
+					return checkIfNumberExist(number).then(callCorpBlockApi);
+				},
+
+				releaseNumbers: function(number) {
+					return checkIfNumberExist(number).then(callCorpReleaseApi);
+				},
+
+				reserveNumberByCategory : function(category, prefix, hlrNumber){
+					return this.getNumberFromCategory(category, prefix, hlrNumber).then(function(number){
+						return this.blockNumber(number.mobileNumber).then(function(){
+							return number;
+						});
+					}.bind(this));
+				},
+
+				isAutomaticMode: function(selectionType){
+					return selectionType === MSISDN_SETTINGS.SELECTION_TYPE_AUTO;
+				},
+
+				isManualMode: function(selectionType){
+					return selectionType === MSISDN_SETTINGS.SELECTION_TYPE_MANUAL;
+				}
+			};
+		}]);
+
+
+// Source: src/scripts/common/services/offering-data.js
+var module = angular.module('TT-UI-CLM.Common.Services.OfferingData', [
+    'TT-UI-CLM.Common.Services.CommonMasterDataResults'
+]);
+
+function OfferingDataFactory($parse, CommonMasterDataResults, COMMON_MASTER_CONFIG) {
+
+    function OfferingData(offering) {
+        this.offering = offering;
+    }
+
+    OfferingData.prototype.getServiceType = function(){
+        return $parse('associatedProducts.associatedProduct[0].product.lineOfBusiness.code')(this.offering);
+    };
+
+    OfferingData.prototype.getSubServiceType = function(){
+        return $parse('associatedProducts.associatedProduct[0].product.productType.code')(this.offering);
+    };
+
+    OfferingData.prototype.getTechnology = function(){
+        return $parse('associatedProducts.associatedProduct[0].product.technicalChannels.technicalChannel[0].code')(this.offering);
+    };
+
+    OfferingData.prototype.getBusinessType = function(){
+        return $parse('associatedProducts.associatedProduct[0].businessType.code')(this.offering);
+    };
+
+    return OfferingData;
+}
+OfferingDataFactory.$inject = ['$parse', 'CommonMasterDataResults', 'COMMON_MASTER_CONFIG']
+module.factory('OfferingData', OfferingDataFactory);
+
+
+// Source: src/scripts/common/steps/service-details/helpers/abstract-locker.js
+
+var module = angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.AbstractLocker', [
+        'TT-UI-CLM.Common.Api.Utils.Assert'
+	]);
+
+	function AbstractLockerFactory($q, store, Assert, _) {
+
+		function AbsctractLocker() {
+			this.sessionKey = 'session';
+			this.localKey = 'local';
+			this.lockerType = '';
+			this.lockerName = '';
+			this.subscriberService = {};
+			this.subscriberStorage = store.getNamespacedStore('subscriber-number');
+		}
+
+		AbsctractLocker.prototype = {
+
+			start: function(number) {
+				var storageKey = this._getSessionStorageKey();
+				this.subscriberStorage.remove(storageKey);
+
+				if (!_.isEmpty(number)) {
+					this.subscriberStorage.set(storageKey, number);
+				}
+
+				if (this._hasLocalNumber()) {
+					this.free();
+				}
+			},
+
+			cleanup: function() {
+				this.subscriberStorage.remove(this._getSessionStorageKey());
+				this.subscriberStorage.remove(this._getLocalStorageKey());
+			},
+
+			endWithCancel: function() {
+				var promise;
+
+				if (this._hasLocalNumber()) {
+					promise = this.free();
+				} else {
+					promise = $q.resolve();
+				}
+
+				return promise.then(this.cleanup.bind(this));
+			},
+
+			endWithSubmit: function() {
+				var promise;
+				var sessionNumber;
+
+				if (this._hasLocalNumber() && this._hasSessionNumber()) {
+					sessionNumber = this._getSessionNumber();
+					promise = this.subscriberService.release(sessionNumber);
+				} else {
+					promise = $q.resolve();
+				}
+
+				return promise.then(this.cleanup.bind(this));
+			},
+
+			lock: function(number, model) {
+				Assert.isDefined(number, 'Please provide ' + this.lockerName + ' number to lock.');
+				return this.subscriberService.block(number, model)
+					.then(this._setLocalNumber(number), this.remove(number));
+			},
+
+			remove: function(){
+				var storageKey = this._getLocalStorageKey();
+				var number = this.subscriberStorage.get(storageKey);
+				this._removeStorageKey(number);
+				this.cleanup.bind(this);
+			},
+
+			free: function(model) {
+				var storageKey = this._getLocalStorageKey();
+				var number = this.subscriberStorage.get(storageKey);
+				if (angular.isDefined(model)){
+                    model.number = number;
+				}
+				Assert.isDefined(number, 'No number available to release.');
+				Assert.isNotNull(number, 'No number available to release.');
+
+				return this.subscriberService.release(model)
+					.then(this._removeStorageKey(storageKey));
+			},
+
+			_hasLocalNumber: function() {
+				return !_.isEmpty(this.subscriberStorage.get(this._getLocalStorageKey()));
+			},
+
+			_setLocalNumber: function(number) {
+				this.subscriberStorage.set(this._getLocalStorageKey(), number);
+			},
+
+			_getSessionNumber: function() {
+				return this.subscriberStorage.get(this._getSessionStorageKey());
+			},
+
+			_hasSessionNumber: function() {
+				return !_.isEmpty(this.subscriberStorage.get(this._getSessionStorageKey()));
+			},
+
+			_removeStorageKey: function(storageKey) {
+				this.subscriberStorage.remove(storageKey);
+			},
+
+			_getLocalStorageKey: function() {
+				return this.lockerType + '.' + this.localKey;
+			},
+
+			_getSessionStorageKey: function() {
+				return this.lockerType + '.' + this.sessionKey;
+			}
+		};
+
+		return AbsctractLocker;
+
+	}
+
+	AbstractLockerFactory.$inject = ['$q', 'store', 'Assert', '_'];
+
+	module.factory('AbstractLocker', AbstractLockerFactory);
+
+// Source: src/scripts/common/steps/service-details/helpers/msisdn-locker.js
+
+var module = angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.MsisdnLocker', [
+		'TT-UI.Common',
+        'TT-UI-CLM.Common.Api.Utils.Assert',
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.AbstractLocker',
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.Services.MsisdnService'
+	]);
+
+	function MsisdnLockerFactory(CommonMsisdnService, AbstractLocker, _) {
+
+		MsisdnLocker.prototype = Object.create(AbstractLocker.prototype);
+		MsisdnLocker.prototype.constructor = MsisdnLocker;
+
+		function MsisdnLocker() {
+			AbstractLocker.call(this);
+			this.lockerType = 'msisdn';
+			this.lockerName = 'MSISDN';
+			this.subscriberService = CommonMsisdnService;
+			_.bindAll(this);
+		}
+
+		return new MsisdnLocker();
+	}
+
+	MsisdnLockerFactory.$inject = ['CommonMsisdnService', 'AbstractLocker', '_'];
+
+	module.factory('MsisdnLocker', MsisdnLockerFactory);
+
+// Source: src/scripts/common/steps/service-details/presentation/msisdn-presentation-model.js
+angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.MSISDNPresentaionModel', [
+	'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.SuggestionBoxPresentationModel',
+    'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.Strategy.MSISDNStrategyFactory',
+    'TT-UI-CLM.Common.Utils.ErrorHandler',
+    'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.MsisdnLocker',
+    'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.Services.MsisdnService',
+    'TT-UI-CLM.Common.Api.Utils.Assert',
+    'TT-UI-CLM.Common.Steps.Presentation.Strategy.ManualMsisdnStrategy',
+    'TT-UI-CLM.Common.Steps.Presentation.Strategy.AutomaticMsisdnStrategy'
+])
+    .constant('MSISDN_SELECT_SERVICE_SETTINGS', {
+        MSISDN_SELECTION_AUTO : 'Automatic',
+        MSISDN_SELECTION_MANUAL	: 'Manual',
+        MSISDN_SELECTION_RESERVE : 'Reserved'
+    });
+
+function CommonMsisdnPresentationModelFactory($parse,
+                                        $q,
+                                        SuggestionBoxPresentationModel,
+                                        Assert,
+                                        CommonMsisdnService,
+                                        MsisdnStrategyFactory,
+                                        MsisdnLocker,
+                                        errorHandlerFn,
+                                        CONFIG,
+										_,
+                                        MSISDN_SELECT_SERVICE_SETTINGS, CommonManualMsisdnStrategy, CommonAutomaticMsisdnStrategy){
+
+    CommonMsisdnPresentationModel.prototype = Object.create(SuggestionBoxPresentationModel.prototype);
+    CommonMsisdnPresentationModel.prototype.constructor = CommonMsisdnPresentationModel;
+
+   // var captcha = CaptchaDialog();
+
+    function CommonMsisdnPresentationModel(model, isMSISDNPrefixRequired) {
+        SuggestionBoxPresentationModel.call(this);
+        Assert.isDefined(model);
+        this.isMsisdnPrefixRequired = angular.isDefined(isMSISDNPrefixRequired) ? isMSISDNPrefixRequired : true;
+        this.itemsSourceField = 'number';
+        this.model = model;
+        this.strategy = MsisdnStrategyFactory();
+        //console.log("this.strategy>>>>>>>>>>>>>>>",this.strategy);
+        this.captchaVerified = false;
+        this.msisdnLocker = MsisdnLocker;
+        if (model.mobileNumber) {
+            this.selectedItem = {
+                number: model.mobileNumber
+            };
+        }
+
+        _.bindAll(this);
+    }
+
+    CommonMsisdnPresentationModel.prototype.isSelectionAllowed = function(value) {
+        return angular.isDefined(this._findMsisdnObjectForNumber(value));
+    };
+
+    CommonMsisdnPresentationModel.prototype.isReadonly = function() {
+        return angular.isDefined(this.selectedItem);
+    };
+
+    CommonMsisdnPresentationModel.prototype.update = function(fieldName) {
+        $parse('mobileNumber').assign(this.model, '');
+        return $q.when(this._updateStrategy())
+            .then(this._updateSelection)
+            //.then(this.assignValueToModel(formModel))
+            //.then(this._showCaptchaIfApplicable.bind(this, fieldName))
+            //.then(this._fetchMoreIfNotSelected);
+    };
+
+    /*MsisdnPresentationModel.prototype._showCaptchaIfApplicable = function(fieldName) {
+        var promise = $q.when();
+
+        if (this._isCaptchaApplicable()){
+            if (fieldName === 'MSISDNSelection'){
+                promise = promise.then(this._showCaptcha);
+            } else {
+                promise = $q.reject();
+            }
+        }
+
+        return promise;
+    };*/
+
+    /*MsisdnPresentationModel.prototype._isCaptchaApplicable = function(){
+        return CONFIG.CAPTCHA_REQUIRED === 'true' && this.model.selectionType === 'Manual' && !this.captchaVerified;
+    };
+
+    MsisdnPresentationModel.prototype._showCaptcha = function(){
+        return captcha.show()
+            .then(this._setCaptchaVerified)
+            .catch(this._resetSelectionField);
+    };
+
+    MsisdnPresentationModel.prototype._setCaptchaVerified = function(){
+        this.captchaVerified = true;
+    };*/
+
+    CommonMsisdnPresentationModel.prototype._resetSelectionField = function(){
+        this.model.selectionType = undefined;
+    };
+
+    CommonMsisdnPresentationModel.prototype._load = function(value) {
+        if (angular.isUndefined(this.strategy.load)){
+            this._updateStrategy();
+        }
+        return this.strategy.load(value, this.isMsisdnPrefixRequired).catch(errorHandlerFn);
+    };
+
+    CommonMsisdnPresentationModel.prototype._search = function(value) {
+        this.toSearchNumber = value;
+        this.strategy.update(this.model);
+        return this.strategy.search(value, this.isMsisdnPrefixRequired).catch(errorHandlerFn);
+    };
+
+    CommonMsisdnPresentationModel.prototype._select = function(value) {
+        var serviceNumbers = [value];
+        //console.log("value>>>>>",value)
+        return this.msisdnLocker.lock(serviceNumbers, this.model)
+            .then(this._findMsisdnObjectForNumber.bind(this, value), this._clear.bind(this))
+            .catch(errorHandlerFn);
+    };
+
+    CommonMsisdnPresentationModel.prototype._clear = function(errors) {
+        this.model.mobileNumber = '';
+        this.model.hlrOfMsisdn = '';
+        this.selectedItem = '';
+        return $q.reject(errors);
+    };
+
+    CommonMsisdnPresentationModel.prototype._deselect = function() {
+        //console.log("this.model>>>>>>>>>", this.model);
+        return this.msisdnLocker.free(this.model)
+            .catch(errorHandlerFn);
+    };
+
+    CommonMsisdnPresentationModel.prototype._setSelectedItem = function(value) {
+        var newItemSelected = angular.isDefined(value);
+
+        this.selectedItem = value;
+        if (newItemSelected) {
+            this.model.mobileNumber = value.number;
+            this.model.hlrOfMsisdn = value.hlrNumber;
+        } else {
+            this.model.mobileNumber = '';
+            this.model.hlrOfMsisdn = '';
+        }
+
+        return newItemSelected;
+    };
+
+    CommonMsisdnPresentationModel.prototype._updateStrategy = function() {
+        var selectionType = this.model.selectionType;
+        //console.log("selectionType>>>>>",selectionType)
+        if (_.get(this, 'strategy.name') !== selectionType) {
+            var Strategy = this.getStrategy(selectionType);
+            //var Strategy = MsisdnStrategyFactory(selectionType);
+            this.strategy = new Strategy(CommonMsisdnService);
+            //console.log("this.strategy?????????",this.strategy)
+        }
+        ////console.log("this.strategy.update(this.model)>>>>>",this.strategy.update(this.model))
+        return this.strategy.update(this.model);
+    };
+
+    CommonMsisdnPresentationModel.prototype.getStrategy = function(selectionType) {
+        if (selectionType === MSISDN_SELECT_SERVICE_SETTINGS.MSISDN_SELECTION_AUTO) {
+            return CommonAutomaticMsisdnStrategy;
+        } else if (selectionType === MSISDN_SELECT_SERVICE_SETTINGS.MSISDN_SELECTION_MANUAL){
+            return CommonManualMsisdnStrategy;
+        } else if (selectionType === MSISDN_SELECT_SERVICE_SETTINGS.MSISDN_SELECTION_RESERVE){
+
+        } else {
+            return this.DummyMsisdnStrategy;
+        }
+    };
+
+    CommonMsisdnPresentationModel.prototype.DummyMsisdnStrategy = function() {
+        this.name = 'Dummy';
+        this.update = _.noop;
+        this.load = _.constant($q.when([]));
+    };
+
+    CommonMsisdnPresentationModel.prototype._updateSelection = function(value) {
+        var queue = $q.when();
+
+        var oldSelectedItemAvailable = !_.isEmpty(this.selectedItem);
+        var newSelectedItemAvailable = !_.isEmpty(value);
+        var selectionChanged = oldSelectedItemAvailable || newSelectedItemAvailable;
+
+        if (oldSelectedItemAvailable) {
+            //console.log("this.toSearchNumber>>>", this.toSearchNumber, value);
+            queue.then(this._deselect.bind(this, this.toSearchNumber));
+        }
+
+        if (newSelectedItemAvailable) {
+            queue.then(this._select.bind(this, value.number));
+        }
+
+        if (selectionChanged) {
+            queue.then(this._setSelectedItem.bind(this, value));
+        }
+
+        return queue;
+    };
+
+    CommonMsisdnPresentationModel.prototype._findMsisdnObjectForNumber = function(number) {
+        //console.log("number>>>>>>>>>>",number)
+        return _.find(this.itemsSource, {number: number} || number);
+    };
+
+    CommonMsisdnPresentationModel.prototype._fetchMoreIfNotSelected = function() {
+        if (!this.selectedItem && _.get(this, 'strategy.name') !== 'Manual') {
+            var prefix = angular.isDefined(this.model.prefix) ? this.model.prefix : '';
+            var mobileNumber = angular.isDefined(this.toSearchNumber) ? this.toSearchNumber : '';
+            var toSearchNumber = prefix + mobileNumber;
+            return this.fetchMore(this.model, toSearchNumber);
+        } else if (!this.selectedItem && _.get(this, 'strategy.name') === 'Manual'){
+            return this.clearItemSource();
+        }
+    };
+
+    return CommonMsisdnPresentationModel;
+}
+
+
+CommonMsisdnPresentationModelFactory.$inject = [
+    '$parse',
+    '$q',
+    'SuggestionBoxPresentationModel',
+    'Assert',
+    'CommonMsisdnService',
+    'MsisdnStrategyFactory',
+    'MsisdnLocker',
+    'errorHandlerFn',
+    'CONFIG',
+	'_',
+    'MSISDN_SELECT_SERVICE_SETTINGS',
+    'CommonManualMsisdnStrategy',
+    'CommonAutomaticMsisdnStrategy'
+];
+module.factory('CommonMsisdnPresentationModel', CommonMsisdnPresentationModelFactory);
+
+// Source: src/scripts/common/steps/service-details/presentation/strategy/automatic-msisdn-strategy.js
+
+var module = angular.module('TT-UI-CLM.Common.Steps.Presentation.Strategy.AutomaticMsisdnStrategy', [
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.Services.MsisdnService',
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.SuggestionBoxPresentationModel',
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.MsisdnLocker',
+        'TT-UI-CLM.Common.Api.Utils.Assert',
+        'TT-UI-CLM.Common.Utils.ErrorHandler',
+        'TT-UI-CLM.Common.Services.OfferingData'
+	]);
+
+	function CommonAutomaticMsisdnFactory($parse, CommonManualMsisdnStrategy, OfferingData) {
+
+		function CommonAutomaticMsisdnStrategy(MsisdnService) {
+            CommonManualMsisdnStrategy.call(this, MsisdnService);
+			this.name = 'Automatic';
+		}
+
+        CommonAutomaticMsisdnStrategy.prototype = Object.create(CommonManualMsisdnStrategy.prototype, {
+			constructor: CommonAutomaticMsisdnStrategy
+		});
+
+        CommonAutomaticMsisdnStrategy.prototype.update = function(model) {
+            CommonManualMsisdnStrategy.prototype.update.call(this, model);
+
+			return this.load(model).then(this.fetchFirst);
+		};
+
+        CommonAutomaticMsisdnStrategy.prototype.fetchFirst = function(value) {
+            return value || {};
+        };
+
+        CommonAutomaticMsisdnStrategy.prototype.load = function(model){
+			var pageSize = 1;
+			return this.service.loadAvailable('', model, pageSize, pageSize);
+		};
+
+		return CommonAutomaticMsisdnStrategy;
+	}
+    CommonAutomaticMsisdnFactory.$inject = ['$parse', 'CommonManualMsisdnStrategy', 'OfferingData'];
+    module.factory('CommonAutomaticMsisdnStrategy', CommonAutomaticMsisdnFactory);
+
+
+
+// Source: src/scripts/common/steps/service-details/presentation/strategy/manual-msisdn-strategy.js
+
+var module = angular.module('TT-UI-CLM.Common.Steps.Presentation.Strategy.ManualMsisdnStrategy', [
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.Services.MsisdnService',
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.SuggestionBoxPresentationModel',
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.MsisdnLocker',
+        'TT-UI-CLM.Common.Api.Utils.Assert',
+        'TT-UI-CLM.Common.Utils.ErrorHandler',
+        'TT-UI-CLM.Common.Services.OfferingData'
+	]);
+
+	function CommonManualMsisdnStrategyFactory($q, translateFilter, OfferingData) {
+		var __ = translateFilter;
+
+		function CommonManualMsisdnStrategy(MsisdnService) {
+			this.service = MsisdnService;
+			this.name = 'Manual';
+		}
+
+        CommonManualMsisdnStrategy.prototype.update = function(model) {
+            this.msisdnCategory = model.category;
+            this.prefix = model.prefix;
+            this.hlrNumber = model.hlrOfSim;
+            this.model = model;
+        };
+        CommonManualMsisdnStrategy.prototype.load = function(msisdnNumber, isMsisdnPrefixRequired) {
+            //console.log("inside load")
+            return this._fetchMore(this.model.msisdnCategory, msisdnNumber || this.prefix, this.hlrNumber, this.serviceData, isMsisdnPrefixRequired);
+        };
+        CommonManualMsisdnStrategy.prototype._fetchMore = function(msisdnNumber, isMsisdnPrefixRequired, model) {
+            if (!mandatoryParametersProvided(this.msisdnCategory)) {
+                return $q.resolve([]);
+            } else if (!this.prefix && isMsisdnPrefixRequired){
+                return $q.reject(__('MSISDN prefix is required'));
+            } else if (!numberMatchesPrefix(this.prefix, msisdnNumber)) {
+                return this._loadPage(numberToSearch(this.prefix, msisdnNumber),model);
+            } else if (numberMatchesPrefix(this.prefix, msisdnNumber)) {
+                return this._loadPage(msisdnNumber, model);
+            } else {
+                return $q.resolve([]);
+            }
+        };
+        CommonManualMsisdnStrategy.prototype._loadPage = function(msisdnNumber, model) {
+            var newToken = [msisdnNumber, model];
+            //console.log("newToken>>>>>>>>>>>", newToken, this.token)
+            if (!angular.equals(newToken, this.token)) {
+                this.token = newToken;
+                this.nextPageNumber = 0;
+            }
+            var parameters = this.token.concat([this.nextPageNumber++]);
+            //console.log("parameters>>>>>>>>>>>", parameters)
+            return this.service.loadAvailable.apply(this, parameters);
+        };
+        CommonManualMsisdnStrategy.prototype.search = function(msisdnNumber, isMsisdnPrefixRequired) {
+            this.nextPageNumber = 0;
+            return this._fetchMore(msisdnNumber, isMsisdnPrefixRequired, this.model);
+        };
+
+
+		function mandatoryParametersProvided() {
+			return _.every(arguments, _.isDefined);
+		}
+
+		function numberMatchesPrefix(prefix, number) {
+			if (!_.isEmpty(prefix)){
+				var startPrefix = new RegExp('^' + prefix);
+				if (_.isUndefined(number)){
+					number = '';
+				}
+				return startPrefix.test(number);
+			} else {
+				return !_.isUndefined(number) ? number : '';
+			}
+
+		}
+
+		function numberToSearch(prefix, number) {
+			if (!_.isUndefined(number)){
+				var serachNumber = !_.isEmpty(prefix) ? prefix + number : number;
+				return serachNumber;
+			}
+			return !_.isEmpty(prefix) ? prefix : '';
+		}
+
+		return CommonManualMsisdnStrategy;
+	}
+
+    CommonManualMsisdnStrategyFactory.$inject = ['$q', 'translateFilter', 'OfferingData'];
+    module.factory('CommonManualMsisdnStrategy', CommonManualMsisdnStrategyFactory);// try with service
+
+
+
+// Source: src/scripts/common/steps/service-details/presentation/strategy/msisdn-strategy-factory.js
+angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.Strategy.MSISDNStrategyFactory', [
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.Services.MsisdnService',
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.SuggestionBoxPresentationModel',
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.MsisdnLocker',
+        'TT-UI-CLM.Common.Api.Utils.Assert',
+        'TT-UI-CLM.Common.Utils.ErrorHandler'
+    ]);
+
+	function MsisdnStrategyFactory($q, $injector) {
+		var STRATEGY_SUFFIX = 'MsisdnStrategy';
+
+		function DummyMsisdnStrategy() {
+			this.name = 'Dummy';
+			this.update = _.noop;
+			this.load = _.constant($q.when([]));
+		}
+
+		return function(name) {
+			var serviceName = name + STRATEGY_SUFFIX;
+			if ($injector.has(serviceName)) {
+				return $injector.get(serviceName);
+			} else {
+				return DummyMsisdnStrategy;
+			}
+		};
+	}
+
+	MsisdnStrategyFactory.$inject = ['$q', '$injector'];
+    module.factory('MsisdnStrategyFactory', MsisdnStrategyFactory);
+
+
+// Source: src/scripts/common/steps/service-details/presentation/strategy/reserved-msisdn-strategy.js
+
+var module = angular.module('TT-UI-CLM.Common.Steps.Presentation.Strategy.ReservedMsisdnStrategy', [
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.Services.MsisdnService',
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.SuggestionBoxPresentationModel',
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.MsisdnLocker',
+        'TT-UI-CLM.Common.Api.Utils.Assert',
+        'TT-UI-CLM.Common.Utils.ErrorHandler'
+	]);
+
+	function CommonReservedMsisdnStrategyFactory($q) {
+		function CommonReservedMsisdnStrategy(MsisdnService) {
+			this.service = MsisdnService;
+			this.name = 'Reserved';
+		}
+
+        CommonReservedMsisdnStrategy.prototype = {
+			update: function(model) {
+				this.reserverationId = model.reservationId;
+				this.hlrNumber = model.hlrOfSim;
+			},
+			load: function() {
+				if (!_.isEmpty(this.reserverationId)) {
+					return this._fetchMore(this.reserverationId, this.hlrNumber);
+				} else {
+					return $q.when([]);
+				}
+			},
+			_fetchMore: function(reserverationId, hlrNumber, msisdnNumber) {
+				if (!mandatoryParametersProvided(reserverationId)) {
+					return $q.resolve([]);
+				}
+
+				return this._loadPage(reserverationId, hlrNumber, msisdnNumber);
+			},
+			_loadPage: function(reserverationId, hlrNumber, msisdnNumber) {
+				var newToken = [reserverationId, hlrNumber];
+				var parameters;
+
+				if (!angular.equals(newToken, this.token)) {
+					this.token = newToken;
+					this.nextPageNumber = 0;
+				}
+				this.nextPageNumber++;
+				if (typeof msisdnNumber === 'undefined') {
+					msisdnNumber = '';
+				}
+				parameters = this.token.concat([this.nextPageNumber, msisdnNumber]);
+				return this.service.loadReserved.apply(this, parameters);
+			},
+			search: function(msisdnNumber) {
+				this.nextPageNumber = 0;
+				if (!_.isEmpty(this.reserverationId)) {
+					return this._fetchMore(this.reserverationId, this.hlrNumber, msisdnNumber);
+				}
+
+				return $q.when([]);
+			}
+		};
+
+		function mandatoryParametersProvided() {
+			return _.every(arguments, _.isDefined);
+		}
+
+		return CommonReservedMsisdnStrategy;
+	}
+
+    CommonReservedMsisdnStrategyFactory.$inject = ['$q'];
+
+    module.factory('CommonReservedMsisdnStrategy', CommonReservedMsisdnStrategyFactory);
+
+
+
+
+// Source: src/scripts/common/steps/service-details/presentation/suggestion-box-presentation-model.js
+var module = angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.SuggestionBoxPresentationModel', [
+        'TT-UI-CLM.Common.Services.OfferingData'
+	]);
+	function SuggestionBoxPresentationModelFactory($parse, $q, OfferingData) {
+
+		function SuggestionBoxPresentationModel() {
+			this.itemsSource = [];
+			this.itemsSourceField = 'label';
+		}
+
+		SuggestionBoxPresentationModel.prototype = {
+
+			getOfferingDataService: function(offering){
+                var offerDataService = new OfferingData(offering);
+                return offerDataService;
+			},
+			selectAction: function(value) {
+                /*var offerDataService = this.getOfferingDataService(value.selectedOffering);
+                var serviceDetails = {
+                    'serviceType': offerDataService.getServiceType(),
+                    'subServiceType': offerDataService.getSubServiceType(),
+					'numberSelectionMode': $parse('serviceDetails.gsmService.stDirect.MSISDNSelection.masterCode')(value),
+					'serviceNumber': $parse('serviceDetails.gsmService.stDirect.MSISDN')(value)
+				};*/
+				$q.when(this._select(value))
+					.then(this._setSelectedItem.bind(this));
+			},
+
+			changeAction: function(value) {
+				$q.when(this._deselect(value))
+					.then(this._setSelectedItem.bind(this, undefined))
+					.then(this.fetchMore.bind(this));
+			},
+
+			fetchMore: function(model, searchNumber) {
+				this._processResponseData(this._load(searchNumber));
+			},
+
+			searchMore: function(model, searchNumber) {
+                /*var offerDataService = this.getOfferingDataService(model.selectedOffering);
+
+				var serviceData = {
+                    'serviceType': offerDataService.getServiceType(),
+                    'subServiceType': offerDataService.getSubServiceType(),
+                    'technology': offerDataService.getTechnology(),
+                    'businessType': offerDataService.getBusinessType(),
+                    'activatedVia': $parse('serviceDetails.gsmService.activatedVia.masterCode')(model)
+				};
+                //console.log("serviceData>>>>>>>>", serviceData)*/
+				this._processResponseData(this._search(searchNumber));
+			},
+
+			isSelectionAllowed: function() {
+				return true;
+			},
+
+			isReadonly: function() {
+				return false;
+			},
+
+			_load: function() {
+				return [];
+			},
+
+			_search: function() {
+				return [];
+			},
+
+			_select: function() {
+				throw new Error('To be implemented in inheriting function.');
+			},
+
+			_deselect: function() {
+				throw new Error('To be implemented in inheriting function.');
+			},
+
+			_setSelectedItem: function() {
+
+			},
+
+			_processResponseData: function(promise) {
+				//console.log("result>>>>>>>>>>>>>>>>>>>>>>>>>>>>",promise)
+				this.isLoading = true;
+				this.itemsSource = [];
+
+				var saveItemsSource = function(result){
+					this.itemsSource = result;
+				}.bind(this);
+
+				var restoreIsLoading = function(){
+					this.isLoading = false;
+				}.bind(this);
+
+				var catchException = function() {
+					this.itemsSource = [];
+				}.bind(this);
+
+				$q.when(promise)
+					.then(saveItemsSource)
+					.catch(catchException)
+					.finally(restoreIsLoading);
+			},
+
+			clearItemSource: function() {
+				this.itemsSource = [];
+			}
+		};
+
+		return SuggestionBoxPresentationModel;
+	}
+
+	SuggestionBoxPresentationModelFactory.$inject = ['$parse', '$q', 'OfferingData'];
+
+	module.factory('SuggestionBoxPresentationModel', SuggestionBoxPresentationModelFactory);
+
+// Source: src/scripts/common/steps/service-details/services/msisdn-service.js
+
+var module = angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.Services.MsisdnService', [
+		'TT-UI.Config',
+        'TT-UI-CLM.Common.Api.Inventory.Msisdn.GetMobileDetailsByMSISDN',
+        'TT-UI-CLM.Common.Api.Inventory.Msisdn.GetMobileDetailsByReservationToken',
+		'TT-UI-CLM.Common.Api.Inventory.CommonInventoryRequestApi',
+        'TT-UI-CLM.Common.Api.Inventory.CommonApiPath'
+	]);
+
+	function CommonMsisdnService($q, getMobileDetailsByMSISDNFn, getMobileDetailsByReservationTokenFn, CONFIG, commonInventoryRequestApiFn, COMMON_INVENTORY_API_PATH, validateMsisdn,
+						validatePortInMsisdn) {
+
+		this.loadAvailable = function(msisdn, model, pageNumber, pageSize) {
+			//console.log("msisdn, model, pageNumber, pageSize>>>>>", msisdn, model, pageNumber, pageSize);
+			return getMobileDetailsByMSISDNFn(msisdn, model, pageNumber, pageSize);
+		};
+
+		this.loadReserved = function(token, hlrNumber, pageNumber, msisdnNumber, pageSize) {
+			return getMobileDetailsByReservationTokenFn(token, hlrNumber, pageNumber , msisdnNumber, pageSize);
+		};
+
+		this.block = function(serviceNumbers, model) {
+			model.serviceNumbers = serviceNumbers;
+            var requestPayload = {
+                serviceType : model.serviceType,
+                subServiceType : model.subServiceType,
+                numberSelectionMode : model.selectionType,
+                serviceNumber : model.serviceNumbers
+            };
+			return commonInventoryRequestApiFn(COMMON_INVENTORY_API_PATH.MSISDN_BLOCK, requestPayload)
+				.then(function(data){
+					return data;
+				}, function(errors){
+					return $q.reject(errors);
+				});
+		};
+
+		this.release = function(model) {
+            var requestPayload = {
+                serviceType : model.serviceType,
+                subServiceType : model.subServiceType,
+                serviceNumber : model.number
+            };
+			return commonInventoryRequestApiFn(COMMON_INVENTORY_API_PATH.MSISDN_RELEASE, requestPayload);
+		};
+
+		this.formatInternationalMSISDN = function(number) {
+			return (CONFIG.MSISDN_COUNTRY_CODE || '') + number;
+		};
+
+		this.validateMsisdnNumberFn = function(msisdn) {
+			return validateMsisdn(msisdn);
+		};
+
+		this.validatePortInMSISDNNumberFn = function(msisdn) {
+			return validatePortInMsisdn(msisdn);
+		};
+	}
+
+    CommonMsisdnService.$injector = ['$q', 'getMobileDetailsByMSISDNFn', 'getMobileDetailsByReservationTokenFn', 'CONFIG', 'commonInventoryRequestApiFn', 'COMMON_INVENTORY_API_PATH', 'validateMsisdn',
+	'validatePortInMsisdn'];
+
+	module.service(CommonMsisdnService.name, CommonMsisdnService);
+
+// Source: src/scripts/common/utils/assert.js
+
+var module = angular.module('TT-UI-CLM.Common.Api.Utils.Assert', []);
+
+	function AssertionError(message) {
+		this.name = 'AssertionError';
+		this.message = message || 'Assertion failed.';
+		this.stack = (new Error()).stack;
+	}
+
+	AssertionError.prototype = Object.create(Error.prototype);
+	AssertionError.prototype.constructor = AssertionError;
+
+	function assertIsTrue(condition, optionalMessage) {
+		if (condition !== true) {
+			throw new AssertionError(optionalMessage);
+		}
+	}
+
+	function assertIsDefined(value, optionalMessage) {
+		assertIsTrue(angular.isDefined(value), optionalMessage);
+	}
+
+	function assertIsNotNull(value, optionalMessage) {
+		assertIsTrue(!_.isNull(value), optionalMessage);
+	}
+
+	function assertHasProperty(object, propertyName, optionalMessage) {
+		return assertIsDefined(_.get(object, propertyName), optionalMessage);
+	}
+
+	module.value('Assert', {
+		isTrue: assertIsTrue,
+		isDefined: assertIsDefined,
+		hasProperty: assertHasProperty,
+		isNotNull: assertIsNotNull
+	});
+
+
+// Source: src/scripts/common/utils/data-model.js
+
+var module = angular.module('TT-UI-CLM.Common.Utils.DataModel', []);
+
+	function DataModelFactory($parse) {
+
+		function DataModel(source, mappings) {
+			Object.defineProperty(this, 'source', {
+				enumerable: false,
+				value: source
+			});
+			Object.keys(mappings || {}).forEach(function(key) {
+				this.addProperty(key, mappings[key]);
+			}, this);
+		}
+
+		DataModel.prototype.addProperty = function(name, mapping) {
+			var accessor = $parse(mapping);
+			Object.defineProperty(this, name, {
+				get: function() {
+					return accessor(this.source);
+				}.bind(this),
+				set: function(value) {
+					accessor.assign(this.source, value);
+				}.bind(this),
+				enumerable: true
+			});
+		};
+
+		DataModel.prototype.getSource = function() {
+			return this.source;
+		};
+
+		return {
+			create: function(source, mappings) {
+				return new DataModel(source, mappings);
+			}
+		};
+
+	}
+
+	DataModelFactory.$inject = ['$parse'];
+
+	module.factory('DataModel', DataModelFactory);
+
+
+// Source: src/scripts/common/utils/error-handler-fn.js
+
+var module = angular.module('TT-UI-CLM.Common.Utils.ErrorHandler', [
+		'TT-UI.Common',
+		'TT-UI.Common.ErrorMessageString'
+	]);
+
+	function ErrorHandlerFnFactory($q, $log, translateFilter, FlashMessage, createErrorMessageString) {
+		var __ = translateFilter;
+
+		function errorHandlerFn(errorMsg) {
+			errorMsg = errorMsg || 'Unknown error';
+			if (!angular.isArray(errorMsg)) {
+				errorMsg = [errorMsg];
+			}
+
+			var errorMsgString;
+			errorMsg.forEach(function(message) {
+				errorMsgString = createErrorMessageString(message);
+				$log.error(errorMsgString);
+				FlashMessage.show(__('Error'), errorMsgString, 'danger');
+			});
+
+			return $q.reject(errorMsg);
+		}
+
+		return errorHandlerFn;
+	}
+
+	ErrorHandlerFnFactory.$inject = ['$q', '$log', 'translateFilter', 'FlashMessage', 'createErrorMessageString'];
+
+	module.factory('errorHandlerFn', ErrorHandlerFnFactory);
+
 return angular;
 })(window, window.angular);
