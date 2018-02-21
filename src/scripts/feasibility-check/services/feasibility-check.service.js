@@ -1,16 +1,17 @@
 'use strict';
 
-var module = angular.module('TT-UI-CLM.FeasibilitySearch.Services.FeasibilitySearchService', []);
+var module = angular.module('TT-UI-CLM.FeasibilityCheck.Services.FeasibilityCheckService', []);
 
-function FeasibilitySearchService($parse) {
+function FeasibilityCheckService($parse) {
     return {
         getLocalities: getLocalities,
         getSubLocalities: getSubLocalities,
-        getStreets: getStreets
+        getStreets: getStreets,
+        getValidators: getValidators
     };
 
     function getLocalities(masterData) {
-        var localities = [];
+        var localities;
         var localitiesList = $parse('localities.locality')(masterData);
         if (localitiesList && localitiesList.length) {
             var localitiesObj = {};
@@ -33,6 +34,10 @@ function FeasibilitySearchService($parse) {
             localities = localitiesList.map(function(loc) {
                 return angular.merge({}, loc, localitiesObj[loc.code]);
             });
+            localities.splice(0, 0, {
+                name: 'Choose Locality',
+                code: ''
+            });
         }
         return localities;
     }
@@ -40,7 +45,7 @@ function FeasibilitySearchService($parse) {
     function getSubLocalities(localities, locality) {
         var subLocalities = [];
         localities.forEach(function(loc) {
-            if (!locality || (locality && loc.code === locality.code)) {
+            if (!locality || (loc.code === locality)) {
                 var sls = $parse('subLocalities.subLocality')(loc);
                 if (sls && sls.length) {
                     sls.forEach(function(sl) {
@@ -50,13 +55,17 @@ function FeasibilitySearchService($parse) {
                 }
             }
         });
+        subLocalities.splice(0, 0, {
+            name: 'Choose Sub Locality',
+            code: ''
+        });
         return subLocalities;
     }
 
     function getStreets(subLocalities, subLocality) {
         var streets = [];
         subLocalities.forEach(function(sl) {
-            if(!subLocality || (subLocality && subLocality.code === sl.code)) {
+            if(!subLocality || (subLocality === sl.code)) {
                 var sts = $parse('streets.street')(sl);
                 if(sts && sts.length) {
                     sts.forEach(function(st) {
@@ -66,8 +75,32 @@ function FeasibilitySearchService($parse) {
                 }
             }
         });
+        streets.splice(0, 0, {
+            name: 'Choose Street',
+            code: ''
+        });
         return streets;
     }
+
+    function getValidators(config) {
+        return {
+            locality: {
+                required: true
+            },
+            subLocality: {
+                required: true
+            },
+            street: {
+                required: true
+            },
+            serviceNumber: {
+                required: true,
+                minLength: 10,
+                maxLength: 15
+            }
+        }
+    }
+
 }
-FeasibilitySearchService.$inject = ['$parse']
-module.service(FeasibilitySearchService.name, FeasibilitySearchService);
+FeasibilityCheckService.$inject = ['$parse']
+module.service(FeasibilityCheckService.name, FeasibilityCheckService);

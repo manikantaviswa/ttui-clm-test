@@ -1,9 +1,8 @@
 {
   "name": "ttui-clm-test",
-  "version": "0.1.06",
+  "version": "0.1.19",
   "description": "Test Package only, later will replace it with our company repo stuff",
-  "scripts": {
-  },
+  "scripts": {},
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-angular-templates": "~1.1.0",
