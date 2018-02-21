@@ -4,7 +4,8 @@ module.exports = function(grunt) {
 	var moduleFilePrefix = 'ttui-clm-';
 
 	var modules = {
-		'feasibility-search': 'TT-UI-CLM.FeasibilitySearch',
+		'feasibility-search': 'TT-UI-CLM.FeasibilitySearch.Tpl',
+		'select-number': 'TT-UI-CLM.SelectNumber.Tpl'
 	};
 
 	grunt.initConfig({
@@ -29,8 +30,10 @@ module.exports = function(grunt) {
 				cwd: 'src',
 				dest: 'dist',
 				src: [
-					'bower_components/**/*',
-					'scss/**/*'
+					'!bower_components/**/*',
+					'scss/**/*',
+					'scripts/**/*.tpl.js',
+                    'scripts/*/data/**/*'
 				]
 			}
 		},
@@ -87,7 +90,7 @@ module.exports = function(grunt) {
 				}]
 			}
 		},
-		
+
 		uglify: {
 			dist: {
 				options: {
@@ -116,14 +119,23 @@ module.exports = function(grunt) {
 						var modulePath = src.replace(cwd, '').split('/')[0];
 						return modules[modulePath];
 					},
-					prefix: 'scripts',
+                    prefix: 'scripts',
 					bootstrap: function(moduleName, script) {
 
 						var header =
-							'angular.module(\''+moduleName+'\').run([\'$templateCache\', function($templateCache) {\n';
+                                '/* commonjs package manager support (eg componentjs) */\n' +
+                                'if (typeof module !== "undefined" && typeof exports !== "undefined" && module.exports === exports){\n' +
+                                '	module.exports = \'@@@@__SOURCE_FILENAME__\';\n' +
+                                '}\n\n' +
+                                '(function (window, angular, undefined) {\n' +
+                                '	"use strict";\n\n'+
+							'angular.module(\''+moduleName+'\',[]).run([\'$templateCache\', function($templateCache) {\n';
+
 
 						var footer =
-							'}]);\n';
+							'}]);\n'+
+                            'return angular;\n'+
+                            '})(window, window.angular);\n';
 
 						var cwd = grunt.template.process('app');
 						script = script.replace(new RegExp(cwd, 'g'), '');
@@ -150,8 +162,9 @@ module.exports = function(grunt) {
 						],
 						dest: 'src/scripts/',
 						rename: function(dest, src) {
-							return dest + src.split('/')[0] + '/' + src.split('/')[0]+'.tpl.js';
-						}
+                            var moduleName = src.split('/')[0];
+                            return dest + moduleName + '/' + moduleFilePrefix + moduleName+'.tpl.js';
+                        }
 					}
 				]
 			}
@@ -166,9 +179,9 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('build', [
 		'clean',
-		'ngtemplates',
-		'copy:dist',
 		'concat:dist',
+        'ngtemplates',
+        'copy:dist',
 		// 'concat:library',
 		// 'uglify'
 		'clean:removeNgTemplates'
