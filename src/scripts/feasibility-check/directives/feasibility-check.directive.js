@@ -15,7 +15,7 @@ module.directive('feasibilityCheck', function() {
             model: '=',
             config: '=',
             masterData: '=',
-            onSearch: '&'
+            onCheck: '&'
         },
         controller: 'FeasibilityCheckCtrl',
         templateUrl: 'scripts/feasibility-check/views/feasibility-check.tpl.html'
