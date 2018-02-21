@@ -381,29 +381,29 @@ var module = angular.module('TT-UI-CLM.Common.Services.Loaders.AbstractLoader', 
 	module.factory('AbstractLoader', AbstractLoaderFactory);
 
 // Source: src/scripts/common/loaders/msisdn-prefix-loader.js
-var module = angular.module('TT-UI-CLM.Common.Services.Loaders.MSISDNPrefixLoader', [
+var module = angular.module('TT-UI-CLM.Common.Services.Loaders.CommonMSISDNPrefixLoader', [
 		'TT-UI.Common',
         'TT-UI-CLM.Common.Services.Loaders.AbstractLoader',
         'TT-UI-CLM.Common.Services.MSISDNPrefix'
 	]);
 
-	function MSISDNPrefixLoaderFactory($q, $parse, AbstractLoader, getMSISDNPrefixFn) {
+	function CommonMSISDNPrefixLoaderFactory($q, $parse, AbstractLoader, getMSISDNPrefixFn) {
 
-		var MSISDNPrefixLoader = function(serviceDetails){
+		var CommonMSISDNPrefixLoader = function(serviceDetails){
 			this.serviceDetails = serviceDetails;
 			/*this.activatedViaPath = activatedVia;
 			this.msisdnCategoryPath = msisdnCategory;*/
 		};
-		/*MSISDNPrefixLoader.prototype = Object.create(AbstractLoader.prototype);
-		MSISDNPrefixLoader.prototype.constructor = MSISDNPrefixLoader;*/
+		/*CommonMSISDNPrefixLoader.prototype = Object.create(AbstractLoader.prototype);
+		CommonMSISDNPrefixLoader.prototype.constructor = CommonMSISDNPrefixLoader;*/
 
-		MSISDNPrefixLoader.prototype.load = function(){
+		CommonMSISDNPrefixLoader.prototype.load = function(){
 			/*var msisdnCategory = values[this.msisdnCategoryPath];
 			var activatedVia = $parse(this.activatedViaPath)(formModel);*/
 			return getMSISDNPrefixFn(this.serviceDetails).then(this._getData.bind(this));
 		};
 
-		MSISDNPrefixLoader.prototype._getData = function(msisdnPrefixesData){
+		CommonMSISDNPrefixLoader.prototype._getData = function(msisdnPrefixesData){
 			var result = [];
 			msisdnPrefixesData.forEach(function(msisdnPrefix){
 				result.push({'name': msisdnPrefix, 'code': msisdnPrefix});
@@ -412,13 +412,13 @@ var module = angular.module('TT-UI-CLM.Common.Services.Loaders.MSISDNPrefixLoade
 		};
 
 		return function(serviceDetails){
-			return new MSISDNPrefixLoader(serviceDetails);
+			return new CommonMSISDNPrefixLoader(serviceDetails);
 		};
 
 	}
 
-	MSISDNPrefixLoaderFactory.$inject = ['$q', '$parse', 'AbstractLoader', 'getMSISDNPrefixFn'];
-	module.factory('MSISDNPrefixLoader', MSISDNPrefixLoaderFactory);
+    CommonMSISDNPrefixLoaderFactory.$inject = ['$q', '$parse', 'AbstractLoader', 'getMSISDNPrefixFn'];
+	module.factory('CommonMSISDNPrefixLoader', CommonMSISDNPrefixLoaderFactory);
 
 
 // Source: src/scripts/common/services/common-config.service.js

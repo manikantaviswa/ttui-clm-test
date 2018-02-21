@@ -2,7 +2,7 @@
     <div class="col-md-6">
 
         <div class="form-group" ng-if="model.serviceDetails.gsmService.activatedVia.masterCode && model.serviceDetails.gsmService.activatedVia.masterCode === 'D'">
-            <label for="msisdn-category" class="col-sm-4 control-label">MSISDN Category</label>
+            <label for="msisdn-category" class="col-sm-4 control-label">Number Category</label>
             <div class="control-content col-sm-2">
                 <select class="form-control" name="msisdnCategory" id="msisdn-category" ng-model="model.serviceDetails.gsmService.stDirect.MSISDNCategory.masterCode"
                         ng-options="category.code as category.name for category in categoryList"
@@ -14,7 +14,7 @@
 
 
         <div class="form-group">
-            <label for="msisdn-selection" class="col-sm-4 control-label">MSISDN Selection</label>
+            <label for="msisdn-selection" class="col-sm-4 control-label">Number Selection</label>
             <div class="control-content col-sm-2">
                 <select class="form-control" name="msisdnSelection" id="msisdn-selection" ng-model="model.serviceDetails.gsmService.stDirect.MSISDNSelection.masterCode"
                         ng-options="selection.code as selection.name for selection in selectionList"
@@ -45,7 +45,7 @@
         <div class="form-group is-required"
              ng-if="model.serviceDetails.gsmService.stDirect.MSISDNSelection.masterCode === selectNumberConstant.MSISDN_SELECTION_AUTO"
              ng-class="{'has-error': (form.autoServiceNumber.$invalid && isFormValid)}">
-            <label for="serviceNumber" class="col-sm-4 control-label">MSISDN</label>
+            <label for="serviceNumber" class="col-sm-4 control-label">Allocated Number</label>
 
             <div class="control-content col-sm-2">
                 <input type="text" class="form-control" name="autoServiceNumber" id="serviceNumber"
@@ -58,7 +58,7 @@
 
 
         <div class="form-group"  ng-init="hasFocus = false" ng-class="{'has-focus': hasFocus, 'is-required': true}" ng-if="model.serviceDetails.gsmService.stDirect.MSISDNSelection.masterCode === selectNumberConstant.MSISDN_SELECTION_MANUAL">
-            <label class="col-sm-4 control-label" translate="MSISDN">MSISDN</label>
+            <label class="col-sm-4 control-label" translate="MSISDN">Allocated Number</label>
 
             <div class="control-content suggestion-box " ng-class="{'col-sm-2': 'small', 'col-sm-5': 'medium'}">
                 <input
