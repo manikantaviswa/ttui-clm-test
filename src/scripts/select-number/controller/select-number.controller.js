@@ -2,7 +2,6 @@
 
 var module = angular.module('TT-UI-CLM.SelectNumber.Controller.SelectNumberController', [
     'TT-UI-CLM.SelectNumber.Services.SelectNumberService',
-    'TT-UI-CLM.Common.Services.MSISDNPrefix',
     'TT-UI-CLM.Common.Services.OfferingData',
     'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.MSISDNPresentaionModel',
     'TT-UI-CLM.Common.Utils.DataModel',
@@ -14,7 +13,7 @@ var module = angular.module('TT-UI-CLM.SelectNumber.Controller.SelectNumberContr
     MSISDN_SELECTION_RESERVE : 'Reserved'
 });
 
-function SelectNumberController($rootScope, $scope, $parse, SelectNumberService, SELECT_SERVICE_SETTINGS, SPINNER_EVENTS, CommonMSISDNPrefixLoader, getMSISDNPrefixFn, OfferingData, FlashMessage, translateFilter, CommonMsisdnPresentationModel, DataModel, MsisdnLocker) {
+function SelectNumberController($rootScope, $scope, $parse, SelectNumberService, SELECT_SERVICE_SETTINGS, SPINNER_EVENTS, CommonMSISDNPrefixLoader, OfferingData, FlashMessage, translateFilter, CommonMsisdnPresentationModel, DataModel, MsisdnLocker) {
     var __ = translateFilter;
 
     var serviceNumberService = new SelectNumberService($scope.model.masterData);
@@ -42,6 +41,8 @@ function SelectNumberController($rootScope, $scope, $parse, SelectNumberService,
 
     $scope.model.msisdnPM = $scope.msisdnPM;
     //console.log("$scope.msisdnPM>>>>>>",$scope.msisdnPM)
+
+    console.log("CommonMSISDNPrefixLoader>>>>",CommonMSISDNPrefixLoader)
 
     $scope.getPrefixList = function(){
         if ($scope.model.serviceDetails.gsmService.stDirect.MSISDNSelection.masterCode === SELECT_SERVICE_SETTINGS.MSISDN_SELECTION_MANUAL){
@@ -82,7 +83,6 @@ SelectNumberController.$inject = [
     'SELECT_SERVICE_SETTINGS',
     'SPINNER_EVENTS',
     'CommonMSISDNPrefixLoader',
-    'getMSISDNPrefixFn',
     'OfferingData',
     'FlashMessage',
     'translateFilter',
