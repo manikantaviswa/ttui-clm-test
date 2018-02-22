@@ -18,7 +18,7 @@ var module = angular.module('TT-UI-CLM.AppointmentSlotPicker.Controllers.Appoint
   'TT-UI-CLM.AppointmentSlotPicker.Services.FetchAppointmentAPIService'
 ]);
 
-function AppointmentSlotPickerCtrl($scope, $compile, uiCalendarConfig, FetchAppointmentAPIService) {
+function AppointmentSlotPickerCtrl($scope, $compile, FetchAppointmentAPIService) {
   var date = new Date();
   var d = date.getDate();
   var m = date.getMonth();
@@ -99,7 +99,6 @@ function AppointmentSlotPickerCtrl($scope, $compile, uiCalendarConfig, FetchAppo
 AppointmentSlotPickerCtrl.$inject = [
     '$scope',
     '$compile',
-    'uiCalendarConfig',
     'FetchAppointmentAPIService'
 ];
 module.controller(AppointmentSlotPickerCtrl.name, AppointmentSlotPickerCtrl);
@@ -109,8 +108,7 @@ module.controller(AppointmentSlotPickerCtrl.name, AppointmentSlotPickerCtrl);
 var module = angular.module('TT-UI-CLM.AppointmentSlotPicker.Directives.AppointmentSlotPicker', [
     'TT-UI-CLM.AppointmentSlotPicker.Controllers.AppointmentSlotPickerCtrl',
     'TT-UI-CLM.AppointmentSlotPicker.Tpl',
-    'ui.calendar',
-//    'ui.bootstrap'
+    'mwl.calendar'
 ]);
 
 module.directive('appointmentSlotPicker', function() {
@@ -153,7 +151,7 @@ function FetchAppointmentAPIService($q, $parse, Api, ResourceFactory, API_CONFIG
     };
 
     var sendRequest = function(payload){
-        var apiService = ResourceFactory(Api.getUrl(), API_CONFIG.API_URL, API_CONFIG.API_METHOD);
+        var apiService = new ResourceFactory(Api.getUrl(), API_CONFIG.API_URL, API_CONFIG.API_METHOD);
         return apiService.fetch(prepareRequest(payload)).$promise;
     };
 

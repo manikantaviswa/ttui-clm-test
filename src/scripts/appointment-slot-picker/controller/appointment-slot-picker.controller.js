@@ -4,7 +4,7 @@ var module = angular.module('TT-UI-CLM.AppointmentSlotPicker.Controllers.Appoint
   'TT-UI-CLM.AppointmentSlotPicker.Services.FetchAppointmentAPIService'
 ]);
 
-function AppointmentSlotPickerCtrl($scope, $compile, uiCalendarConfig, FetchAppointmentAPIService) {
+function AppointmentSlotPickerCtrl($scope, $compile, FetchAppointmentAPIService) {
   var date = new Date();
   var d = date.getDate();
   var m = date.getMonth();
@@ -85,7 +85,6 @@ function AppointmentSlotPickerCtrl($scope, $compile, uiCalendarConfig, FetchAppo
 AppointmentSlotPickerCtrl.$inject = [
     '$scope',
     '$compile',
-    'uiCalendarConfig',
     'FetchAppointmentAPIService'
 ];
 module.controller(AppointmentSlotPickerCtrl.name, AppointmentSlotPickerCtrl);
