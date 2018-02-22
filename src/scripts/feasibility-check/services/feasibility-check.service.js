@@ -95,7 +95,7 @@ function FeasibilityCheckService($parse) {
             },
             serviceNumber: {
                 required: true,
-                minLength: 10,
+                minLength: 7,
                 maxLength: 15
             }
         }
