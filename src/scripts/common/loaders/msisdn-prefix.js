@@ -38,7 +38,7 @@
                     return error.desc;
                 }));
             }
-            var response = {"numberPrefix":["525", "570", "243","23234","2344","5353","75343"]};
+            //var response = {"numberPrefix":["525", "570", "243","23234","2344","5353","75343"]};
             return response;
         };
 
@@ -48,7 +48,7 @@
 		};
 
 		var getResponse = function(rawResponse){
-			return $parse('numberPrefix')(rawResponse);
+			return $parse('numberPrefix')(rawResponse) || [];
 		};
 
 		return commonGetMSISDNPrefixFn;
