@@ -213,7 +213,7 @@ var module = angular.module('TT-UI-CLM.Common.Api.Inventory.Msisdn.GetMobileDeta
 				technology: model.technology,
 				businessType: model.businessType,
 				activatedVia: model.activatedVia,
-				category: 'NPOST',
+				category: model.category || '',
                 serviceNumber: msisdn || '',
 				hlrNumber: 'MDF-01',
 				pageNumber: pageNumber || '1',
@@ -460,7 +460,7 @@ angular.module('TT-UI-CLM.Common.Services.CommonMSISDNPrefix', [
                     return error.desc;
                 }));
             }
-            var response = {"numberPrefix":["525", "570", "243","23234","2344","5353","75343"]};
+            //var response = {"numberPrefix":["525", "570", "243","23234","2344","5353","75343"]};
             return response;
         };
 
