@@ -397,8 +397,6 @@ var module = angular.module('TT-UI-CLM.Common.Services.Loaders.CommonMSISDNPrefi
 		/*CommonMSISDNPrefixLoader.prototype = Object.create(AbstractLoader.prototype);
 		CommonMSISDNPrefixLoader.prototype.constructor = CommonMSISDNPrefixLoader;*/
 
-		console.log("commonGetMSISDNPrefixFn>>>>",commonGetMSISDNPrefixFn)
-
 		CommonMSISDNPrefixLoader.prototype.load = function(){
 			/*var msisdnCategory = values[this.msisdnCategoryPath];
 			var activatedVia = $parse(this.activatedViaPath)(formModel);*/
