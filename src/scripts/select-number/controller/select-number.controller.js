@@ -2,12 +2,10 @@
 
 var module = angular.module('TT-UI-CLM.SelectNumber.Controller.SelectNumberController', [
     'TT-UI-CLM.SelectNumber.Services.SelectNumberService',
-    'CLM-UI.Customers.Services.Loaders.MSISDNPrefixLoader',
-    'TT-UI-CLM.Common.Services.MSISDNPrefix',
     'TT-UI-CLM.Common.Services.OfferingData',
     'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.MSISDNPresentaionModel',
     'TT-UI-CLM.Common.Utils.DataModel',
-    'TT-UI-CLM.Common.Services.Loaders.MSISDNPrefixLoader',
+    'TT-UI-CLM.Common.Services.Loaders.CommonMSISDNPrefixLoader',
     'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.MsisdnLocker'
 ]).constant('SELECT_SERVICE_SETTINGS', {
     MSISDN_SELECTION_AUTO : 'Automatic',
@@ -15,7 +13,7 @@ var module = angular.module('TT-UI-CLM.SelectNumber.Controller.SelectNumberContr
     MSISDN_SELECTION_RESERVE : 'Reserved'
 });
 
-function SelectNumberController($rootScope, $scope, $parse, SelectNumberService, SELECT_SERVICE_SETTINGS, SPINNER_EVENTS, MSISDNPrefixLoader, getMSISDNPrefixFn, OfferingData, FlashMessage, translateFilter, CommonMsisdnPresentationModel, DataModel, MsisdnLocker) {
+function SelectNumberController($rootScope, $scope, $parse, SelectNumberService, SELECT_SERVICE_SETTINGS, SPINNER_EVENTS, CommonMSISDNPrefixLoader, OfferingData, FlashMessage, translateFilter, CommonMsisdnPresentationModel, DataModel, MsisdnLocker) {
     var __ = translateFilter;
 
     var serviceNumberService = new SelectNumberService($scope.model.masterData);
@@ -48,7 +46,7 @@ function SelectNumberController($rootScope, $scope, $parse, SelectNumberService,
         if ($scope.model.serviceDetails.gsmService.stDirect.MSISDNSelection.masterCode === SELECT_SERVICE_SETTINGS.MSISDN_SELECTION_MANUAL){
             var commonRequestPayload = $scope.getCommoRequestPayload();
             var serviceDetails = commonRequestPayload;
-            var msisdnLoader = MSISDNPrefixLoader(serviceDetails);
+            var msisdnLoader = CommonMSISDNPrefixLoader(serviceDetails);
             msisdnLoader.load().then(function(response){
                 $scope.prefixList = response;
                 //console.log(" $scope.prefixList>>>>", $scope.prefixList)
@@ -82,8 +80,7 @@ SelectNumberController.$inject = [
     'SelectNumberService',
     'SELECT_SERVICE_SETTINGS',
     'SPINNER_EVENTS',
-    'MSISDNPrefixLoader',
-    'getMSISDNPrefixFn',
+    'CommonMSISDNPrefixLoader',
     'OfferingData',
     'FlashMessage',
     'translateFilter',
