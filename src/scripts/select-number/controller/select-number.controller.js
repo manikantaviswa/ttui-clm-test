@@ -42,8 +42,6 @@ function SelectNumberController($rootScope, $scope, $parse, SelectNumberService,
     $scope.model.msisdnPM = $scope.msisdnPM;
     //console.log("$scope.msisdnPM>>>>>>",$scope.msisdnPM)
 
-    console.log("CommonMSISDNPrefixLoader>>>>",CommonMSISDNPrefixLoader)
-
     $scope.getPrefixList = function(){
         if ($scope.model.serviceDetails.gsmService.stDirect.MSISDNSelection.masterCode === SELECT_SERVICE_SETTINGS.MSISDN_SELECTION_MANUAL){
             var commonRequestPayload = $scope.getCommoRequestPayload();
