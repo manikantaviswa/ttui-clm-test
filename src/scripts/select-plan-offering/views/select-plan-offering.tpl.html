@@ -126,13 +126,15 @@
 					</tr>
 				</thead>
 
-				<tbody ng-repeat="items in offeringDisplayedList track by $index">
+				<tbody ng-repeat="items in ::offeringDisplayedList">
 					<tr ng-class="{'active':items.selected}">
 						<td ng-bind="::items.offering.name" data-mobile-label="Offering"></td>
 						<td>
-							<select ng-init="items.offering.code =items.offering.code " ng-model="selectedVariant.code" ng-options="variant.product.code as variant.product.name for 
+							 
+							<span ng-show="items.offering.associatedProducts.associatedProduct[0].mandatory === true">-</span>
+							<select ng-show="items.offering.associatedProducts.associatedProduct[0].mandatory === false" ng-init="items.offering.code =items.offering.code " ng-model='selectedVariant[items.offering.code]' ng-options="variant.product.code as variant.product.name for 
 							 variant in items.offering.associatedProducts.associatedProduct | filter:variant.mandatory === false" ng-change="getSelectedVariant(items.offering)">
-								<option value="">Select</option>
+								<option value="">Select </option>
 							</select>
 						</td>
 						<td ng-bind="items.allowanceDescription" data-mobile-label="Allowance"></td>
@@ -326,8 +328,8 @@
 					<tr>
 						<td colspan="8">
 							<div st-pagination=""
-							st-items-by-page="1"
-							st-displayed-pages="1"
+							st-items-by-page="10"
+							st-displayed-pages="10"
 							st-template="scripts/ttui-table/table-pagination.tpl.html"
 							class="pull-right"></div>
 						</td>
