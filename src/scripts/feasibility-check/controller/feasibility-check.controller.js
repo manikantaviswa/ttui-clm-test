@@ -15,7 +15,7 @@ function FeasibilityCheckCtrl($scope, $parse, Spinner, feasibilityCheckService, 
         serviceNumCheck: {}
     };
 
-    $scope.validators = feasibilityCheckService.getValidators($scope.config);
+    $scope.validators = new feasibilityCheckService.getValidators($scope.config);
 
     $scope.checkAddressFeasibility = function(isNumberCheck) {
         var req;
@@ -44,7 +44,6 @@ function FeasibilityCheckCtrl($scope, $parse, Spinner, feasibilityCheckService, 
             setCheckResult(checkResult);
         }).catch(function(err) {
             Spinner.inner.hide();
-            console.log(err);
             setCheckResult(null);
         });
     };

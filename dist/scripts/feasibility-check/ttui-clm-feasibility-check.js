@@ -29,7 +29,7 @@ function FeasibilityCheckCtrl($scope, $parse, Spinner, feasibilityCheckService, 
         serviceNumCheck: {}
     };
 
-    $scope.validators = feasibilityCheckService.getValidators($scope.config);
+    $scope.validators = new feasibilityCheckService.getValidators($scope.config);
 
     $scope.checkAddressFeasibility = function(isNumberCheck) {
         var req;
@@ -58,7 +58,6 @@ function FeasibilityCheckCtrl($scope, $parse, Spinner, feasibilityCheckService, 
             setCheckResult(checkResult);
         }).catch(function(err) {
             Spinner.inner.hide();
-            console.log(err);
             setCheckResult(null);
         });
     };
@@ -229,7 +228,7 @@ function FeasibilityCheckAPIService($q, $parse, Api, ResourceFactory, API_CONFIG
     };
 
     var sendRequest = function(payload){
-        var apiService = ResourceFactory(Api.getUrl(), API_CONFIG.API_URL, API_CONFIG.API_METHOD);
+        var apiService = new ResourceFactory(Api.getUrl(), API_CONFIG.API_URL, API_CONFIG.API_METHOD);
         return apiService.fetch(prepareRequest(payload)).$promise;
     };
 
@@ -359,11 +358,11 @@ function FeasibilityCheckService($parse) {
                 minLength: 7,
                 maxLength: 15
             }
-        }
+        };
     }
 
 }
-FeasibilityCheckService.$inject = ['$parse']
+FeasibilityCheckService.$inject = ['$parse'];
 module.service(FeasibilityCheckService.name, FeasibilityCheckService);
 
 return angular;

@@ -15,10 +15,23 @@ module.exports = function(grunt) {
         jshint: {
             scripts: {
                 src: [
-                    'src/scripts/*.js'
+                    'src/scripts/feasibility-check/**/*.js'
                 ]
             }
         },
+
+        jscs: {
+			options: {
+				fix: (grunt.option('fix') ? true : false), // Autofix code style violations when possible.
+			},
+			scripts: {
+                // src: ['app/scripts/feasibility-check/**/*.js']
+                src: ['app/scripts/**/*.js']
+			},
+			unit: {
+				src: ['test/unit/**/*.js']
+			}
+		},
 
         clean: {
             dist: 'dist',
@@ -172,7 +185,8 @@ module.exports = function(grunt) {
             }
         }
     });
-
+    grunt.loadNpmTasks('grunt-jscs');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-copy');
@@ -181,6 +195,8 @@ module.exports = function(grunt) {
 
     grunt.registerTask('build', [
         'clean',
+        // 'jshint',
+        // 'jscs',
         'concat:dist',
         'ngtemplates',
         'copy:dist',
