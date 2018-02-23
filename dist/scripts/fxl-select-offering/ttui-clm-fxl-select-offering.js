@@ -78,9 +78,6 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
                         if ($scope.searchofferingModel.offering.CustomerCategory === '' && angular.isDefined(temp.default)) {
                             $scope.searchofferingModel.offering.CustomerCategory = temp.code;
                         }
-                        else{
-                            $scope.searchofferingModel.offering.CustomerCategory = temp.name;
-                        }
                     });
                     $scope.getCustomerSubCategory($scope.searchofferingModel.offering.CustomerCategory);
                 } else {
@@ -98,9 +95,6 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
                 angular.forEach($scope.customerCategoryList, function (temp) {
                     if (angular.isDefined(temp.default)) {
                         $scope.searchofferingModel.offering.CustomerType = temp.code;
-                    }
-                    else{
-                        $scope.searchofferingModel.offering.CustomerCategory = temp.name;
                     }
                 });
                 $scope.getCustomerSubCategory($scope.searchofferingModel.offering.CustomerType);

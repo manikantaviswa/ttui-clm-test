@@ -110,7 +110,7 @@
     <div class="col-sm-4">
       <label translate="Service">Service</label>
       <p ng-hide='defaultState.isServiceRemoved =="ProductType" || searchofferingModel.offering.ProductType=="" || searchofferingModel.offering.ProductType== undefined || searchofferingModel.offering.ProductType==null'>
-        <span class="badge">{{searchofferingModel.offering[ProductType]}}
+        <span class="badge">{{searchofferingModel.offering.ProductType}}
           <span class="pull-right badgeClose" ng-click="removeSerive('ProductType', searchofferingModel)">x</span>
         </span>
       </p>
