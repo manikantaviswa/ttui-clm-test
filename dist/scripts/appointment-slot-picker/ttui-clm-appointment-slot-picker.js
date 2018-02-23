@@ -10,15 +10,20 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 // Source: src/scripts/appointment-slot-picker/index.js
 angular.module('TT-UI-CLM.AppointmentSlotPicker', [
     'TT-UI-CLM.AppointmentSlotPicker.Directives.AppointmentSlotPicker',
+    'TT-UI-CLM.CommonComponents'
 ]);
 
 
 // Source: src/scripts/appointment-slot-picker/controller/appointment-slot-picker.controller.js
 var module = angular.module('TT-UI-CLM.AppointmentSlotPicker.Controllers.AppointmentSlotPickerCtrl', [
-    'TT-UI-CLM.AppointmentSlotPicker.Services.FetchAppointmentsAPIService'
+    'TT-UI-CLM.AppointmentSlotPicker.Services.FetchAppointmentsAPIService',
+    'TT-UI-CLM.AppointmentSlotPicker.Services.AppointmentSlotPickerService'
 ]);
 
-function AppointmentSlotPickerCtrl($scope, moment, calendarConfig, FetchAppointmentsAPIService) {
+function AppointmentSlotPickerCtrl($scope, moment, calendarConfig, FetchAppointmentsAPIService, AppointmentSlotPickerService) {
+
+    var appointmentSlotPickerService = new AppointmentSlotPickerService($scope.masterData);
+
     $scope.views = [
         { label: 'Year',    value: 'year'   },
         { label: 'Month',   value: 'month'  },
@@ -95,13 +100,16 @@ function AppointmentSlotPickerCtrl($scope, moment, calendarConfig, FetchAppointm
             $scope.viewDate =  date;
         }
     };
+
+    $scope.installationTypeList = appointmentSlotPickerService.getInstallationTypes();
 }
 
 AppointmentSlotPickerCtrl.$inject = [
     '$scope',
     'moment',
     'calendarConfig',
-    'FetchAppointmentsAPIService'
+    'FetchAppointmentsAPIService',
+    'AppointmentSlotPickerService'
 ];
 module.controller(AppointmentSlotPickerCtrl.name, AppointmentSlotPickerCtrl);
 
@@ -127,6 +135,27 @@ module.directive('appointmentSlotPicker', function() {
         templateUrl: 'scripts/appointment-slot-picker/views/appointment-slot-picker.tpl.html'
     };
 });
+
+
+// Source: src/scripts/appointment-slot-picker/services/appointment-slot-pciker.service.js
+var module = angular.module('TT-UI-CLM.AppointmentSlotPicker.Services.AppointmentSlotPickerService', [
+    'TT-UI-CLM.Common.Services.CommonMasterDataResults',
+    'TT-UI-CLM.Common.Services.Config'
+]);
+
+function AppointmentSlotPickerFactory($parse, CommonMasterDataResults, COMMON_MASTER_CONFIG) {
+
+    function AppointmentSlotPickerService(masterData) {
+        this.masterDataResults = CommonMasterDataResults.getMasterDataResults(masterData);
+    }
+
+    AppointmentSlotPickerService.prototype.getInstallationTypes = function(){
+        return this.masterDataResults[COMMON_MASTER_CONFIG.INSTALLATION_TYPES];
+    };
+    return AppointmentSlotPickerService;
+}
+AppointmentSlotPickerFactory.$inject = ['$parse', 'CommonMasterDataResults', 'COMMON_MASTER_CONFIG']
+module.factory('AppointmentSlotPickerService', AppointmentSlotPickerFactory);
 
 
 // Source: src/scripts/appointment-slot-picker/services/fetch-appointments.api.service.js

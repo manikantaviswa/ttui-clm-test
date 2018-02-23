@@ -56,8 +56,8 @@ var module = angular.module('TT-UI-CLM.Common.Services.Config', [])
         MASTER_WAIVE_OFF_APPR_REASONS: 'masterData.waiveOffApprReasons.waiveOffApprReason',
         MASTER_WAIVE_OFF_REJECT_REASONS: 'masterData.waiveOffRejReasons.waiveOffRejReason',
 		MASTER_TELEPHONE_CATEGORIES: 'masterData.telephoneCategories.telephoneCategory',
-        MASTER_TELEPHONE_SELECTIONS: 'masterData.telephoneSelections.telephoneSelection'
-
+        MASTER_TELEPHONE_SELECTIONS: 'masterData.telephoneSelections.telephoneSelection',
+        MASTER_INSTALLATION_TYPES: 'masterData.installationTypes.installationType'
     })
     .constant('COMMON_MASTER_CONFIG', {
         CUSTOMER_TYPE: 'MASTER_CUSTOMER_TYPE',
@@ -115,5 +115,6 @@ var module = angular.module('TT-UI-CLM.Common.Services.Config', [])
         WAIVE_OFF_APPR_REASONS:'MASTER_WAIVE_OFF_APPR_REASONS',
         WAIVE_OFF_REJECT_REASONS:'MASTER_WAIVE_OFF_REJECT_REASONS',
 		TELEPHONE_CATEGORIES: 'MASTER_TELEPHONE_CATEGORIES',
-		TELEPHONE_SELECTIONS: 'MASTER_TELEPHONE_SELECTIONS'
+        TELEPHONE_SELECTIONS: 'MASTER_TELEPHONE_SELECTIONS',
+        INSTALLATION_TYPES: 'MASTER_INSTALLATION_TYPES'
     });

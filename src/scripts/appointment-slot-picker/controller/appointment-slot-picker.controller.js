@@ -1,10 +1,14 @@
 'use strict';
 
 var module = angular.module('TT-UI-CLM.AppointmentSlotPicker.Controllers.AppointmentSlotPickerCtrl', [
-    'TT-UI-CLM.AppointmentSlotPicker.Services.FetchAppointmentsAPIService'
+    'TT-UI-CLM.AppointmentSlotPicker.Services.FetchAppointmentsAPIService',
+    'TT-UI-CLM.AppointmentSlotPicker.Services.AppointmentSlotPickerService'
 ]);
 
-function AppointmentSlotPickerCtrl($scope, moment, calendarConfig, FetchAppointmentsAPIService) {
+function AppointmentSlotPickerCtrl($scope, moment, calendarConfig, FetchAppointmentsAPIService, AppointmentSlotPickerService) {
+
+    var appointmentSlotPickerService = new AppointmentSlotPickerService($scope.masterData);
+
     $scope.views = [
         { label: 'Year',    value: 'year'   },
         { label: 'Month',   value: 'month'  },
@@ -81,12 +85,15 @@ function AppointmentSlotPickerCtrl($scope, moment, calendarConfig, FetchAppointm
             $scope.viewDate =  date;
         }
     };
+
+    $scope.installationTypeList = appointmentSlotPickerService.getInstallationTypes();
 }
 
 AppointmentSlotPickerCtrl.$inject = [
     '$scope',
     'moment',
     'calendarConfig',
-    'FetchAppointmentsAPIService'
+    'FetchAppointmentsAPIService',
+    'AppointmentSlotPickerService'
 ];
 module.controller(AppointmentSlotPickerCtrl.name, AppointmentSlotPickerCtrl);

@@ -2,4 +2,5 @@
 
 angular.module('TT-UI-CLM.AppointmentSlotPicker', [
     'TT-UI-CLM.AppointmentSlotPicker.Directives.AppointmentSlotPicker',
+    'TT-UI-CLM.CommonComponents'
 ]);
