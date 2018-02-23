@@ -4,7 +4,7 @@ var module = angular.module('TT-UI-CLM.AppointmentSlotPicker.Controllers.Appoint
     'TT-UI-CLM.AppointmentSlotPicker.Services.FetchAppointmentsAPIService'
 ]);
 
-function AppointmentSlotPickerCtrl($scope, moment, calendarConfig, FetchAppointmentsAPIService, ) {
+function AppointmentSlotPickerCtrl($scope, moment, calendarConfig, FetchAppointmentsAPIService) {
     $scope.views = [
         { label: 'Year',    value: 'year'   },
         { label: 'Month',   value: 'month'  },
@@ -25,10 +25,17 @@ function AppointmentSlotPickerCtrl($scope, moment, calendarConfig, FetchAppointm
             }
         };
         new FetchAppointmentsAPIService(req).then(function(res) {
-            var slots = [];
-            res.appointmentSlot.forEach(function(slot) {
-                var event
+            var startDate = null;
+            $scope.events = res.appointmentSlot.map(function(slot, index) {
+                slot.color = calendarConfig.colorTypes.info;
+                slot.title = index;
+                if(!startDate || startDate > slot.startsAt) {
+                    startDate = slot.startsAt;
+                }
+                return slot;
             });
+            $scope.viewDate = startDate;
+            console.log('updated');
         });
     }
     loadAppointments();

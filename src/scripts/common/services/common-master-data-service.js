@@ -18,7 +18,7 @@
 		'CLM-UI.Customers.Services.Loaders.LongitudeLoader'
 	]);
 
-	function CommonMasterDataUtil($q, $http, $parse, COMMON_CONFIG, CustomerSubCategoryLoaderFactory, CustomerCategoryLoaderFactory,
+	function CommonMasterDataUtil($q, $http, $parse, CLM_COMMON_CONFIG, CustomerSubCategoryLoaderFactory, CustomerCategoryLoaderFactory,
 							SubServiceLoaderFactory, ProvincesLoaderFactory, CitiesLoaderFactory, TechnologyLoaderFactory,
 							BillCyclesLoader, DocumentsLoaderTypeService, DocumentPurposeLoaderService, AddressFormatLoaderFactory,
 							CorporateDunningScheduleLoaderFactory, PostOfficeCodeLoaderFactory, SubLocalityLoaderFactory,
@@ -27,7 +27,7 @@
 		var getMasterDataValues = function(masterData, valuesMap) {
 			var results = {};
 			angular.forEach(valuesMap, function(key) {
-				results[key] = $parse(COMMON_CONFIG[key])(masterData);
+				results[key] = $parse(CLM_COMMON_CONFIG[key])(masterData);
 			});
 			return results;
 		};
@@ -163,7 +163,7 @@
 		};
 	}
 
-    CommonMasterDataUtil.$inject = ['$q', '$http', '$parse', 'COMMON_CONFIG', 'CustomerSubCategoryLoaderFactory', 'CustomerCategoryLoaderFactory',
+    CommonMasterDataUtil.$inject = ['$q', '$http', '$parse', 'CLM_COMMON_CONFIG', 'CustomerSubCategoryLoaderFactory', 'CustomerCategoryLoaderFactory',
 		'SubServiceLoaderFactory', 'ProvincesLoaderFactory', 'CitiesLoaderFactory', 'TechnologyLoaderFactory',  'BillCyclesLoader',
 		'DocumentsLoaderTypeService', 'DocumentPurposeLoaderService', 'AddressFormatLoaderFactory', 'CorporateDunningScheduleLoaderFactory',
 		'PostOfficeCodeLoaderFactory', 'SubLocalityLoaderFactory', 'StreetAddressLoaderFactory', 'PostalCodeLoaderFactory',

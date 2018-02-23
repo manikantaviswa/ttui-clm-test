@@ -1,13 +1,13 @@
 
 	'use strict';
 
-	var module = angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.AbstractLocker', [
+	var module = angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.CommonAbstractLocker', [
         'TT-UI-CLM.Common.Api.Utils.Assert'
 	]);
 
-	function AbstractLockerFactory($q, store, Assert, _) {
+	function CommonAbstractLockerFactory($q, store, Assert) {
 
-		function AbsctractLocker() {
+		function CommonAbsctractLocker() {
 			this.sessionKey = 'session';
 			this.localKey = 'local';
 			this.lockerType = '';
@@ -16,7 +16,7 @@
 			this.subscriberStorage = store.getNamespacedStore('subscriber-number');
 		}
 
-		AbsctractLocker.prototype = {
+        CommonAbsctractLocker.prototype = {
 
 			start: function(number) {
 				var storageKey = this._getSessionStorageKey();
@@ -117,10 +117,10 @@
 			}
 		};
 
-		return AbsctractLocker;
+		return CommonAbsctractLocker;
 
 	}
 
-	AbstractLockerFactory.$inject = ['$q', 'store', 'Assert', '_'];
+    CommonAbstractLockerFactory.$inject = ['$q', 'store', 'Assert'];
 
-	module.factory('AbstractLocker', AbstractLockerFactory);
+	module.factory('CommonAbstractLocker', CommonAbstractLockerFactory);

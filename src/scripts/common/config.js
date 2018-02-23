@@ -1,7 +1,7 @@
 'use strict';
 
 var module = angular.module('TT-UI-CLM.Common.Services.Config', [])
-    .constant('COMMON_CONFIG', {
+    .constant('CLM_COMMON_CONFIG', {
         MASTER_CUSTOMER_TYPE: 'masterData.partyTypes.partyType',
         MASTER_INDUSTRIES: 'masterData.industries.industry',
         MASTER_ADDRESS_TYPES: 'masterData.addressTypes.addressType',
