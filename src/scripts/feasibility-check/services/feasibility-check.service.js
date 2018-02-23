@@ -95,12 +95,12 @@ function FeasibilityCheckService($parse) {
             },
             serviceNumber: {
                 required: true,
-                minLength: 10,
+                minLength: 7,
                 maxLength: 15
             }
-        }
+        };
     }
 
 }
-FeasibilityCheckService.$inject = ['$parse']
+FeasibilityCheckService.$inject = ['$parse'];
 module.service(FeasibilityCheckService.name, FeasibilityCheckService);

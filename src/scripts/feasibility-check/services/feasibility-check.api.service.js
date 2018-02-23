@@ -25,7 +25,7 @@ function FeasibilityCheckAPIService($q, $parse, Api, ResourceFactory, API_CONFIG
     };
 
     var sendRequest = function(payload){
-        var apiService = ResourceFactory(Api.getUrl(), API_CONFIG.API_URL, API_CONFIG.API_METHOD);
+        var apiService = new ResourceFactory(Api.getUrl(), API_CONFIG.API_URL, API_CONFIG.API_METHOD);
         return apiService.fetch(prepareRequest(payload)).$promise;
     };
 

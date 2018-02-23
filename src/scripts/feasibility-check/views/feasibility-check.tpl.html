@@ -79,17 +79,18 @@
             </p>
             <div class="col-sm-6">
                 <div class="form-group" ng-class="{'is-required': isRequired('serviceNumber'), 'has-error': requiredValidity('serviceNumCheck', 'serviceNumber', model.serviceNumber)}">
-                    <label class="col-sm-4 control-label" translate="Service Number">Service Number</label>
+                    <label class="col-sm-4 control-label" translate="Fixed Line Number">Fixed Line Number</label>
                     <div class="control-content col-sm-8">
                         <input type="text" minlength="{{validators.serviceNumber.minLength}}" maxlength="{{validators.serviceNumber.maxLength}}" name="serviceNumber" ng-model="model.serviceNumber" ng-attr-required="{{isRequired('serviceNumber')}}" class="form-control">
-                        <span class="help-block" ng-show="requiredValidity('serviceNumCheck', 'serviceNumber', model.serviceNumber)"> This field is required </span>
+                        <span class="help-block" ng-show="requiredValidity('serviceNumCheck', 'serviceNumber', model.serviceNumber) && form.serviceNumCheck.serviceNumber.$error.required"> This field is required </span>
+                        <span class="help-block" ng-show="requiredValidity('serviceNumCheck', 'serviceNumber', model.serviceNumber) && form.serviceNumCheck.serviceNumber.$error.minlength"> Invalid fixed line number </span>
                     </div>
                 </div>
                 
                 <div class="form-group">
                     <label for="street" class="col-sm-4 control-label"></label>
                     <div class="control-content col-sm-8">
-                        <button type="button" class="btn btn-primary" ng-disabled="serviceNumCheck.$invalid" ng-click="checkAddressFeasibility(true)">Check Feasibility</button>
+                        <button type="button" class="btn btn-primary" ng-click="checkAddressFeasibility(true)">Check Feasibility</button>
                     </div>
                 </div>
             </div>
@@ -100,8 +101,8 @@
                             <span class="glyphicon glyphicon-ok-sign" style="font-size: 24px"></span>
                         </div>
                         <div class="col-xs-10">
-                            <div>The address &lt; <em>{{checkResult.locality.locality}}, {{checkResult.locality.subLocality}}, {{checkResult.locality.street}} &gt;</em></div>
-                            <p><strong>{{checkResult.technology || "--unknown--"}}</strong></p>
+                            <div>The fixed line number &lt; <em>{{checkResult.serviceNumber}} &gt;</em></div>
+                            <p><strong>Has {{checkResult.technology}} Feasibility</strong></p>
                             <div>MDF: {{checkResult.MDF || "--unknown--"}}</div>
                             <div>Cabinet: {{checkResult.cabinet || "--unknown--"}}</div>
                             <div>FDP: {{checkResult.FDP || "--unknown--"}}</div>

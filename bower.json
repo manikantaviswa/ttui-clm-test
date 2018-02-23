@@ -1,22 +1,22 @@
 {
   "name": "ttui-clm-test",
-
-  "version": "0.1.21",
+  "version": "0.1.24",
   "ignore": [
     "src"
   ],
   "dependencies": {
     "angular": "1.4.9",
     "angular-bootstrap": "~1.0.3",
-		"angular-animate": "1.4.9",
+    "angular-animate": "1.4.9",
     "angular-sanitize": "1.4.9",
     "angular-ui-select": "~0.19.8",
     "angular-smart-table": "2.1.8",
     "angular-ui-calendar": "^1.0.2",
     "tecnotree-ui-library": "git@git.tecnotree.com:tec_common/ui-lib.git#0.6.24.19",
     "ttui-table": "http://git.tecnotree.com/tec_common/ttui-table.git#^0.0.42",
-    "ttui-navigation": "https://git.tecnotree.com/tec_common/ttui-navigation.git#0.0.33",   
-    "angular-bootstrap-calendar": "^1.0.0"
+    "ttui-navigation": "https://git.tecnotree.com/tec_common/ttui-navigation.git#0.0.33",
+    "angular-bootstrap-calendar": "^1.0.0",
+    "interactjs": "^1.3.3"
   },
   "resolutions": {
     "angular": "1.4.9",

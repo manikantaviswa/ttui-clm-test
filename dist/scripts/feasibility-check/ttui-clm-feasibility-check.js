@@ -29,10 +29,11 @@ function FeasibilityCheckCtrl($scope, $parse, Spinner, feasibilityCheckService, 
         serviceNumCheck: {}
     };
 
-    $scope.validators = feasibilityCheckService.getValidators($scope.config);
+    $scope.validators = new feasibilityCheckService.getValidators($scope.config);
 
     $scope.checkAddressFeasibility = function(isNumberCheck) {
         var req;
+        setCheckResult(null);
         $parse('form.localityCheck.$valid')($scope);
         if (isNumberCheck) {
             if ($parse('form.serviceNumCheck.$invalid')($scope)) {
@@ -41,7 +42,7 @@ function FeasibilityCheckCtrl($scope, $parse, Spinner, feasibilityCheckService, 
             }
             req = { serviceNumber: $scope.model.serviceNumber };
             $scope.model.serviceNumberCheck = true;
-            delete $scope.model.localityCheck;
+            clearLocalityForm();
         } else {
             if ($parse('form.localityCheck.$invalid')($scope)) {
                 $scope.form.localityCheck.$setSubmitted();
@@ -49,19 +50,23 @@ function FeasibilityCheckCtrl($scope, $parse, Spinner, feasibilityCheckService, 
             }
             req = $scope.model.locality;
             $scope.model.localityCheck = true;
-            delete $scope.model.serviceNumberCheck;
+            clearServiceNumberForm();
         }
         Spinner.inner.show();
         FeasibilityCheckAPIService(req).then(function(res) {
             var checkResult = angular.merge({}, $scope.model, res.feasibilityDetails);
-            $scope.onCheck({$result: checkResult});
-            $scope.checkResult = checkResult;
-            Spinner.inner.hide();
+            setCheckResult(checkResult);
         }).catch(function(err) {
-            Spinner.inner.hide();            
-            console.log(err);
+            Spinner.inner.hide();
+            setCheckResult(null);
         });
     };
+    
+    function setCheckResult(result) {
+        Spinner.inner.hide();
+        $scope.checkResult = result;
+        $scope.onCheck({$result: result});
+    }
 
     $scope.onSelectLocality = function(item, model) {
         setSubLocalities(true);
@@ -146,6 +151,22 @@ function FeasibilityCheckCtrl($scope, $parse, Spinner, feasibilityCheckService, 
         }
         return item;
     }
+
+    function clearLocalityForm() {
+        delete $scope.model.locality;
+        delete $scope.model.localityCheck;
+        if($scope.form.localityCheck.$name) {
+            $scope.form.localityCheck.$setPristine();
+        }
+    }
+
+    function clearServiceNumberForm() {
+        delete $scope.model.serviceNumber;
+        delete $scope.model.serviceNumberCheck;
+        if($scope.form.serviceNumCheck.$name) {
+            $scope.form.serviceNumCheck.$setPristine();
+        }
+    }
 }
 FeasibilityCheckCtrl.$inject = [
     '$scope',
@@ -207,7 +228,7 @@ function FeasibilityCheckAPIService($q, $parse, Api, ResourceFactory, API_CONFIG
     };
 
     var sendRequest = function(payload){
-        var apiService = ResourceFactory(Api.getUrl(), API_CONFIG.API_URL, API_CONFIG.API_METHOD);
+        var apiService = new ResourceFactory(Api.getUrl(), API_CONFIG.API_URL, API_CONFIG.API_METHOD);
         return apiService.fetch(prepareRequest(payload)).$promise;
     };
 
@@ -334,14 +355,14 @@ function FeasibilityCheckService($parse) {
             },
             serviceNumber: {
                 required: true,
-                minLength: 10,
+                minLength: 7,
                 maxLength: 15
             }
-        }
+        };
     }
 
 }
-FeasibilityCheckService.$inject = ['$parse']
+FeasibilityCheckService.$inject = ['$parse'];
 module.service(FeasibilityCheckService.name, FeasibilityCheckService);
 
 return angular;

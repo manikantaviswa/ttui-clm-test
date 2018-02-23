@@ -23,7 +23,7 @@ var module = angular.module('TT-UI-CLM.SelectPlanOffering.Controllers.SelectPlan
     'ui.bootstrap.modal'
 ])
 
-function SelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa) {
+function SelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa, $filter) {
     $scope.selectedVariant = {
         code: ""
     };
@@ -67,11 +67,10 @@ function SelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa) {
 
     $scope.getSelectedVariant = function (selectedOffer) {
         setSelectedVariantAllowance(selectedOffer);
-	}
-
+    }
 
      var setSelectedVariantAllowance = function (selectedOffer) {
-        var selectedVariant = $scope.selectedVariant.code;
+        var selectedVariant = $scope.selectedVariant[selectedOffer.code];
         var offeringData = $scope.offeringData;
         $scope.offeringData.map(function (offer) {
             if (selectedOffer.code === offer.offering.code) {
@@ -120,6 +119,7 @@ SelectPlanOfferingCtrl.$inject = [
     '$parse',
     '$timeout',
     '$uibModal',
+    '$filter'
 ]
 module.controller(SelectPlanOfferingCtrl.name, SelectPlanOfferingCtrl)
 

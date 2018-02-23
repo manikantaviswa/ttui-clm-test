@@ -3,8 +3,7 @@
 var module = angular.module('TT-UI-CLM.AppointmentSlotPicker.Directives.AppointmentSlotPicker', [
     'TT-UI-CLM.AppointmentSlotPicker.Controllers.AppointmentSlotPickerCtrl',
     'TT-UI-CLM.AppointmentSlotPicker.Tpl',
-    'ui.calendar',
-//    'ui.bootstrap'
+    'mwl.calendar'
 ]);
 
 module.directive('appointmentSlotPicker', function() {
@@ -17,6 +16,7 @@ module.directive('appointmentSlotPicker', function() {
             onSearch: '&'
         },
         controller: 'AppointmentSlotPickerCtrl',
+        controllerAs: 'AppointmentSlotPickerCtrl as vm',
         templateUrl: 'scripts/appointment-slot-picker/views/appointment-slot-picker.tpl.html'
     };
 });

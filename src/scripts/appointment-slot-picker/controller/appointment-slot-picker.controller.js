@@ -1,91 +1,85 @@
 'use strict';
 
 var module = angular.module('TT-UI-CLM.AppointmentSlotPicker.Controllers.AppointmentSlotPickerCtrl', [
-  'TT-UI-CLM.AppointmentSlotPicker.Services.FetchAppointmentAPIService'
+    'TT-UI-CLM.AppointmentSlotPicker.Services.FetchAppointmentsAPIService'
 ]);
 
-function AppointmentSlotPickerCtrl($scope, $compile, uiCalendarConfig, FetchAppointmentAPIService) {
-  var date = new Date();
-  var d = date.getDate();
-  var m = date.getMonth();
-  var y = date.getFullYear();
+function AppointmentSlotPickerCtrl($scope, moment, calendarConfig, FetchAppointmentsAPIService, ) {
+    $scope.views = [
+        { label: 'Year',    value: 'year'   },
+        { label: 'Month',   value: 'month'  },
+        { label: 'Week',    value: 'week'   },
+        { label: 'Day',     value: 'day'    }
+    ];
 
-  $scope.slots = [];
-  $scope.selectedSlot = [];
-  
-  $scope.colors = ['#ccc', '#ffa500', '#65abff', '#008000',];
-  $scope.colorMeaning = ['No Slots', 'Morning Slots Free', 'Afternoon Slots Free', 'Both the slots are free']
-  function getSlots() {
-    return Math.floor(Math.random() * ($scope.colors.length));
-  }
+    $scope.calendarView = $scope.views[1].value;
+    $scope.viewDate = new Date();
 
-  for(var i=0; i<90; i++) {
-    var slots = getSlots();
-    console.log(slots);
-    var slotObjs = [];
-    switch(slots) {
-      case 1: 
-        slotObjs = [{time: '10:00 AM to 12:30 AM', free: 2}]
-        break;
-      case 2: 
-        slotObjs = [{time: '02:00 AM to 4:30 AM', free: 3}]
-        break;
-      case 3:
-        slotObjs = [{time: '10:00 AM to 12:30 AM', free: 1}, {time: '02:00 AM to 4:30 AM', free: 5}]
-    };
-    $scope.slots.push({
-      title: 'Slot',
-      allDay: true,
-      start: new Date(y, m, d+i),
-      rendering: 'background',
-      backgroundColor: $scope.colors[slots],
-      freeSlots: slotObjs
-    });
-  }
-
-  $scope.selectDate = function( date, jsEvent, view ) {
-    var filtered = $scope.slots.filter(function(slot) {
-      return moment(slot.start).format('DD-MMM-YYYY') === moment(date.toDate()).format('DD-MMM-YYYY')
-    });
-
-    FetchAppointmentAPIService({
-      installationType: "building",
-      startDate: "2018-11-11T00:00:00.000Z",
-      endDate: "2018-11-13T00:00:00.000Z"
-    }).then(function(res) {
-      debugger;
-      this;
-    })
-    $scope.selectedSlot = [{
-      title: 'Selected',
-      allDay: true,
-      start: date.toDate(),
-      rendering: 'background',
-      backgroundColor: 'dodgerblue',
-      freeSlots: filtered[0].freeSlots
-    }];
-    console.log(filtered);
-  };
-
-  /* config object */
-  $scope.uiConfig = {
-    calendar:{
-      editable: false,
-      header:{
-        left: 'title',
-        center: '',
-        right: 'today prev,next'
-      },
-      dayClick: $scope.selectDate
+    function loadAppointments() {
+        var req = {
+            // @TODO need to get it from form or some constants
+            getAppointmentSlot: {
+                installationType: "building",
+                startDate: "2018-11-11T00:00:00.000Z",
+                endDate: "2018-11-13T00:00:00.000Z"
+            }
+        };
+        new FetchAppointmentsAPIService(req).then(function(res) {
+            var slots = [];
+            res.appointmentSlot.forEach(function(slot) {
+                var event
+            });
+        });
     }
-  };
-  $scope.eventSources = [$scope.slots, $scope.selectedSlot];
+    loadAppointments();
+
+    $scope.events = [{
+        color: calendarConfig.colorTypes.info,
+        title: 'Event title 1',
+        startsAt: moment('2018-02-26T10:00:00.000Z').toDate(),
+        endsAt: moment('2018-02-26T12:30:00.000Z').toDate(),
+        appointments: {
+            free: 0,
+            booked: 10,
+            maxAllowed: 10		
+        }
+    }, {
+        color: calendarConfig.colorTypes.warning,
+        title: 'Event title 2',
+        startsAt: moment('2018-02-26T14:00:00.000Z').toDate(),
+        endsAt: moment('2018-02-26T16:30:00.000Z').toDate(),
+        appointments: {
+            free: 9,
+            booked: 1,
+            maxAllowed: 10		
+        }
+    }, {
+        color: calendarConfig.colorTypes.important,
+        title: 'Event title 3',
+        startsAt: moment('2018-02-26T17:00:00.000Z').toDate(),
+        endsAt: moment('2018-02-26T19:30:00.000Z').toDate(),
+        appointments: {
+            free: 5,
+            booked: 5,
+            maxAllowed: 10		
+        }
+    }];
+
+    $scope.eventClicked = function(event) {
+        console.log('Clicked', event);
+    };
+
+    $scope.timespanClicked = function(date, cell) {
+        if ($scope.calendarView === 'month' && cell.events.length !== 0) {
+            $scope.viewDate =  date;
+        }
+    };
 }
 
 AppointmentSlotPickerCtrl.$inject = [
     '$scope',
-    '$compile',
-    'uiCalendarConfig',
-    'FetchAppointmentAPIService'
+    'moment',
+    'calendarConfig',
+    'FetchAppointmentsAPIService'
 ];
 module.controller(AppointmentSlotPickerCtrl.name, AppointmentSlotPickerCtrl);
