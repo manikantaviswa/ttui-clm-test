@@ -470,7 +470,7 @@ angular.module('TT-UI-CLM.Common.Services.CommonMSISDNPrefix', [
 		};
 
 		var getResponse = function(rawResponse){
-			return $parse('numberPrefix')(rawResponse);
+			return $parse('numberPrefix')(rawResponse) || [];
 		};
 
 		return commonGetMSISDNPrefixFn;
