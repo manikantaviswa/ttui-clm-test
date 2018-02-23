@@ -6,7 +6,7 @@ var module = angular.module('TT-UI-CLM.FxlSelectOffering.Controllers.FxlSelectOf
     'CLM-UI.Customers.Services.StepStorage'
 ]);
 
-function FEASIBILITY_SEARCH_FORM() {
+function FEASIBILITY_CHECK_FORM() {
     return {
         LOCAL_STORAGE_NS: 'feasibility-check-form',
         LOCAL_STORAGE_MODEL: 'model',
@@ -14,11 +14,11 @@ function FEASIBILITY_SEARCH_FORM() {
     };
 }
 
-module.constant(FEASIBILITY_SEARCH_FORM.name, FEASIBILITY_SEARCH_FORM());
+module.constant(FEASIBILITY_CHECK_FORM.name, FEASIBILITY_CHECK_FORM());
 
-FxlSelectOfferingCtrl.$inject = ['$scope', 'FxlSelectOfferingService', 'MasterDataUtil', '$translate', 'CurrentUser', 'MASTER_CONFIG', 'store', 'StepStorageFactory', 'FEASIBILITY_SEARCH_FORM'];
+FxlSelectOfferingCtrl.$inject = ['$scope', 'FxlSelectOfferingService', 'MasterDataUtil', '$translate', 'CurrentUser', 'MASTER_CONFIG', 'store', 'StepStorageFactory', 'FEASIBILITY_CHECK_FORM', '$parse'];
 
-function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil, $translate, CurrentUser, MASTER_CONFIG, store, StepStorageFactory, FEASIBILITY_SEARCH_FORM) {  
+function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil, $translate, CurrentUser, MASTER_CONFIG, store, StepStorageFactory, FEASIBILITY_CHECK_FORM, $parse) {  
     
     $scope.lists = FxlSelectOfferingService.getAllList($scope.masterData);
     $scope.services = FxlSelectOfferingService.getServices($scope.masterData);
@@ -28,7 +28,7 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
     $scope.businessTypes = FxlSelectOfferingService.getBusinessTypes($scope.masterData);
     $scope.plans = FxlSelectOfferingService.getPlans($scope.masterData);
 
-    var stepStorage = new StepStorageFactory(FEASIBILITY_SEARCH_FORM.LOCAL_STORAGE_NS, FEASIBILITY_SEARCH_FORM.LOCAL_STORAGE_DEFAULT_OBJECT);
+    var stepStorage = new StepStorageFactory(FEASIBILITY_CHECK_FORM.LOCAL_STORAGE_NS, FEASIBILITY_CHECK_FORM.LOCAL_STORAGE_DEFAULT_OBJECT);
     this.load = stepStorage.load.bind(stepStorage);
     var feasibilityModalData = this.load();
 
@@ -122,7 +122,7 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
         $scope.setCategoryDefault(categoryLists);
         $scope.setServiceDefault($scope.services);
         $scope.setBusinessTypeDefault($scope.businessTypes);
-        $scope.searchofferingModel.offering.City = feasibilityModalData.locality.locality;
+        $scope.searchofferingModel.offering.City = $parse('locality.locality')(feasibilityModalData);
         var serviceType = store.get('service');
         $scope.searchofferingModel.offering.LoB = _.isEmpty(serviceType) ? MasterDataUtil.getMasterDataDefault(masterData, [MASTER_CONFIG.SERVICE_TYPE])[MASTER_CONFIG.SERVICE_TYPE] : serviceType;
         $scope.searchofferingModel.offering.Country = MasterDataUtil.getMasterDataDefault($scope.lists, [MASTER_CONFIG.COUNTRY])[MASTER_CONFIG.COUNTRY];        
