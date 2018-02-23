@@ -15,6 +15,29 @@ function SelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa, $filter) {
     };
     $scope.selectAllowance = "";
 
+    $scope.offeringTabs = [
+        {
+            id:0,
+            title: 'Plans',
+            disabled: false,
+            
+
+        }, {
+            id:0,
+            title: 'VAS',
+            disabled: false
+        }
+    ];
+    $scope.vasList = [];
+
+    //selected Plan Offering Tabs
+    $scope.offerTabId = 0;
+    $scope.offerTab = function (tabId) {
+       $scope.offerTabId = tabId;
+    };
+    $scope.isSetTab = function (tabId) {     
+        return $scope.offerTabId === tabId;
+    };
 
 
     this.setAllowanceDescription = function () {
@@ -61,21 +84,18 @@ function SelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa, $filter) {
              console.log(err);
         });
     }
-
+    $scope.isSelect = false; //Select offer toggle State
+  
 	$scope.getOfferingDetailsView = function () {
-
 		$scope.tabs = []
 		$scope.offeringData.map(function (offerDetails, $index) {
-
 			$scope.tabs = $parse('details')(offerDetails);
 		})
 	}
 
 	$scope.tabId = 0;
-
 	$scope.setTab = function (tabId, $event) {
-		debugger
-		$scope.tabId = tabId;
+	    $scope.tabId = tabId;
         $event.stopPropagation();
 	};
 }

@@ -162,11 +162,14 @@ module.directive('selectOffering', selectOfferingDetail)
     function selectOfferingDetail() {
         var directive = {
             restrict: 'EA',
-            replace: true,
+            //replace: true,
             scope: {
                 searchofferingModel: '=',
                 masterData: '=',
                 onSearch: '=',
+                defaultState:'=',
+                onToggle:'=',
+                removeSerive:'='
             },
               controller: 'FxlSelectOfferingCtrl',
               templateUrl: 'scripts/fxl-select-offering/views/fxl-select-offering.tpl.html',
