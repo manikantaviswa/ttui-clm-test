@@ -1,16 +1,16 @@
 	'use strict';
 
-	var module = angular.module('TT-UI-CLM.Common.Services.Loaders.AbstractLoader', []);
+	var module = angular.module('TT-UI-CLM.Common.Services.Loaders.CommonAbstractLoader', []);
 
-	function AbstractLoaderFactory(){
+	function CommonAbstractLoaderFactory(){
 
-		var AbstractLoader = function(){};
+		var CommonAbstractLoader = function(){};
 
-		AbstractLoader.prototype.load = function() {
+        CommonAbstractLoader.prototype.load = function() {
 			throw new Error('load method must be implemented');
 		};
 
-		AbstractLoader.prototype.updateValues = function(ngModel, form, values){
+        CommonAbstractLoader.prototype.updateValues = function(ngModel, form, values){
 			if (angular.isUndefined(form.schema) || !angular.isArray(values)){
 				return;
 			}
@@ -42,7 +42,7 @@
 			return list;
 		}
 
-		return AbstractLoader;
+		return CommonAbstractLoader;
 	}
 
-	module.factory('AbstractLoader', AbstractLoaderFactory);
+	module.factory('CommonAbstractLoader', CommonAbstractLoaderFactory);

@@ -1,18 +1,18 @@
 
 	'use strict';
 
-	var module = angular.module('TT-UI-CLM.Common.Api.Inventory.Msisdn.GetMobileDetailsByMSISDN', [
+	var module = angular.module('TT-UI-CLM.Common.Api.Inventory.Msisdn.GetCommonMobileDetailsByMSISDN', [
         'TT-UI-CLM.Common.Api.Utils.Assert',
         'TT-UI-CLM.Common.Api.Inventory.CommonRequestInventory'
 	]);
 
-	function getMobileDetailsByMSISDNFactory($parse, Assert, commonRequestInventoryFn) {
+	function getCommonMobileDetailsByMSISDNFactory($parse, Assert, commonRequestInventoryFn) {
 
 		var URL = 'GetAvailableNumbers/json/query';
 		var PAGE_SIZE = '10';
 		var RESPONSE_PATH = 'numbersList';
 
-		function getMobileDetailsByMSISDNFn(msisdn, model, pageNumber, pageSize) {
+		function getCommonMobileDetailsByMSISDNFn(msisdn, model, pageNumber, pageSize) {
 			var request = prepareRequest(msisdn, model, pageNumber, pageSize);
 			return commonRequestInventoryFn(URL, request).then(function(response){
                 //var response = {"numbersList":[{"category":"NPOST","hlrNumber":"0","number":"52501115"},{"category":"NPOST","hlrNumber":"0","number":"52501116"}]};
@@ -41,9 +41,9 @@
 			return $parse(RESPONSE_PATH)(response);
         };
 
-		return getMobileDetailsByMSISDNFn;
+		return getCommonMobileDetailsByMSISDNFn;
 	}
 
-	getMobileDetailsByMSISDNFactory.$inject = ['$parse', 'Assert', 'commonRequestInventoryFn'];
+    getCommonMobileDetailsByMSISDNFactory.$inject = ['$parse', 'Assert', 'commonRequestInventoryFn'];
 
-	module.factory('getMobileDetailsByMSISDNFn', getMobileDetailsByMSISDNFactory);
+	module.factory('getCommonMobileDetailsByMSISDNFn', getCommonMobileDetailsByMSISDNFactory);

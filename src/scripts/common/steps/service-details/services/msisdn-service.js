@@ -3,23 +3,22 @@
 
 	var module = angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.Services.MsisdnService', [
 		'TT-UI.Config',
-        'TT-UI-CLM.Common.Api.Inventory.Msisdn.GetMobileDetailsByMSISDN',
-        'TT-UI-CLM.Common.Api.Inventory.Msisdn.GetMobileDetailsByReservationToken',
+        'TT-UI-CLM.Common.Api.Inventory.Msisdn.GetCommonMobileDetailsByMSISDN',
 		'TT-UI-CLM.Common.Api.Inventory.CommonInventoryRequestApi',
         'TT-UI-CLM.Common.Api.Inventory.CommonApiPath'
 	]);
 
-	function CommonMsisdnService($q, getMobileDetailsByMSISDNFn, getMobileDetailsByReservationTokenFn, CONFIG, commonInventoryRequestApiFn, COMMON_INVENTORY_API_PATH, validateMsisdn,
+	function CommonMsisdnService($q, getCommonMobileDetailsByMSISDNFn, CONFIG, commonInventoryRequestApiFn, COMMON_INVENTORY_API_PATH, validateMsisdn,
 						validatePortInMsisdn) {
 
 		this.loadAvailable = function(msisdn, model, pageNumber, pageSize) {
 			//console.log("msisdn, model, pageNumber, pageSize>>>>>", msisdn, model, pageNumber, pageSize);
-			return getMobileDetailsByMSISDNFn(msisdn, model, pageNumber, pageSize);
+			return getCommonMobileDetailsByMSISDNFn(msisdn, model, pageNumber, pageSize);
 		};
 
-		this.loadReserved = function(token, hlrNumber, pageNumber, msisdnNumber, pageSize) {
+		/*this.loadReserved = function(token, hlrNumber, pageNumber, msisdnNumber, pageSize) {
 			return getMobileDetailsByReservationTokenFn(token, hlrNumber, pageNumber , msisdnNumber, pageSize);
-		};
+		};*/
 
 		this.block = function(serviceNumbers, model) {
 			model.serviceNumbers = serviceNumbers;
@@ -59,7 +58,7 @@
 		};
 	}
 
-    CommonMsisdnService.$injector = ['$q', 'getMobileDetailsByMSISDNFn', 'getMobileDetailsByReservationTokenFn', 'CONFIG', 'commonInventoryRequestApiFn', 'COMMON_INVENTORY_API_PATH', 'validateMsisdn',
+    CommonMsisdnService.$injector = ['$q', 'getCommonMobileDetailsByMSISDNFn', 'CONFIG', 'commonInventoryRequestApiFn', 'COMMON_INVENTORY_API_PATH', 'validateMsisdn',
 	'validatePortInMsisdn'];
 
 	module.service(CommonMsisdnService.name, CommonMsisdnService);
