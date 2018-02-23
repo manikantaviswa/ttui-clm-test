@@ -2,11 +2,11 @@
 
 	var module = angular.module('TT-UI-CLM.Common.Services.Loaders.CommonMSISDNPrefixLoader', [
 		'TT-UI.Common',
-        'TT-UI-CLM.Common.Services.Loaders.AbstractLoader',
+        'TT-UI-CLM.Common.Services.Loaders.CommonAbstractLoader',
         'TT-UI-CLM.Common.Services.CommonMSISDNPrefix'
 	]);
 
-	function CommonMSISDNPrefixLoaderFactory($q, $parse, AbstractLoader, commonGetMSISDNPrefixFn) {
+	function CommonMSISDNPrefixLoaderFactory($q, $parse, CommonAbstractLoader, commonGetMSISDNPrefixFn) {
 
 		var CommonMSISDNPrefixLoader = function(serviceDetails){
 			this.serviceDetails = serviceDetails;
@@ -36,5 +36,5 @@
 
 	}
 
-    CommonMSISDNPrefixLoaderFactory.$inject = ['$q', '$parse', 'AbstractLoader', 'commonGetMSISDNPrefixFn'];
+    CommonMSISDNPrefixLoaderFactory.$inject = ['$q', '$parse', 'CommonAbstractLoader', 'commonGetMSISDNPrefixFn'];
 	module.factory('CommonMSISDNPrefixLoader', CommonMSISDNPrefixLoaderFactory);

@@ -2,8 +2,8 @@
 	'use strict';
     var module = angular.module('TT-UI-CLM.Common.Steps.Presentation.Strategy.ReservedMsisdnStrategy', [
         'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.Services.MsisdnService',
-        'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.SuggestionBoxPresentationModel',
-        'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.MsisdnLocker',
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.CommonSuggestionBoxPresentationModel',
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.CommonMsisdnLocker',
         'TT-UI-CLM.Common.Api.Utils.Assert',
         'TT-UI-CLM.Common.Utils.ErrorHandler'
 	]);

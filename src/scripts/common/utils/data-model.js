@@ -1,11 +1,11 @@
 
 	'use strict';
 
-	var module = angular.module('TT-UI-CLM.Common.Utils.DataModel', []);
+	var module = angular.module('TT-UI-CLM.Common.Utils.CommonDataModel', []);
 
-	function DataModelFactory($parse) {
+	function CommonDataModelFactory($parse) {
 
-		function DataModel(source, mappings) {
+		function CommonDataModel(source, mappings) {
 			Object.defineProperty(this, 'source', {
 				enumerable: false,
 				value: source
@@ -15,7 +15,7 @@
 			}, this);
 		}
 
-		DataModel.prototype.addProperty = function(name, mapping) {
+        CommonDataModel.prototype.addProperty = function(name, mapping) {
 			var accessor = $parse(mapping);
 			Object.defineProperty(this, name, {
 				get: function() {
@@ -28,18 +28,18 @@
 			});
 		};
 
-		DataModel.prototype.getSource = function() {
+        CommonDataModel.prototype.getSource = function() {
 			return this.source;
 		};
 
 		return {
 			create: function(source, mappings) {
-				return new DataModel(source, mappings);
+				return new CommonDataModel(source, mappings);
 			}
 		};
 
 	}
 
-	DataModelFactory.$inject = ['$parse'];
+    CommonDataModelFactory.$inject = ['$parse'];
 
-	module.factory('DataModel', DataModelFactory);
+	module.factory('CommonDataModel', CommonDataModelFactory);

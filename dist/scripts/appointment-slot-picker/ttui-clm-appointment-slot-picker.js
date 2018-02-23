@@ -18,7 +18,7 @@ var module = angular.module('TT-UI-CLM.AppointmentSlotPicker.Controllers.Appoint
     'TT-UI-CLM.AppointmentSlotPicker.Services.FetchAppointmentsAPIService'
 ]);
 
-function AppointmentSlotPickerCtrl($scope, moment, calendarConfig, FetchAppointmentsAPIService, ) {
+function AppointmentSlotPickerCtrl($scope, moment, calendarConfig, FetchAppointmentsAPIService) {
     $scope.views = [
         { label: 'Year',    value: 'year'   },
         { label: 'Month',   value: 'month'  },
