@@ -14,6 +14,7 @@ module.directive('selectPlanOffering',function(){
         scope:{
             offeringData: '=',
             masterData: '=',
+            defaultState:'='
         }
     }
 })

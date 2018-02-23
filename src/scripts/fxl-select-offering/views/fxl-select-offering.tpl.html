@@ -1,6 +1,28 @@
-<!-- ng-model naming we have to decide -->
-<div class="panel-body forms-ttui row">
+<style>
+  .block-ttui .panel>.panel-heading {
+    border-top: none;
+  }
 
+  .badgeClose {
+    margin-left: 15px;
+    cursor: pointer;
+  }
+
+  .labelView {
+    margin-top: -15px;
+  }
+  .mb-2x{
+    margin-bottom:10px;
+  }
+</style>
+<!-- ng-model naming we have to decide -->
+<uib-accordion class="accordion" close-others="false">
+  <uib-accordion-group is-open="defaultState.showOfferingsFilter" is-disabled="defaultState.hasPreselectedOffering">
+    <uib-accordion-heading>
+      <span ng-hide="defaultState.hasPreselectedOffering">
+        <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': defaultState.showOfferingsFilter, 'glyphicon-chevron-right': !defaultState.showOfferingsFilter}"></i>
+      </span>
+    </uib-accordion-heading>
     <form class="form-horizontal">
       <div class="col-sm-4">
         <label translate="Registration of Service">Registration of Service</label>
@@ -76,12 +98,57 @@
         </div>
       </div>
 
-      <div class="col-sm-12">
+      <div class="col-sm-12 mb-2x">
         <button type="button" class="btn btn-primary btn-lg pull-right" data-role="action" data-action="submit" ng-click="onSearch(searchofferingModel)"
           translate="Search"> Search
         </button>
       </div>
-
     </form>
-
+  </uib-accordion-group>
+  <div class="col-sm-11 labelView" ng-show="!defaultState.showOfferingsFilter">
+    <div class="col-sm-4">
+      <label translate="Service">Service</label>
+      <p ng-hide='defaultState.isServiceRemoved =="ProductType" || searchofferingModel.offering.ProductType=="" || searchofferingModel.offering.ProductType== undefined || searchofferingModel.offering.ProductType==null'>
+        <span class="badge">{{searchofferingModel.offering.ProductType}}
+          <span class="pull-right badgeClose" ng-click="removeSerive('ProductType', searchofferingModel)">x</span>
+        </span>
+      </p>
+      <p ng-hide='defaultState.isServiceRemoved =="Technology" || searchofferingModel.offering.Technology=="" || searchofferingModel.offering.Technology==undefined || searchofferingModel.offering.Technology==null'>
+        <span class="badge">{{searchofferingModel.offering.Technology}}
+          <span class="pull-right badgeClose" ng-click="removeSerive('Technology',searchofferingModel)">x</span>
+        </span>
+      </p>
+    </div>
+    <div class="col-sm-4">
+      <label translate="Customer">Customer</label>
+      <p>
+        <span ng-hide='defaultState.isServiceRemoved=="CustomerCategory"  || searchofferingModel.offering.CustomerCategory=="" || searchofferingModel.offering.CustomerCategory== undefined || searchofferingModel.offering.CustomerCategory==null'
+          class="badge">{{searchofferingModel.offering.CustomerCategory}}
+          <span class="pull-right badgeClose" ng-click="removeSerive('CustomerCategory', searchofferingModel)">x</span>
+        </span>
+        <span ng-hide='defaultState.isServiceRemoved=="CustomerSubCategory"  || searchofferingModel.offering.CustomerSubCategory=="" || searchofferingModel.offering.CustomerSubCategory== undefined || searchofferingModel.offering.CustomerSubCategory==null'
+          class="badge">{{searchofferingModel.offering.CustomerSubCategory}}
+          <span class="pull-right badgeClose" ng-click="removeSerive('CustomerSubCategory', searchofferingModel)">x</span>
+        </span>
+      </p>
+      <p ng-hide='defaultState.isServiceRemoved=="Nationality" || searchofferingModel.offering.Nationality=="" || searchofferingModel.offering.Nationality == undefined || searchofferingModel.offering.Nationality==null'>
+        <span class="badge">{{searchofferingModel.offering.Nationality}}
+          <span class="pull-right badgeClose" ng-click="removeSerive('Nationality', searchofferingModel)">x</span>
+        </span>
+      </p>
+    </div>
+    <div class="col-sm-4">
+      <label translate="Plan">Plan:</label>
+      <p ng-hide='defaultState.isServiceRemoved=="BusinessType" || searchofferingModel.offering.BusinessType=="" || searchofferingModel.offering.BusinessType == undefined || searchofferingModel.offering.BusinessType==null'>
+        <span class="badge">{{searchofferingModel.offering.BusinessType}}
+          <span class="pull-right badgeClose" ng-click="removeSerive('BusinessType', searchofferingModel)">x</span>
+        </span>
+      </p>
+      <!-- <p ng-hide='defaultState.isServiceRemoved=="plan" || searchofferingModel.offering.plan=="" searchofferingModel.offering.plan == undefined || searchofferingModel.offering.plan==null'>
+        <span class="badge">{{searchofferingModel.offering.plan}}
+          <span class="pull-right badgeClose" ng-click="removeSerive('plan', searchofferingModel)">x</span>
+        </span>
+      </p> -->
+    </div>
   </div>
+</uib-accordion>
