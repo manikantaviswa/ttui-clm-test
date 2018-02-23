@@ -1,16 +1,16 @@
 	'use strict';
 
-	var module = angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.SuggestionBoxPresentationModel', [
+	var module = angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.CommonSuggestionBoxPresentationModel', [
         'TT-UI-CLM.Common.Services.OfferingData'
 	]);
-	function SuggestionBoxPresentationModelFactory($parse, $q, OfferingData) {
+	function CommonSuggestionBoxPresentationModelFactory($parse, $q, OfferingData) {
 
-		function SuggestionBoxPresentationModel() {
+		function CommonSuggestionBoxPresentationModel() {
 			this.itemsSource = [];
 			this.itemsSourceField = 'label';
 		}
 
-		SuggestionBoxPresentationModel.prototype = {
+        CommonSuggestionBoxPresentationModel.prototype = {
 
 			getOfferingDataService: function(offering){
                 var offerDataService = new OfferingData(offering);
@@ -108,9 +108,9 @@
 			}
 		};
 
-		return SuggestionBoxPresentationModel;
+		return CommonSuggestionBoxPresentationModel;
 	}
 
-	SuggestionBoxPresentationModelFactory.$inject = ['$parse', '$q', 'OfferingData'];
+	CommonSuggestionBoxPresentationModelFactory.$inject = ['$parse', '$q', 'OfferingData'];
 
-	module.factory('SuggestionBoxPresentationModel', SuggestionBoxPresentationModelFactory);
+	module.factory('CommonSuggestionBoxPresentationModel', CommonSuggestionBoxPresentationModelFactory);
