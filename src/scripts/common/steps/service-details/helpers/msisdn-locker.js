@@ -1,29 +1,29 @@
 
 	'use strict';
 
-	var module = angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.MsisdnLocker', [
+	var module = angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.CommonMsisdnLocker', [
 		'TT-UI.Common',
         'TT-UI-CLM.Common.Api.Utils.Assert',
-        'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.AbstractLocker',
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.CommonAbstractLocker',
         'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.Services.MsisdnService'
 	]);
 
-	function MsisdnLockerFactory(CommonMsisdnService, AbstractLocker, _) {
+	function CommonMsisdnLockerFactory(CommonMsisdnService, CommonAbstractLocker) {
 
-		MsisdnLocker.prototype = Object.create(AbstractLocker.prototype);
-		MsisdnLocker.prototype.constructor = MsisdnLocker;
+        CommonMsisdnLocker.prototype = Object.create(CommonAbstractLocker.prototype);
+        CommonMsisdnLocker.prototype.constructor = CommonMsisdnLocker;
 
-		function MsisdnLocker() {
-			AbstractLocker.call(this);
+		function CommonMsisdnLocker() {
+            CommonAbstractLocker.call(this);
 			this.lockerType = 'msisdn';
 			this.lockerName = 'MSISDN';
 			this.subscriberService = CommonMsisdnService;
 			_.bindAll(this);
 		}
 
-		return new MsisdnLocker();
+		return new CommonMsisdnLocker();
 	}
 
-	MsisdnLockerFactory.$inject = ['CommonMsisdnService', 'AbstractLocker', '_'];
+	CommonMsisdnLockerFactory.$inject = ['CommonMsisdnService', 'CommonAbstractLocker'];
 
-	module.factory('MsisdnLocker', MsisdnLockerFactory);
+	module.factory('CommonMsisdnLocker', CommonMsisdnLockerFactory);

@@ -12,14 +12,13 @@ angular.module('TT-UI-CLM.CommonComponents', [
     'TT-UI-CLM.Common.Services.CommonMasterDataResults',
     'TT-UI-CLM.Common.Services.CommonMasterDataUtil',
     'TT-UI-CLM.Common.Services.Config',
-    'TT-UI-CLM.Common.Services.OfferingData',
-    'lodash'
+    'TT-UI-CLM.Common.Services.OfferingData'
 ]);
 
 
 // Source: src/scripts/common/config.js
 var module = angular.module('TT-UI-CLM.Common.Services.Config', [])
-    .constant('COMMON_CONFIG', {
+    .constant('CLM_COMMON_CONFIG', {
         MASTER_CUSTOMER_TYPE: 'masterData.partyTypes.partyType',
         MASTER_INDUSTRIES: 'masterData.industries.industry',
         MASTER_ADDRESS_TYPES: 'masterData.addressTypes.addressType',
@@ -186,18 +185,18 @@ var module = angular.module('TT-UI-CLM.Common.Api.Inventory.CommonInventoryReque
 
 // Source: src/scripts/common/inventory/msisdn/get-mobile-details-by-msisdn-fn.js
 
-var module = angular.module('TT-UI-CLM.Common.Api.Inventory.Msisdn.GetMobileDetailsByMSISDN', [
+var module = angular.module('TT-UI-CLM.Common.Api.Inventory.Msisdn.GetCommonMobileDetailsByMSISDN', [
         'TT-UI-CLM.Common.Api.Utils.Assert',
         'TT-UI-CLM.Common.Api.Inventory.CommonRequestInventory'
 	]);
 
-	function getMobileDetailsByMSISDNFactory($parse, Assert, commonRequestInventoryFn) {
+	function getCommonMobileDetailsByMSISDNFactory($parse, Assert, commonRequestInventoryFn) {
 
 		var URL = 'GetAvailableNumbers/json/query';
 		var PAGE_SIZE = '10';
 		var RESPONSE_PATH = 'numbersList';
 
-		function getMobileDetailsByMSISDNFn(msisdn, model, pageNumber, pageSize) {
+		function getCommonMobileDetailsByMSISDNFn(msisdn, model, pageNumber, pageSize) {
 			var request = prepareRequest(msisdn, model, pageNumber, pageSize);
 			return commonRequestInventoryFn(URL, request).then(function(response){
                 //var response = {"numbersList":[{"category":"NPOST","hlrNumber":"0","number":"52501115"},{"category":"NPOST","hlrNumber":"0","number":"52501116"}]};
@@ -226,52 +225,12 @@ var module = angular.module('TT-UI-CLM.Common.Api.Inventory.Msisdn.GetMobileDeta
 			return $parse(RESPONSE_PATH)(response);
         };
 
-		return getMobileDetailsByMSISDNFn;
+		return getCommonMobileDetailsByMSISDNFn;
 	}
 
-	getMobileDetailsByMSISDNFactory.$inject = ['$parse', 'Assert', 'commonRequestInventoryFn'];
+    getCommonMobileDetailsByMSISDNFactory.$inject = ['$parse', 'Assert', 'commonRequestInventoryFn'];
 
-	module.factory('getMobileDetailsByMSISDNFn', getMobileDetailsByMSISDNFactory);
-
-
-// Source: src/scripts/common/inventory/msisdn/get-mobile-details-by-reservation-token-fn.js
-
-var module = angular.module('TT-UI-CLM.Common.Api.Inventory.Msisdn.GetMobileDetailsByReservationToken', [
-        'TT-UI-CLM.Common.Api.Utils.Assert',
-        'TT-UI-CLM.Common.Api.Inventory.CommonRequestInventory'
-	]);
-
-	function getMobileDetailsByReservationTokenFactory($parse, Assert, commonRequestInventoryFn) {
-
-		var URL = 'GetMobileDetailsByReservationTokenRequest/json/query';
-		var RESPONSE_PATH = 'mobileNumbersList.mobileNumbers';
-		var PAGE_SIZE = '10';
-		var parseResponse;
-
-		function getMobileDetailsByReservationTokenFn(token, hlrNumber, pageNumber, msisdnNumber, pageSize) {
-			Assert.isDefined(token, 'Mandatory parameter `token` not given or empty.');
-
-			var request = prepareRequest(token, hlrNumber,  pageNumber, msisdnNumber, pageSize);
-			return commonRequestInventoryFn(URL, request).then(parseResponse);
-		}
-		parseResponse = $parse(RESPONSE_PATH);
-
-		function prepareRequest(token, hlrNumber,  pageNumber, msisdnNumber, pageSize) {
-			return {
-				resTokenNumber: token,
-				hlrNumber: hlrNumber || '',
-				pageNumber: pageNumber || '1',
-				pageSize: pageSize || PAGE_SIZE,
-				msisdn: msisdnNumber || ''
-			};
-		}
-
-		return getMobileDetailsByReservationTokenFn;
-	}
-
-	getMobileDetailsByReservationTokenFactory.$inject = ['$parse', 'Assert', 'commonRequestInventoryFn'];
-
-	module.factory('getMobileDetailsByReservationTokenFn', getMobileDetailsByReservationTokenFactory);
+	module.factory('getCommonMobileDetailsByMSISDNFn', getCommonMobileDetailsByMSISDNFactory);
 
 
 // Source: src/scripts/common/inventory/request-inventory-fn.js
@@ -333,17 +292,17 @@ var module = angular.module('TT-UI-CLM.Common.Api.Inventory.CommonRequestInvento
 
 
 // Source: src/scripts/common/loaders/abstract-loader.js
-var module = angular.module('TT-UI-CLM.Common.Services.Loaders.AbstractLoader', []);
+var module = angular.module('TT-UI-CLM.Common.Services.Loaders.CommonAbstractLoader', []);
 
-	function AbstractLoaderFactory(){
+	function CommonAbstractLoaderFactory(){
 
-		var AbstractLoader = function(){};
+		var CommonAbstractLoader = function(){};
 
-		AbstractLoader.prototype.load = function() {
+        CommonAbstractLoader.prototype.load = function() {
 			throw new Error('load method must be implemented');
 		};
 
-		AbstractLoader.prototype.updateValues = function(ngModel, form, values){
+        CommonAbstractLoader.prototype.updateValues = function(ngModel, form, values){
 			if (angular.isUndefined(form.schema) || !angular.isArray(values)){
 				return;
 			}
@@ -375,19 +334,19 @@ var module = angular.module('TT-UI-CLM.Common.Services.Loaders.AbstractLoader', 
 			return list;
 		}
 
-		return AbstractLoader;
+		return CommonAbstractLoader;
 	}
 
-	module.factory('AbstractLoader', AbstractLoaderFactory);
+	module.factory('CommonAbstractLoader', CommonAbstractLoaderFactory);
 
 // Source: src/scripts/common/loaders/msisdn-prefix-loader.js
 var module = angular.module('TT-UI-CLM.Common.Services.Loaders.CommonMSISDNPrefixLoader', [
 		'TT-UI.Common',
-        'TT-UI-CLM.Common.Services.Loaders.AbstractLoader',
+        'TT-UI-CLM.Common.Services.Loaders.CommonAbstractLoader',
         'TT-UI-CLM.Common.Services.CommonMSISDNPrefix'
 	]);
 
-	function CommonMSISDNPrefixLoaderFactory($q, $parse, AbstractLoader, commonGetMSISDNPrefixFn) {
+	function CommonMSISDNPrefixLoaderFactory($q, $parse, CommonAbstractLoader, commonGetMSISDNPrefixFn) {
 
 		var CommonMSISDNPrefixLoader = function(serviceDetails){
 			this.serviceDetails = serviceDetails;
@@ -417,7 +376,7 @@ var module = angular.module('TT-UI-CLM.Common.Services.Loaders.CommonMSISDNPrefi
 
 	}
 
-    CommonMSISDNPrefixLoaderFactory.$inject = ['$q', '$parse', 'AbstractLoader', 'commonGetMSISDNPrefixFn'];
+    CommonMSISDNPrefixLoaderFactory.$inject = ['$q', '$parse', 'CommonAbstractLoader', 'commonGetMSISDNPrefixFn'];
 	module.factory('CommonMSISDNPrefixLoader', CommonMSISDNPrefixLoaderFactory);
 
 
@@ -470,227 +429,11 @@ angular.module('TT-UI-CLM.Common.Services.CommonMSISDNPrefix', [
 		};
 
 		var getResponse = function(rawResponse){
-			return $parse('numberPrefix')(rawResponse);
+			return $parse('numberPrefix')(rawResponse) || [];
 		};
 
 		return commonGetMSISDNPrefixFn;
 	}]);
-
-// Source: src/scripts/common/services/common-config.service.js
-define([
-	'angular',
-	'angular-storage',
-	'ttui-common'
-], function(angular) {
-angular.module('CLM-UI.customers.Customershome.Services.Configuration', [
-		'angular-storage',
-		'TT-UI.Common'
-	])
-		.constant('OPCO_CONFIG_DATA', {
-			CACHE_STORAGE_NS: 'config',
-			OPCO_URL: 'data/envirnoments/config.',
-			CORE_URL : 'data/envirnoments/config.core.json'
-		})
-
-		.factory('CommonConfiguration', CommonConfiguration);
-	CommonConfiguration.$inject = ['$translate', 'CONFIG', 'XhrHelper', '$parse', '$q', 'OPCO_CONFIG_DATA', '$log', 'store',
-		'COMMON_CONSTANTS_CORPORATE', 'COMMON_CONSTANTS_RETAIL', 'COMMON_CONSTANTS_CONFIG'];
-	function CommonConfiguration($translate, CONFIG, XhrHelper, $parse, $q, OPCO_CONFIG_DATA, $log, store, COMMON_CONSTANTS_CORPORATE,
-			COMMON_CONSTANTS_RETAIL, COMMON_CONSTANTS_CONFIG) {
-
-		var getConfigForKey  = function(key) {
-			var	data = store.get(OPCO_CONFIG_DATA.CACHE_STORAGE_NS);
-			return $parse(key)(data);
-		};
-
-		var getConfigKeys = function(valuesMap, customerType) {
-			var results = {};
-			var COMMON_CONSTANT = customerType === 'Retail' ? COMMON_CONSTANTS_RETAIL : COMMON_CONSTANTS_CORPORATE;
-
-			var	data = store.get(OPCO_CONFIG_DATA.CACHE_STORAGE_NS);
-			angular.forEach(valuesMap, function(key) {
-				var values = $parse(COMMON_CONSTANT[key])(data) === true ? true : false;
-				results[key] = values;
-			});
-			return results;
-		};
-		var getCommonConfigKeys = function(valuesMap) {
-			var results = {};
-
-			var	data = store.get(OPCO_CONFIG_DATA.CACHE_STORAGE_NS);
-			angular.forEach(valuesMap, function(key) {
-				var values = $parse(COMMON_CONSTANTS_CONFIG[key])(data) === true ? true : false;
-				results[key] = values;
-			});
-			return results;
-		};
-		var getConfigKeyValues = function(valuesMap, constants) {
-			var results = {};
-			var	data = store.get(OPCO_CONFIG_DATA.CACHE_STORAGE_NS);
-			angular.forEach(valuesMap, function(key) {
-				results[key] = $parse(constants[key])(data);
-			});
-			return results;
-		};
-
-		return {
-			getConfigForKey: getConfigForKey,
-			getConfigKeys: getConfigKeys,
-			getConfigKeyValues: getConfigKeyValues,
-			getCommonConfigKeys: getCommonConfigKeys,
-			getOpcosConfig: function() {
-				var deferred = $q.defer();
-				$translate('CLM').then(this.getFromCache).then(function(data){
-					return data;
-				}).catch(this.loadOpcoConfig.bind(this))
-					.then(this.readOpcoData)
-					.then(this.storeInCache)
-					.then(deferred.resolve)
-					.catch(deferred.reject)
-					.catch($log.error);
-				return deferred.promise;
-			},
-
-			loadOpcoConfig: function() {
-				var opcoUrl = OPCO_CONFIG_DATA.OPCO_URL + CONFIG.OPCO + '.json';
-				return XhrHelper.loadJsonDeferred(opcoUrl).then(function(data){
-					return data;
-				},
-					this.loadDefaultConfig);
-			},
-
-			loadDefaultConfig: function() {
-				return XhrHelper.loadJsonDeferred(OPCO_CONFIG_DATA.CORE_URL);
-
-			},
-
-			readOpcoData: function(response) {
-				var data = response;
-				return data || $q.reject('Missing Config data', data);
-			},
-
-			getFromCache: function() {
-				var data;
-				try {
-					data = store.get(OPCO_CONFIG_DATA.CACHE_STORAGE_NS);
-				}
-				catch (e) {
-				}
-
-				if (data) {
-					return data;
-				}
-
-				return $q.reject();
-			},
-
-			storeInCache: function(opcoData) {
-				store.set(OPCO_CONFIG_DATA.CACHE_STORAGE_NS, opcoData);
-
-				return opcoData;
-			},
-
-			clearCache: function() {
-				store.remove(OPCO_CONFIG_DATA.CACHE_STORAGE_NS);
-			},
-			getRequiredData: function() {
-				return store.get(OPCO_CONFIG_DATA.CACHE_STORAGE_NS);
-			},
-			populateCustomerProfileFields: function(form) {
-				var schemaPaths = [
-					'profileDetails.basicDetails',
-					'profileDetails.address.addressDetails.items'
-				];
-				var requiredData = this.getRequiredData();
-				this.populateRequiredFields(form, requiredData.customerProfilePage, schemaPaths);
-				return form;
-			},
-			populateServiceUsersFields: function(form) {
-				var schemaPaths = [
-					'serviceUser.basicDetails',
-					'serviceUser.address.addressDetails.items',
-					'serviceUser.demographics'
-				];
-				var requiredData = this.getRequiredData();
-				this.populateRequiredFields(form, requiredData.serviceUsersPage, schemaPaths);
-				return form;
-			},
-			populateBillingAccountDetailsFields: function(form) {
-				var schemaPaths = [
-					'billingAccounts.billingAccount.accountOwnerDetails',
-					'billingAccounts.billingAccount.billingAddressDetails',
-					'billingAccounts.billingAccount',
-					'billingAccounts.billingAccount.relationshipManager'
-				];
-				var requiredData = this.getRequiredData();
-				this.populateRequiredFields(form, requiredData.billingAccountDetailsPage, schemaPaths);
-				return form;
-			},
-			populateMandatoryDocumentFields: function(form){
-				var schemaPaths = [
-					'collectDocuments.identificationDetail.items'
-				];
-				var requiredData = this.getRequiredData();
-				this.populateRequiredFields(form, requiredData.mandatoryDocuments, schemaPaths);
-				return form;
-			},
-			populateServiceDetailFields: function(form){
-				var schemaPaths = [
-					'serviceDetails.gsmService.stDirect'
-				];
-				var requiredData = this.getRequiredData();
-				this.populateRequiredFields(form, requiredData.serviceDetailsPage, schemaPaths);
-				return form;
-			},
-			populateRequiredFields : function(form, requiredData, schemaPaths) {
-				var schema = form.schema;
-				angular.forEach(schemaPaths, function(schemaPath) {
-					var propertySchemaPath = this.getPropertySchema(schemaPath, schema);
-					var propertyReqPropSchema = $parse(schemaPath)(requiredData);
-					propertySchemaPath.required = propertyReqPropSchema.required;
-
-				}.bind(this));
-			},
-			createPathForPropertySchema: function(path){
-				var customPath = 'properties.' + path.replace(/\./g, '.properties.');
-				var addItemsPath = customPath.replace(/\.properties.items/g, '.items');
-				return addItemsPath;
-			},
-			getPropertySchema: function(path, schema){
-				var schemaGetter = $parse(this.createPathForPropertySchema(path));
-				return schemaGetter(schema);
-			},
-
-			setReqFeildsForSubType: function(form, serviceReqSubType) {
-				if (!_.isEmpty(serviceReqSubType)) {
-					var reqFields = getConfigForKey('reqFeildsForSubType');
-					if (!_.isEmpty(reqFields[serviceReqSubType])) {
-						angular.forEach(reqFields[serviceReqSubType], function(field) {
-							var paths = COMMON_CONSTANTS_CONFIG.schemaPathsReqForSubType[field];
-							angular.forEach(paths, function(path) {
-								var schema = $parse(path)(form.schema);
-								if (schema) {
-									if (!schema.required) {
-										schema.required = [];
-									}
-									schema.required.push(field);
-									if ($parse('properties.' + field + '.properties.masterCode')(schema)) {
-										$parse('properties.' + field + '.required').assign(schema, ['masterCode']);
-									} else {
-										$parse('properties.' + field + '.required').assign(schema, true);
-									}
-								}
-							});
-						});
-					}
-				}
-				return form;
-			}
-		};
-
-	}
-});
-
 
 // Source: src/scripts/common/services/common-master-data-results.js
 var module = angular.module('TT-UI-CLM.Common.Services.CommonMasterDataResults', [
@@ -752,7 +495,7 @@ var module = angular.module('TT-UI-CLM.Common.Services.CommonMasterDataUtil', [
 		'CLM-UI.Customers.Services.Loaders.LongitudeLoader'
 	]);
 
-	function CommonMasterDataUtil($q, $http, $parse, COMMON_CONFIG, CustomerSubCategoryLoaderFactory, CustomerCategoryLoaderFactory,
+	function CommonMasterDataUtil($q, $http, $parse, CLM_COMMON_CONFIG, CustomerSubCategoryLoaderFactory, CustomerCategoryLoaderFactory,
 							SubServiceLoaderFactory, ProvincesLoaderFactory, CitiesLoaderFactory, TechnologyLoaderFactory,
 							BillCyclesLoader, DocumentsLoaderTypeService, DocumentPurposeLoaderService, AddressFormatLoaderFactory,
 							CorporateDunningScheduleLoaderFactory, PostOfficeCodeLoaderFactory, SubLocalityLoaderFactory,
@@ -761,7 +504,7 @@ var module = angular.module('TT-UI-CLM.Common.Services.CommonMasterDataUtil', [
 		var getMasterDataValues = function(masterData, valuesMap) {
 			var results = {};
 			angular.forEach(valuesMap, function(key) {
-				results[key] = $parse(COMMON_CONFIG[key])(masterData);
+				results[key] = $parse(CLM_COMMON_CONFIG[key])(masterData);
 			});
 			return results;
 		};
@@ -897,39 +640,13 @@ var module = angular.module('TT-UI-CLM.Common.Services.CommonMasterDataUtil', [
 		};
 	}
 
-    CommonMasterDataUtil.$inject = ['$q', '$http', '$parse', 'COMMON_CONFIG', 'CustomerSubCategoryLoaderFactory', 'CustomerCategoryLoaderFactory',
+    CommonMasterDataUtil.$inject = ['$q', '$http', '$parse', 'CLM_COMMON_CONFIG', 'CustomerSubCategoryLoaderFactory', 'CustomerCategoryLoaderFactory',
 		'SubServiceLoaderFactory', 'ProvincesLoaderFactory', 'CitiesLoaderFactory', 'TechnologyLoaderFactory',  'BillCyclesLoader',
 		'DocumentsLoaderTypeService', 'DocumentPurposeLoaderService', 'AddressFormatLoaderFactory', 'CorporateDunningScheduleLoaderFactory',
 		'PostOfficeCodeLoaderFactory', 'SubLocalityLoaderFactory', 'StreetAddressLoaderFactory', 'PostalCodeLoaderFactory',
 		'ISPDocumentsLoaderService', 'LatitudeLoaderFactory', 'LongitudeLoaderFactory'];
 	module.factory(CommonMasterDataUtil.name, CommonMasterDataUtil);
 
-
-// Source: src/scripts/common/services/get-registration-data.js
-var module = angular.module('TT-UI-CLM.SelectNumber.Services.GetRegistrationDataService', [
-]);
-
-function GetRegistrationDataService($parse) {
-
-    function getServiceType(){
-
-    }
-
-    function getTechnology(){
-
-    }
-
-    return {
-        getServiceType : getServiceType,
-        getTechnology : getTechnology
-    };
-}
-GetRegistrationDataService.$inject = ['$parse']
-module.service(GetRegistrationDataService.name, GetRegistrationDataService);
-
-// Source: src/scripts/common/services/lodashFactory.js
-angular.module('lodash', [])
-    .constant('_', window._);
 
 // Source: src/scripts/common/services/offering-data.js
 var module = angular.module('TT-UI-CLM.Common.Services.OfferingData', [
@@ -966,13 +683,13 @@ module.factory('OfferingData', OfferingDataFactory);
 
 // Source: src/scripts/common/steps/service-details/helpers/abstract-locker.js
 
-var module = angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.AbstractLocker', [
+var module = angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.CommonAbstractLocker', [
         'TT-UI-CLM.Common.Api.Utils.Assert'
 	]);
 
-	function AbstractLockerFactory($q, store, Assert, _) {
+	function CommonAbstractLockerFactory($q, store, Assert) {
 
-		function AbsctractLocker() {
+		function CommonAbsctractLocker() {
 			this.sessionKey = 'session';
 			this.localKey = 'local';
 			this.lockerType = '';
@@ -981,7 +698,7 @@ var module = angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.Abstr
 			this.subscriberStorage = store.getNamespacedStore('subscriber-number');
 		}
 
-		AbsctractLocker.prototype = {
+        CommonAbsctractLocker.prototype = {
 
 			start: function(number) {
 				var storageKey = this._getSessionStorageKey();
@@ -1082,49 +799,49 @@ var module = angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.Abstr
 			}
 		};
 
-		return AbsctractLocker;
+		return CommonAbsctractLocker;
 
 	}
 
-	AbstractLockerFactory.$inject = ['$q', 'store', 'Assert', '_'];
+    CommonAbstractLockerFactory.$inject = ['$q', 'store', 'Assert'];
 
-	module.factory('AbstractLocker', AbstractLockerFactory);
+	module.factory('CommonAbstractLocker', CommonAbstractLockerFactory);
 
 // Source: src/scripts/common/steps/service-details/helpers/msisdn-locker.js
 
-var module = angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.MsisdnLocker', [
+var module = angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.CommonMsisdnLocker', [
 		'TT-UI.Common',
         'TT-UI-CLM.Common.Api.Utils.Assert',
-        'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.AbstractLocker',
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.CommonAbstractLocker',
         'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.Services.MsisdnService'
 	]);
 
-	function MsisdnLockerFactory(CommonMsisdnService, AbstractLocker, _) {
+	function CommonMsisdnLockerFactory(CommonMsisdnService, CommonAbstractLocker) {
 
-		MsisdnLocker.prototype = Object.create(AbstractLocker.prototype);
-		MsisdnLocker.prototype.constructor = MsisdnLocker;
+        CommonMsisdnLocker.prototype = Object.create(CommonAbstractLocker.prototype);
+        CommonMsisdnLocker.prototype.constructor = CommonMsisdnLocker;
 
-		function MsisdnLocker() {
-			AbstractLocker.call(this);
+		function CommonMsisdnLocker() {
+            CommonAbstractLocker.call(this);
 			this.lockerType = 'msisdn';
 			this.lockerName = 'MSISDN';
 			this.subscriberService = CommonMsisdnService;
 			_.bindAll(this);
 		}
 
-		return new MsisdnLocker();
+		return new CommonMsisdnLocker();
 	}
 
-	MsisdnLockerFactory.$inject = ['CommonMsisdnService', 'AbstractLocker', '_'];
+	CommonMsisdnLockerFactory.$inject = ['CommonMsisdnService', 'CommonAbstractLocker'];
 
-	module.factory('MsisdnLocker', MsisdnLockerFactory);
+	module.factory('CommonMsisdnLocker', CommonMsisdnLockerFactory);
 
 // Source: src/scripts/common/steps/service-details/presentation/msisdn-presentation-model.js
 angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.MSISDNPresentaionModel', [
-	'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.SuggestionBoxPresentationModel',
+    'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.CommonSuggestionBoxPresentationModel',
     'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.Strategy.MSISDNStrategyFactory',
     'TT-UI-CLM.Common.Utils.ErrorHandler',
-    'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.MsisdnLocker',
+    'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.CommonMsisdnLocker',
     'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.Services.MsisdnService',
     'TT-UI-CLM.Common.Api.Utils.Assert',
     'TT-UI-CLM.Common.Steps.Presentation.Strategy.ManualMsisdnStrategy',
@@ -1138,23 +855,22 @@ angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.MSISDNPresent
 
 function CommonMsisdnPresentationModelFactory($parse,
                                         $q,
-                                        SuggestionBoxPresentationModel,
+                                        CommonSuggestionBoxPresentationModel,
                                         Assert,
                                         CommonMsisdnService,
                                         MsisdnStrategyFactory,
-                                        MsisdnLocker,
+                                        CommonMsisdnLocker,
                                         errorHandlerFn,
                                         CONFIG,
-										_,
                                         MSISDN_SELECT_SERVICE_SETTINGS, CommonManualMsisdnStrategy, CommonAutomaticMsisdnStrategy){
 
-    CommonMsisdnPresentationModel.prototype = Object.create(SuggestionBoxPresentationModel.prototype);
+    CommonMsisdnPresentationModel.prototype = Object.create(CommonSuggestionBoxPresentationModel.prototype);
     CommonMsisdnPresentationModel.prototype.constructor = CommonMsisdnPresentationModel;
 
    // var captcha = CaptchaDialog();
 
     function CommonMsisdnPresentationModel(model, isMSISDNPrefixRequired) {
-        SuggestionBoxPresentationModel.call(this);
+        CommonSuggestionBoxPresentationModel.call(this);
         Assert.isDefined(model);
         this.isMsisdnPrefixRequired = angular.isDefined(isMSISDNPrefixRequired) ? isMSISDNPrefixRequired : true;
         this.itemsSourceField = 'number';
@@ -1162,7 +878,7 @@ function CommonMsisdnPresentationModelFactory($parse,
         this.strategy = MsisdnStrategyFactory();
         //console.log("this.strategy>>>>>>>>>>>>>>>",this.strategy);
         this.captchaVerified = false;
-        this.msisdnLocker = MsisdnLocker;
+        this.msisdnLocker = CommonMsisdnLocker;
         if (model.mobileNumber) {
             this.selectedItem = {
                 number: model.mobileNumber
@@ -1347,14 +1063,13 @@ function CommonMsisdnPresentationModelFactory($parse,
 CommonMsisdnPresentationModelFactory.$inject = [
     '$parse',
     '$q',
-    'SuggestionBoxPresentationModel',
+    'CommonSuggestionBoxPresentationModel',
     'Assert',
     'CommonMsisdnService',
     'MsisdnStrategyFactory',
-    'MsisdnLocker',
+    'CommonMsisdnLocker',
     'errorHandlerFn',
     'CONFIG',
-	'_',
     'MSISDN_SELECT_SERVICE_SETTINGS',
     'CommonManualMsisdnStrategy',
     'CommonAutomaticMsisdnStrategy'
@@ -1365,8 +1080,8 @@ module.factory('CommonMsisdnPresentationModel', CommonMsisdnPresentationModelFac
 
 var module = angular.module('TT-UI-CLM.Common.Steps.Presentation.Strategy.AutomaticMsisdnStrategy', [
         'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.Services.MsisdnService',
-        'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.SuggestionBoxPresentationModel',
-        'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.MsisdnLocker',
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.CommonSuggestionBoxPresentationModel',
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.CommonMsisdnLocker',
         'TT-UI-CLM.Common.Api.Utils.Assert',
         'TT-UI-CLM.Common.Utils.ErrorHandler',
         'TT-UI-CLM.Common.Services.OfferingData'
@@ -1409,8 +1124,8 @@ var module = angular.module('TT-UI-CLM.Common.Steps.Presentation.Strategy.Automa
 
 var module = angular.module('TT-UI-CLM.Common.Steps.Presentation.Strategy.ManualMsisdnStrategy', [
         'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.Services.MsisdnService',
-        'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.SuggestionBoxPresentationModel',
-        'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.MsisdnLocker',
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.CommonSuggestionBoxPresentationModel',
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.CommonMsisdnLocker',
         'TT-UI-CLM.Common.Api.Utils.Assert',
         'TT-UI-CLM.Common.Utils.ErrorHandler',
         'TT-UI-CLM.Common.Services.OfferingData'
@@ -1500,8 +1215,8 @@ var module = angular.module('TT-UI-CLM.Common.Steps.Presentation.Strategy.Manual
 // Source: src/scripts/common/steps/service-details/presentation/strategy/msisdn-strategy-factory.js
 angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.Strategy.MSISDNStrategyFactory', [
         'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.Services.MsisdnService',
-        'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.SuggestionBoxPresentationModel',
-        'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.MsisdnLocker',
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.CommonSuggestionBoxPresentationModel',
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.CommonMsisdnLocker',
         'TT-UI-CLM.Common.Api.Utils.Assert',
         'TT-UI-CLM.Common.Utils.ErrorHandler'
     ]);
@@ -1533,8 +1248,8 @@ angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.Strategy.MSIS
 
 var module = angular.module('TT-UI-CLM.Common.Steps.Presentation.Strategy.ReservedMsisdnStrategy', [
         'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.Services.MsisdnService',
-        'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.SuggestionBoxPresentationModel',
-        'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.MsisdnLocker',
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.CommonSuggestionBoxPresentationModel',
+        'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.CommonMsisdnLocker',
         'TT-UI-CLM.Common.Api.Utils.Assert',
         'TT-UI-CLM.Common.Utils.ErrorHandler'
 	]);
@@ -1604,17 +1319,17 @@ var module = angular.module('TT-UI-CLM.Common.Steps.Presentation.Strategy.Reserv
 
 
 // Source: src/scripts/common/steps/service-details/presentation/suggestion-box-presentation-model.js
-var module = angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.SuggestionBoxPresentationModel', [
+var module = angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.CommonSuggestionBoxPresentationModel', [
         'TT-UI-CLM.Common.Services.OfferingData'
 	]);
-	function SuggestionBoxPresentationModelFactory($parse, $q, OfferingData) {
+	function CommonSuggestionBoxPresentationModelFactory($parse, $q, OfferingData) {
 
-		function SuggestionBoxPresentationModel() {
+		function CommonSuggestionBoxPresentationModel() {
 			this.itemsSource = [];
 			this.itemsSourceField = 'label';
 		}
 
-		SuggestionBoxPresentationModel.prototype = {
+        CommonSuggestionBoxPresentationModel.prototype = {
 
 			getOfferingDataService: function(offering){
                 var offerDataService = new OfferingData(offering);
@@ -1712,34 +1427,33 @@ var module = angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.
 			}
 		};
 
-		return SuggestionBoxPresentationModel;
+		return CommonSuggestionBoxPresentationModel;
 	}
 
-	SuggestionBoxPresentationModelFactory.$inject = ['$parse', '$q', 'OfferingData'];
+	CommonSuggestionBoxPresentationModelFactory.$inject = ['$parse', '$q', 'OfferingData'];
 
-	module.factory('SuggestionBoxPresentationModel', SuggestionBoxPresentationModelFactory);
+	module.factory('CommonSuggestionBoxPresentationModel', CommonSuggestionBoxPresentationModelFactory);
 
 // Source: src/scripts/common/steps/service-details/services/msisdn-service.js
 
 var module = angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.Services.MsisdnService', [
 		'TT-UI.Config',
-        'TT-UI-CLM.Common.Api.Inventory.Msisdn.GetMobileDetailsByMSISDN',
-        'TT-UI-CLM.Common.Api.Inventory.Msisdn.GetMobileDetailsByReservationToken',
+        'TT-UI-CLM.Common.Api.Inventory.Msisdn.GetCommonMobileDetailsByMSISDN',
 		'TT-UI-CLM.Common.Api.Inventory.CommonInventoryRequestApi',
         'TT-UI-CLM.Common.Api.Inventory.CommonApiPath'
 	]);
 
-	function CommonMsisdnService($q, getMobileDetailsByMSISDNFn, getMobileDetailsByReservationTokenFn, CONFIG, commonInventoryRequestApiFn, COMMON_INVENTORY_API_PATH, validateMsisdn,
+	function CommonMsisdnService($q, getCommonMobileDetailsByMSISDNFn, CONFIG, commonInventoryRequestApiFn, COMMON_INVENTORY_API_PATH, validateMsisdn,
 						validatePortInMsisdn) {
 
 		this.loadAvailable = function(msisdn, model, pageNumber, pageSize) {
 			//console.log("msisdn, model, pageNumber, pageSize>>>>>", msisdn, model, pageNumber, pageSize);
-			return getMobileDetailsByMSISDNFn(msisdn, model, pageNumber, pageSize);
+			return getCommonMobileDetailsByMSISDNFn(msisdn, model, pageNumber, pageSize);
 		};
 
-		this.loadReserved = function(token, hlrNumber, pageNumber, msisdnNumber, pageSize) {
+		/*this.loadReserved = function(token, hlrNumber, pageNumber, msisdnNumber, pageSize) {
 			return getMobileDetailsByReservationTokenFn(token, hlrNumber, pageNumber , msisdnNumber, pageSize);
-		};
+		};*/
 
 		this.block = function(serviceNumbers, model) {
 			model.serviceNumbers = serviceNumbers;
@@ -1779,7 +1493,7 @@ var module = angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.
 		};
 	}
 
-    CommonMsisdnService.$injector = ['$q', 'getMobileDetailsByMSISDNFn', 'getMobileDetailsByReservationTokenFn', 'CONFIG', 'commonInventoryRequestApiFn', 'COMMON_INVENTORY_API_PATH', 'validateMsisdn',
+    CommonMsisdnService.$injector = ['$q', 'getCommonMobileDetailsByMSISDNFn', 'CONFIG', 'commonInventoryRequestApiFn', 'COMMON_INVENTORY_API_PATH', 'validateMsisdn',
 	'validatePortInMsisdn'];
 
 	module.service(CommonMsisdnService.name, CommonMsisdnService);
@@ -1825,11 +1539,11 @@ var module = angular.module('TT-UI-CLM.Common.Api.Utils.Assert', []);
 
 // Source: src/scripts/common/utils/data-model.js
 
-var module = angular.module('TT-UI-CLM.Common.Utils.DataModel', []);
+var module = angular.module('TT-UI-CLM.Common.Utils.CommonDataModel', []);
 
-	function DataModelFactory($parse) {
+	function CommonDataModelFactory($parse) {
 
-		function DataModel(source, mappings) {
+		function CommonDataModel(source, mappings) {
 			Object.defineProperty(this, 'source', {
 				enumerable: false,
 				value: source
@@ -1839,7 +1553,7 @@ var module = angular.module('TT-UI-CLM.Common.Utils.DataModel', []);
 			}, this);
 		}
 
-		DataModel.prototype.addProperty = function(name, mapping) {
+        CommonDataModel.prototype.addProperty = function(name, mapping) {
 			var accessor = $parse(mapping);
 			Object.defineProperty(this, name, {
 				get: function() {
@@ -1852,21 +1566,21 @@ var module = angular.module('TT-UI-CLM.Common.Utils.DataModel', []);
 			});
 		};
 
-		DataModel.prototype.getSource = function() {
+        CommonDataModel.prototype.getSource = function() {
 			return this.source;
 		};
 
 		return {
 			create: function(source, mappings) {
-				return new DataModel(source, mappings);
+				return new CommonDataModel(source, mappings);
 			}
 		};
 
 	}
 
-	DataModelFactory.$inject = ['$parse'];
+    CommonDataModelFactory.$inject = ['$parse'];
 
-	module.factory('DataModel', DataModelFactory);
+	module.factory('CommonDataModel', CommonDataModelFactory);
 
 
 // Source: src/scripts/common/utils/error-handler-fn.js

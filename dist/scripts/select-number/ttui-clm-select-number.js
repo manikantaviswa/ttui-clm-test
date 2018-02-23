@@ -19,23 +19,23 @@ var module = angular.module('TT-UI-CLM.SelectNumber.Controller.SelectNumberContr
     'TT-UI-CLM.SelectNumber.Services.SelectNumberService',
     'TT-UI-CLM.Common.Services.OfferingData',
     'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.MSISDNPresentaionModel',
-    'TT-UI-CLM.Common.Utils.DataModel',
+    'TT-UI-CLM.Common.Utils.CommonDataModel',
     'TT-UI-CLM.Common.Services.Loaders.CommonMSISDNPrefixLoader',
-    'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.MsisdnLocker'
+    'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.CommonMsisdnLocker'
 ]).constant('SELECT_SERVICE_SETTINGS', {
     MSISDN_SELECTION_AUTO : 'Automatic',
     MSISDN_SELECTION_MANUAL	: 'Manual',
     MSISDN_SELECTION_RESERVE : 'Reserved'
 });
 
-function SelectNumberController($rootScope, $scope, $parse, SelectNumberService, SELECT_SERVICE_SETTINGS, SPINNER_EVENTS, CommonMSISDNPrefixLoader, OfferingData, FlashMessage, translateFilter, CommonMsisdnPresentationModel, DataModel, MsisdnLocker) {
+function SelectNumberController($rootScope, $scope, $parse, SelectNumberService, SELECT_SERVICE_SETTINGS, SPINNER_EVENTS, CommonMSISDNPrefixLoader, OfferingData, FlashMessage, translateFilter, CommonMsisdnPresentationModel, CommonDataModel, CommonMsisdnLocker) {
     var __ = translateFilter;
 
     var serviceNumberService = new SelectNumberService($scope.model.masterData);
     var offerDataService = new OfferingData($scope.model.selectedOffering);
 
 
-    var msisdn = DataModel.create($scope.model, {
+    var msisdn = CommonDataModel.create($scope.model, {
         mobileNumber: 'serviceDetails.gsmService.stDirect.MSISDN',
         hlrOfMsisdn: 'serviceDetails.gsmService.stDirect.hlrMSISDN',
         hlrOfSim: 'serviceDetails.gsmService.stDirect.hlrSIM',
@@ -52,7 +52,7 @@ function SelectNumberController($rootScope, $scope, $parse, SelectNumberService,
 
     $scope.msisdnPM = new CommonMsisdnPresentationModel(msisdn, true);
 
-    MsisdnLocker.start.bind($scope.msisdnPM)
+    CommonMsisdnLocker.start.bind($scope.msisdnPM)
 
     $scope.model.msisdnPM = $scope.msisdnPM;
     //console.log("$scope.msisdnPM>>>>>>",$scope.msisdnPM)
@@ -100,8 +100,8 @@ SelectNumberController.$inject = [
     'FlashMessage',
     'translateFilter',
     'CommonMsisdnPresentationModel',
-    'DataModel',
-    'MsisdnLocker'
+    'CommonDataModel',
+    'CommonMsisdnLocker',
 ];
 module.controller(SelectNumberController.name, SelectNumberController);
 

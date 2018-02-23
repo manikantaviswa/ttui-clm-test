@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.MSISDNPresentaionModel', [
-	'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.SuggestionBoxPresentationModel',
+    'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.CommonSuggestionBoxPresentationModel',
     'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.Strategy.MSISDNStrategyFactory',
     'TT-UI-CLM.Common.Utils.ErrorHandler',
-    'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.MsisdnLocker',
+    'TT-UI-CLM.Common.Steps.ServiceDetails.Helpers.CommonMsisdnLocker',
     'TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.Services.MsisdnService',
     'TT-UI-CLM.Common.Api.Utils.Assert',
     'TT-UI-CLM.Common.Steps.Presentation.Strategy.ManualMsisdnStrategy',
@@ -18,23 +18,22 @@ angular.module('TT-UI-CLM.Common.Steps.ServiceDetails.Presentation.MSISDNPresent
 
 function CommonMsisdnPresentationModelFactory($parse,
                                         $q,
-                                        SuggestionBoxPresentationModel,
+                                        CommonSuggestionBoxPresentationModel,
                                         Assert,
                                         CommonMsisdnService,
                                         MsisdnStrategyFactory,
-                                        MsisdnLocker,
+                                        CommonMsisdnLocker,
                                         errorHandlerFn,
                                         CONFIG,
-										_,
                                         MSISDN_SELECT_SERVICE_SETTINGS, CommonManualMsisdnStrategy, CommonAutomaticMsisdnStrategy){
 
-    CommonMsisdnPresentationModel.prototype = Object.create(SuggestionBoxPresentationModel.prototype);
+    CommonMsisdnPresentationModel.prototype = Object.create(CommonSuggestionBoxPresentationModel.prototype);
     CommonMsisdnPresentationModel.prototype.constructor = CommonMsisdnPresentationModel;
 
    // var captcha = CaptchaDialog();
 
     function CommonMsisdnPresentationModel(model, isMSISDNPrefixRequired) {
-        SuggestionBoxPresentationModel.call(this);
+        CommonSuggestionBoxPresentationModel.call(this);
         Assert.isDefined(model);
         this.isMsisdnPrefixRequired = angular.isDefined(isMSISDNPrefixRequired) ? isMSISDNPrefixRequired : true;
         this.itemsSourceField = 'number';
@@ -42,7 +41,7 @@ function CommonMsisdnPresentationModelFactory($parse,
         this.strategy = MsisdnStrategyFactory();
         //console.log("this.strategy>>>>>>>>>>>>>>>",this.strategy);
         this.captchaVerified = false;
-        this.msisdnLocker = MsisdnLocker;
+        this.msisdnLocker = CommonMsisdnLocker;
         if (model.mobileNumber) {
             this.selectedItem = {
                 number: model.mobileNumber
@@ -227,14 +226,13 @@ function CommonMsisdnPresentationModelFactory($parse,
 CommonMsisdnPresentationModelFactory.$inject = [
     '$parse',
     '$q',
-    'SuggestionBoxPresentationModel',
+    'CommonSuggestionBoxPresentationModel',
     'Assert',
     'CommonMsisdnService',
     'MsisdnStrategyFactory',
-    'MsisdnLocker',
+    'CommonMsisdnLocker',
     'errorHandlerFn',
     'CONFIG',
-	'_',
     'MSISDN_SELECT_SERVICE_SETTINGS',
     'CommonManualMsisdnStrategy',
     'CommonAutomaticMsisdnStrategy'
