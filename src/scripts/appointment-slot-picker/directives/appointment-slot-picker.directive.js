@@ -16,6 +16,7 @@ module.directive('appointmentSlotPicker', function() {
             onSearch: '&'
         },
         controller: 'AppointmentSlotPickerCtrl',
+        controllerAs: 'AppointmentSlotPickerCtrl as vm',
         templateUrl: 'scripts/appointment-slot-picker/views/appointment-slot-picker.tpl.html'
     };
 });

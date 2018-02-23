@@ -28,7 +28,7 @@
 				technology: model.technology,
 				businessType: model.businessType,
 				activatedVia: model.activatedVia,
-				category: 'NPOST',
+				category: model.category || '',
                 serviceNumber: msisdn || '',
 				hlrNumber: 'MDF-01',
 				pageNumber: pageNumber || '1',

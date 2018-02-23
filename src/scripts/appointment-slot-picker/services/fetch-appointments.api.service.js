@@ -1,6 +1,6 @@
 'use strict';
 
-var module = angular.module('TT-UI-CLM.AppointmentSlotPicker.Services.FetchAppointmentAPIService', [
+var module = angular.module('TT-UI-CLM.AppointmentSlotPicker.Services.FetchAppointmentsAPIService', [
     'TT-UI.Common'
 ]);
 
@@ -10,7 +10,7 @@ module.constant('FETCH_APPOINTMENT_API_CONFIG', {
     RESPONSE_ERROR_JSON_PATH: 'response.errors.error'
 });
 
-function FetchAppointmentAPIService($q, $parse, Api, ResourceFactory, API_CONFIG) {
+function FetchAppointmentsAPIService($q, $parse, Api, ResourceFactory, API_CONFIG) {
 
     var prepareRequest = function(payload) {
         var requestData = {
@@ -51,5 +51,5 @@ function FetchAppointmentAPIService($q, $parse, Api, ResourceFactory, API_CONFIG
 
 }
 
-FetchAppointmentAPIService.$inject = ['$q', '$parse', 'Api', 'ResourceFactory', 'FETCH_APPOINTMENT_API_CONFIG'];
-module.factory(FetchAppointmentAPIService.name, FetchAppointmentAPIService);
+FetchAppointmentsAPIService.$inject = ['$q', '$parse', 'Api', 'ResourceFactory', 'FETCH_APPOINTMENT_API_CONFIG'];
+module.factory(FetchAppointmentsAPIService.name, FetchAppointmentsAPIService);
