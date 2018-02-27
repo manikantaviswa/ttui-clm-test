@@ -3,7 +3,7 @@
 var module = angular.module('TT-UI-CLM.AppointmentSlotPicker.Directives.AppointmentSlotPicker', [
     'TT-UI-CLM.AppointmentSlotPicker.Controllers.AppointmentSlotPickerCtrl',
     'TT-UI-CLM.AppointmentSlotPicker.Tpl',
-    'mwl.calendar'
+    'TT-UI-CLM.CalendarPicker.Directives.CalendarPicker',    
 ]);
 
 module.directive('appointmentSlotPicker', function() {
@@ -12,8 +12,7 @@ module.directive('appointmentSlotPicker', function() {
         scope: {
             model: '=',
             // config: '=',
-            masterData: '=',
-            onSearch: '&'
+            masterData: '='
         },
         controller: 'AppointmentSlotPickerCtrl',
         controllerAs: 'AppointmentSlotPickerCtrl as vm',
