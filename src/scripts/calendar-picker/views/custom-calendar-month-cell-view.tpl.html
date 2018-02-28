@@ -7,9 +7,9 @@
         'cal-day-today': day.isToday,
         'cal-day-future': day.isFuture,
         'cal-day-has-events': day.events.length > 0,
-        'cal-day-selected': vm.selectedIndex === dayIndex,
+        'cal-day-selected': vm.selectedDate === day,
         'cal-day-open': dayIndex === vm.openDayIndex
-    }" ng-click="day.events.length > 0? vm.selectedIndex = dayIndex: ''">
+    }" ng-click="day.events.length > 0? vm.selectedDate = day: ''">
 
     <small class="cal-events-num badge badge-important pull-left"
         ng-show="day.badgeTotal > 0 && (vm.calendarConfig.displayAllMonthEvents || day.inMonth)"
