@@ -6,7 +6,8 @@
                     <label for="installation-type" class="col-sm-4 control-label">Installation Type</label>
                     <div class="control-content col-sm-2">
                         <select class="form-control" name="installationType" id="installation-type" ng-model="model.installationType"
-                            ng-options="installationType.code as installationType.name for installationType in installationTypeList">
+                            ng-options="installationType.code as installationType.name for installationType in installationTypeList"
+                            ng-change="onSelectInstallationType()">
                             <option value="">Select</option>
                         </select>
                     </div>
