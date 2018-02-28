@@ -15,26 +15,29 @@ angular.module('TT-UI-CLM.FxlSelectOffering', [
 ]);
 
 // Source: src/scripts/fxl-select-offering/controller/fxl-select-offering-ctrl.js
-var module = angular.module('TT-UI-CLM.FxlSelectOffering.Controllers.FxlSelectOfferingCtrl', [
-    'TT-UI-CLM.FxlSelectOffering.Services.FxlSelectOfferingService',
-    'CLM-UI.Customers.Corporate.Services.MasterDataUtil',
-    'CLM-UI.Customers.Services.StepStorage'
-]);
+var module = angular.module('TT-UI-CLM.FxlSelectOffering.Controllers.FxlSelectOfferingCtrl', ['TT-UI-CLM.FxlSelectOffering.Services.FxlSelectOfferingService', 'CLM-UI.Customers.Corporate.Services.MasterDataUtil', 'CLM-UI.Customers.Services.StepStorage']);
 
 function FEASIBILITY_CHECK_FORM() {
-    return {
-        LOCAL_STORAGE_NS: 'feasibility-check-form',
-        LOCAL_STORAGE_MODEL: 'model',
-        LOCAL_STORAGE_DEFAULT_OBJECT: {}
-    };
+    return {LOCAL_STORAGE_NS: 'feasibility-check-form', LOCAL_STORAGE_MODEL: 'model', LOCAL_STORAGE_DEFAULT_OBJECT: {}};
 }
 
 module.constant(FEASIBILITY_CHECK_FORM.name, FEASIBILITY_CHECK_FORM());
 
-FxlSelectOfferingCtrl.$inject = ['$scope', 'FxlSelectOfferingService', 'MasterDataUtil', '$translate', 'CurrentUser', 'MASTER_CONFIG', 'store', 'StepStorageFactory', 'FEASIBILITY_CHECK_FORM', '$parse'];
+FxlSelectOfferingCtrl.$inject = [
+    '$scope',
+    'FxlSelectOfferingService',
+    'MasterDataUtil',
+    '$translate',
+    'CurrentUser',
+    'MASTER_CONFIG',
+    'store',
+    'StepStorageFactory',
+    'FEASIBILITY_CHECK_FORM',
+    '$parse'
+];
 
-function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil, $translate, CurrentUser, MASTER_CONFIG, store, StepStorageFactory, FEASIBILITY_CHECK_FORM, $parse) {  
-    
+function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil, $translate, CurrentUser, MASTER_CONFIG, store, StepStorageFactory, FEASIBILITY_CHECK_FORM, $parse) {
+
     $scope.lists = FxlSelectOfferingService.getAllList($scope.masterData);
     $scope.services = FxlSelectOfferingService.getServices($scope.masterData);
     $scope.technologies = FxlSelectOfferingService.getTechnologies($scope.masterData);
@@ -42,96 +45,210 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
     $scope.nationalities = FxlSelectOfferingService.getCustomerNationalities($scope.masterData);
     $scope.businessTypes = FxlSelectOfferingService.getBusinessTypes($scope.masterData);
     $scope.plans = FxlSelectOfferingService.getPlans($scope.masterData);
-
+    
     var stepStorage = new StepStorageFactory(FEASIBILITY_CHECK_FORM.LOCAL_STORAGE_NS, FEASIBILITY_CHECK_FORM.LOCAL_STORAGE_DEFAULT_OBJECT);
-    this.load = stepStorage.load.bind(stepStorage);
+    this.load = stepStorage
+        .load
+        .bind(stepStorage);
     var feasibilityModalData = this.load();
-
     $scope.searchofferingModel = {
         offering: {
             CustomerType: "I",
             State: "S2",
             SalesChannel: CurrentUser.getSalesChannel(),
             language: $translate.use(),
+            plan: ""
         }
+    };
+    $scope.searchofferingLabelModel = {
+        offering: {}
     };
 
     //Get Customer Subcategory (This function must be clean later)
     $scope.getCustomerSubCategory = function (customerCategory) {
-        MasterDataUtil.getCustomerSubCategory($scope.searchofferingModel.offering.CustomerType, customerCategory).then(function (data) {
-            $scope.customerSubCategoryList = data;
-            angular.forEach($scope.customerSubCategoryList, function (temp) {
-                if ($scope.searchofferingModel.CustomerSubCategory === '' && angular.isDefined(temp.default)) {
-                    $scope.searchofferingModel.CustomerSubCategory = temp.code;
-                }
+          MasterDataUtil
+            .getCustomerSubCategory($scope.searchofferingModel.offering.CustomerType, customerCategory)
+            .then(function (data) {
+                $scope.customerSubCategoryList = data;
+                angular.forEach($scope.customerSubCategoryList, function (temp) {
+                    if ($scope.searchofferingModel.CustomerSubCategory === '' && angular.isDefined(temp.default)) {
+                        $scope.searchofferingModel.CustomerSubCategory = temp.code;
+                        $scope.searchofferingLabelModel.CustomerSubCategoryName = temp.name;
+                    }
+                });
             });
-        });
     };
 
     //Get Customer Category (This function must be clean later)
     $scope.getCustomerCategory = function () {
         if (angular.isDefined($scope.searchofferingModel.offering.CustomerType)) {
-            MasterDataUtil.getCustomerCategory($scope.searchofferingModel.offering.CustomerType).then(function (data) {
-                $scope.customerCategoryList = data;
-                if (angular.isDefined($scope.customerCategoryList)) {
-                    angular.forEach($scope.customerCategoryList, function (temp) {
-                        if ($scope.searchofferingModel.offering.CustomerCategory === '' && angular.isDefined(temp.default)) {
-                            $scope.searchofferingModel.offering.CustomerCategory = temp.code;
-                        }
-                    });
-                    $scope.getCustomerSubCategory($scope.searchofferingModel.offering.CustomerCategory);
-                } else {
-                    $scope.searchOffer.CustomerCategory = {};
-                    $scope.searchOffer.CustomerSubCategory = {};
-                    $scope.customerSubCategoryList = {};
-                }
+            MasterDataUtil
+                .getCustomerCategory($scope.searchofferingModel.offering.CustomerType)
+                .then(function (data) {
+                    $scope.customerCategoryList = data;
+                    if (angular.isDefined($scope.customerCategoryList)) {
+                        angular
+                            .forEach($scope.customerCategoryList, function (temp) {
+                                if ($scope.searchofferingModel.offering.CustomerCategory === '' && angular.isDefined(temp.default)) {
+                                    $scope.searchofferingModel.offering.CustomerCategory = temp.code;
+                                    $scope.searchofferingLabelModel.offering.CustomerCategoryName = temp.name;
+                                }
+                            });
+                        $scope.getCustomerSubCategory($scope.searchofferingModel.offering.CustomerCategory);
+                    } else {
+                        $scope.searchOffer.CustomerCategory = {};
+                        $scope.searchOffer.CustomerSubCategory = {};
+                        $scope.customerSubCategoryList = {};
+                    }
 
-            });
+                });
         } else {
             var defaultCustomerType = MasterDataUtil.getMasterDataDefault($scope.masterData, [MASTER_CONFIG.CUSTOMER_TYPE])[MASTER_CONFIG.CUSTOMER_TYPE];
-            MasterDataUtil.getCustomerCategory(defaultCustomerType).then(function (data) {
-                $scope.searchofferingModel.offering.CustomerType = defaultCustomerType;
-                $scope.customerCategoryList = data;
-                angular.forEach($scope.customerCategoryList, function (temp) {
-                    if (angular.isDefined(temp.default)) {
-                        $scope.searchofferingModel.offering.CustomerType = temp.code;
-                    }
+            MasterDataUtil
+                .getCustomerCategory(defaultCustomerType)
+                .then(function (data) {
+                    $scope.searchofferingModel.offering.CustomerType = defaultCustomerType;
+                    $scope.customerCategoryList = data;
+                    angular.forEach($scope.customerCategoryList, function (temp) {
+                        if (angular.isDefined(temp.default)) {
+                            $scope.searchofferingModel.offering.CustomerType = temp.code;
+                            $scope.searchofferingLabelModel.offering.CustomerName = temp.name;
+                        }
+                    });
+                    $scope.getCustomerSubCategory($scope.searchofferingModel.offering.CustomerType);
                 });
-                $scope.getCustomerSubCategory($scope.searchofferingModel.offering.CustomerType);
-            });
         }
     };
 
-
-    //Setting the drop down default values function starts here (Want to write a common function for this)
+    // Setting the drop down default values function starts here (Want to write a
+    // common function for this)
     $scope.setCategoryDefault = function (categoryLists) {
-        angular.forEach(categoryLists, function (category) {
-            if (category.hasOwnProperty('default') && category.default === 'Y') {
-                $scope.searchofferingModel.offering.CustomerCategory = category.categories.category[0].code;
-                $scope.getCustomerCategory();
-            }
-        });
+        angular
+            .forEach(categoryLists, function (category) {
+                if (category.hasOwnProperty('default') && category.default === 'Y') {
+                    $scope.searchofferingModel.offering.CustomerCategory = category.categories.category[0].code;
+                    $scope.searchofferingLabelModel.offering.CustomerCategoryName = category.categories.category[0].name;
+                    $scope.getCustomerCategory();
+                }
+            });
     }
 
     $scope.setServiceDefault = function (serviceList) {
-        angular.forEach(serviceList, function (service) {
-            if (service.hasOwnProperty('default') && service.default === 'Y') {
-                $scope.searchofferingModel.offering.ProductType = service.code;
-            }
-        });
+        angular
+            .forEach(serviceList, function (service) {
+                if (service.hasOwnProperty('default') && service.default === 'Y') {
+                    $scope.searchofferingModel.offering.ProductType = service.code;
+                    $scope.searchofferingLabelModel.offering.ProductName = service.name;
+                }
+            });
     }
 
     $scope.setBusinessTypeDefault = function (businesstypeList) {
-        angular.forEach(businesstypeList, function (businesstype) {
-            if (businesstype.hasOwnProperty('default') && businesstype.default === 'Y') {
-                $scope.searchofferingModel.offering.BusinessType = businesstype.code;
-            }
-        });
+        angular
+            .forEach(businesstypeList, function (businesstype) {
+                if (businesstype.hasOwnProperty('default') && businesstype.default === 'Y') {
+                    $scope.searchofferingModel.offering.BusinessType = businesstype.code;
+                    $scope.searchofferingLabelModel.offering.BusinessName = businesstype.name;
+                }
+            });
     }
 
-    //Setting the droap down default values function ends here
+    $scope.onSelectsubCustomerCategory = function () {
+        if ($scope.searchofferingModel.offering.CustomerSubCategory == null) {
+            $scope.searchofferingModel.offering.CustomerSubCategory = '';
+            $scope.searchofferingLabelModel.offering.CustomerSubCategoryName = '';
+        } else {
+            angular
+                .forEach($scope.customerSubCategoryList, function (item) {
+                    if (item.code === $scope.searchofferingModel.offering.CustomerSubCategory) {
+                        $scope.searchofferingModel.offering.CustomerSubCategory = item.code
+                        $scope.searchofferingLabelModel.offering.CustomerSubCategoryName = item.name
+                    }
 
-    //comon function for calling group oof function on onload
+                });
+        }
+
+    }
+
+    $scope.onSelectService = function () {
+        if ($scope.searchofferingModel.offering.ProductType == null) {
+            $scope.searchofferingModel.offering.ProductType = '';
+            $scope.searchofferingLabelModel.offering.ProductName = '';
+        } else {
+            angular
+                .forEach($scope.services, function (item) {
+                    if (item.code === $scope.searchofferingModel.offering.ProductType) {
+                        $scope.searchofferingModel.offering.ProductType = item.code
+                        $scope.searchofferingLabelModel.offering.ProductName = item.name
+                    }
+                });
+        }
+
+    }
+    $scope.onSelectTechnologies = function () {
+        if ($scope.searchofferingModel.offering.Technology == null) {
+            $scope.searchofferingModel.offering.Technology = '';
+            $scope.searchofferingLabelModel.offering.TechnologyName = '';
+        } else {
+            angular
+                .forEach($scope.technologies, function (item) {
+                    if (item.code === $scope.searchofferingModel.offering.Technology) {
+                        $scope.searchofferingModel.offering.Technology = item.code
+                        $scope.searchofferingLabelModel.offering.TechnologyName = item.name
+                    }
+                });
+        }
+    }
+
+    $scope.onSelectNationalities = function () {
+        if ($scope.searchofferingModel.offering.Nationality == null) {
+            $scope.searchofferingModel.offering.Nationality = '';
+            $scope.searchofferingLabelModel.offering.NationalityName = '';
+        } else {
+            angular
+                .forEach($scope.nationalities, function (item) {
+                    if (item.code === $scope.searchofferingModel.offering.Nationality) {
+                        $scope.searchofferingModel.offering.Nationality = item.code;
+                        $scope.searchofferingLabelModel.offering.NationalityName = item.name;
+                    }
+                });
+        }
+
+    }
+
+    $scope.onSelectbusiness = function () {
+        if ($scope.searchofferingModel.offering.BusinessType == null) {
+            $scope.searchofferingModel.offering.BusinessType = '';
+            $scope.searchofferingLabelModel.offering.BusinessName = '';
+        } else {
+            angular
+                .forEach($scope.businessTypes, function (item) {
+                    if (item.code === $scope.searchofferingModel.offering.BusinessType) {
+                        $scope.searchofferingModel.offering.BusinessType = item.code
+                        $scope.searchofferingLabelModel.offering.BusinessName = item.name
+                    }
+                });
+        }
+    }
+    $scope.onSelectPlan = function () {
+        debugger;
+        if ($scope.searchofferingModel.offering.plan == null) {
+            $scope.searchofferingModel.offering.plan = '';
+            $scope.searchofferingLabelModel.offering.planName = '';
+        } else {
+            angular
+                .forEach($scope.plans, function (item) {
+                    if (item.code === $scope.searchofferingModel.offering.plan) {
+                        $scope.searchofferingModel.offering.plan = item.code;
+                        $scope.searchofferingLabelModel.offering.planName = item.name;
+                    }
+                });
+        }
+
+    }
+
+    // Setting the droap down default values function ends here comon function for
+    // calling group oof function on onload
     var onloadCall = function () {
         var categoryLists = $scope.lists.masterData.partyTypes.partyType;
         $scope.setCategoryDefault(categoryLists);
@@ -139,8 +256,10 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
         $scope.setBusinessTypeDefault($scope.businessTypes);
         $scope.searchofferingModel.offering.City = $parse('locality.locality')(feasibilityModalData);
         var serviceType = store.get('service');
-        $scope.searchofferingModel.offering.LoB = _.isEmpty(serviceType) ? MasterDataUtil.getMasterDataDefault(masterData, [MASTER_CONFIG.SERVICE_TYPE])[MASTER_CONFIG.SERVICE_TYPE] : serviceType;
-        $scope.searchofferingModel.offering.Country = MasterDataUtil.getMasterDataDefault($scope.lists, [MASTER_CONFIG.COUNTRY])[MASTER_CONFIG.COUNTRY];        
+        $scope.searchofferingModel.offering.LoB = _.isEmpty(serviceType)
+            ? MasterDataUtil.getMasterDataDefault(masterData, [MASTER_CONFIG.SERVICE_TYPE])[MASTER_CONFIG.SERVICE_TYPE]
+            : serviceType;
+        $scope.searchofferingModel.offering.Country = MasterDataUtil.getMasterDataDefault($scope.lists, [MASTER_CONFIG.COUNTRY])[MASTER_CONFIG.COUNTRY];
     }
 
     onloadCall();
