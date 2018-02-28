@@ -20,17 +20,19 @@ var module = angular.module('TT-UI-CLM.AppointmentSlotPicker.Controllers.Appoint
     'TT-UI-CLM.AppointmentSlotPicker.Services.AppointmentSlotPickerService'
 ]);
 
-function AppointmentSlotPickerCtrl($scope, moment, calendarConfig, FetchAppointmentsAPIService, AppointmentSlotPickerService) {
+function AppointmentSlotPickerCtrl($scope, $parse, moment, calendarConfig, FetchAppointmentsAPIService, AppointmentSlotPickerService) {
 
     var appointmentSlotPickerService = new AppointmentSlotPickerService($scope.masterData);
 
     function loadAppointments() {
+        var fromDate = moment().startOf('day').toDate();
+        var toDate = moment(fromDate).add('month', 3).toDate();
         var req = {
             // @TODO need to get it from form or some constants
             getAppointmentSlot: {
-                installationType: "building",
-                startDate: "2018-11-11T00:00:00.000Z",
-                endDate: "2018-11-13T00:00:00.000Z"
+                installationType: $parse('model.installationType')($scope),
+                startDate: fromDate,
+                endDate: toDate
             }
         };
         new FetchAppointmentsAPIService(req).then(function(res) {
@@ -44,13 +46,17 @@ function AppointmentSlotPickerCtrl($scope, moment, calendarConfig, FetchAppointm
             console.log('updated');
         });
     }
-    loadAppointments();
+
+    $scope.onSelectInstallationType = function() {
+        loadAppointments();
+    };
 
     $scope.installationTypeList = appointmentSlotPickerService.getInstallationTypes();
 }
 
 AppointmentSlotPickerCtrl.$inject = [
     '$scope',
+    '$parse',
     'moment',
     'calendarConfig',
     'FetchAppointmentsAPIService',
