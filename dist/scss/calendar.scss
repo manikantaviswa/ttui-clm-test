@@ -59,6 +59,7 @@ mwl-calendar .cal-month-box .events-list>.event {
     border-radius: 100%;
     margin-left: 19px;
     margin-top: -2px;
+    pointer-events: none;
 }
 mwl-calendar [class*="cal-cell"]:hover {
     background-color: transparent;
