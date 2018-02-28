@@ -98,11 +98,20 @@
 	.selectOffering table>tbody>tr.expanding-row {
 		display: none;
 	}
+	.selectPlanOfferview{
+		float: left;
+    	width: 100%;
+	}
+	.accordion.selectPlanOffer{
+		float: left;
+		width: 100%;
+		background: #fff;
+	}
 </style>
 
-
-<uib-accordion class="accordion" close-others="false">
-	<uib-accordion-group is-open="!defaultAccordionState.showPlansList" is-disabled="defaultAccordionState.hasPreselectedOffering">
+<div class="selectPlanOfferview" ng-hide="defaultState.hasPreselectedOffering">
+<uib-accordion class="accordion selectPlanOffer" close-others="false">
+	<uib-accordion-group is-open="defaultState.showPlansList" is-disabled="defaultState.hasPreselectedOffering">
 		<uib-accordion-heading>
 			<span translate="Eligible offerings" bs-collapse-toggle>Eligible offerings</span>
 
@@ -390,3 +399,4 @@
 	</uib-accordion-group>
 
 </uib-accordion>
+</div>
