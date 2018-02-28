@@ -18,8 +18,6 @@ function CalendarPickerCtrl($scope, moment) {
     $scope.$watch('events', function(newVal, oldVal) {
         if (newVal && newVal.length > 0) {
             $scope.viewDate = new Date(newVal[0].startsAt);
-            $scope.selectedSlots = [];
-            $scope.selectedSlots.push(newVal[0]);
         } else {
             $scope.viewDate = new Date();
         }

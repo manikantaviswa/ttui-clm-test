@@ -3,20 +3,18 @@
         <div class="input-group text-center">
             <span class="input-group-btn">
                 <button class="btn btn-primary" mwl-date-modifier
-                    date="viewDate" decrement="calendarView"
-                    ng-click="cellIsOpen = false" type="button">
-                    <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;
+                    date="viewDate" decrement="calendarView" type="button">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
                 </button>
             </span>
             <input type="text" class="form-control" ng-model="calendarTitle" readonly>
             <span class="input-group-btn">
                 <button class="btn btn-primary" mwl-date-modifier
-                    date="viewDate" increment="calendarView"
-                    ng-click="cellIsOpen = false" type="button">
-                    <span class="glyphicon glyphicon-chevron-right"></span>&nbsp;
+                    date="viewDate" increment="calendarView" type="button">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
                 </button>
             </span>
-        </div>    
+        </div>
         <mwl-calendar
             events="events"
             view="calendarView"
@@ -24,7 +22,6 @@
             view-date="viewDate"
             on-event-click="eventClicked(calendarEvent)"
             on-event-times-changed="eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
-            cell-is-open="cellIsOpen"
             day-view-start="00:00"
             day-view-end="23:59"
             day-view-split="30"
@@ -37,12 +34,11 @@
         </mwl-calendar>
     </div>
     <div class="col-md-4 pl-0">
-        <div class="col-sm-12 event-Details">
+        <!-- <div class="col-sm-12 event-Details">
             <label class="current-Date col-sm-4">{{viewDate | date: 'dd'}} </label>
             <label class="current-Date col-sm-4">{{viewDate | date: 'EEEE'}} </label>
-            <label class="current-Date col-sm-4">{{viewDate | date: 'EEEE'}} </label>
-            <!-- <label class="current-day col-sm-4">Tuesday</label> -->
-        </div>
+            <label class="current-day col-sm-4">{{viewDate | date: 'MMM'}} </label>
+        </div> -->
         <div class="col-sm-12 pr-0 event-list">
             <ul class="list-group">
                 <li class="list-group-item" ng-repeat="slot in selectedSlots" ng-click="onSlotClick(slot)" ng-class="{'active': activeSlot === slot}">

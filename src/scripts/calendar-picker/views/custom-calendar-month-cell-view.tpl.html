@@ -1,5 +1,3 @@
-{{day.date}} ---
-{{vm.viewDate}}
 <div class="cal-month-day {{ day.cssClass }}"
     ng-class="{
         'cal-day-outmonth': !day.inMonth,
@@ -8,9 +6,10 @@
         'cal-day-past': day.isPast,
         'cal-day-today': day.isToday,
         'cal-day-future': day.isFuture,
-        'cal-day-selected': true,
+        'cal-day-has-events': day.events.length > 0,
+        'cal-day-selected': vm.selectedIndex === dayIndex,
         'cal-day-open': dayIndex === vm.openDayIndex
-    }">
+    }" ng-click="day.events.length > 0? vm.selectedIndex = dayIndex: ''">
 
     <small class="cal-events-num badge badge-important pull-left"
         ng-show="day.badgeTotal > 0 && (vm.calendarConfig.displayAllMonthEvents || day.inMonth)"

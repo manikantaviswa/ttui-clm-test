@@ -14,12 +14,12 @@ $templateCache.put('scripts/calendar-picker/views/calendar-picker.tpl.html',
     "\n" +
     "                calendarMonthCell: 'scripts/calendar-picker/views/custom-calendar-month-cell-view.tpl.html'\r" +
     "\n" +
-    "            }\"></mwl-calendar></div><div class=\"col-md-4 pl-0\"><div class=\"col-sm-12 event-Details\"><label class=\"current-Date col-sm-4\">{{viewDate | date: 'dd'}}</label><label class=\"current-Date col-sm-4\">{{viewDate | date: 'EEEE'}}</label><label class=\"current-Date col-sm-4\">{{viewDate | date: 'EEEE'}}</label></div><div class=\"col-sm-12 pr-0 event-list\"><ul class=\"list-group\"><li class=\"list-group-item\" ng-repeat=\"slot in selectedSlots\" ng-click=\"onSlotClick(slot)\" ng-class=\"{'active': activeSlot === slot}\">{{slot.startsAt | date: 'hh:mm'}} - {{slot.endsAt | date: 'hh:mm'}}</li></ul></div></div></div>"
+    "            }\"></mwl-calendar></div><div class=\"col-md-4 pl-0\"><div class=\"col-sm-12 event-Details\"><label class=\"current-Date col-sm-4\">{{viewDate | date: 'dd'}}</label><label class=\"current-Date col-sm-4\">{{viewDate | date: 'EEEE'}}</label><label class=\"current-Date col-sm-4\">{{viewDate | date: 'MMM'}}</label></div><div class=\"col-sm-12 pr-0 event-list\"><ul class=\"list-group\"><li class=\"list-group-item\" ng-repeat=\"slot in selectedSlots\" ng-click=\"onSlotClick(slot)\" ng-class=\"{'active': activeSlot === slot}\">{{slot.startsAt | date: 'hh:mm'}} - {{slot.endsAt | date: 'hh:mm'}}</li></ul></div></div></div>"
   );
 
 
   $templateCache.put('scripts/calendar-picker/views/custom-calendar-month-cell-view.tpl.html',
-    "{{day.date}} --- {{vm.viewDate.toLocaleDateString()}}<div class=\"cal-month-day {{ day.cssClass }}\" ng-class=\"{\r" +
+    "<div class=\"cal-month-day {{ day.cssClass }}\" ng-class=\"{\r" +
     "\n" +
     "        'cal-day-outmonth': !day.inMonth,\r" +
     "\n" +
@@ -33,11 +33,13 @@ $templateCache.put('scripts/calendar-picker/views/calendar-picker.tpl.html',
     "\n" +
     "        'cal-day-future': day.isFuture,\r" +
     "\n" +
-    "        'cal-day-selected': true,\r" +
+    "        'cal-day-has-events': day.events.length > 0,\r" +
+    "\n" +
+    "        'cal-day-selected': vm.selectedIndex === dayIndex,\r" +
     "\n" +
     "        'cal-day-open': dayIndex === vm.openDayIndex\r" +
     "\n" +
-    "    }\"><small class=\"cal-events-num badge badge-important pull-left\" ng-show=\"day.badgeTotal > 0 && (vm.calendarConfig.displayAllMonthEvents || day.inMonth)\" ng-bind=\"day.badgeTotal\"></small> <span class=\"pull-right\" data-cal-date ng-click=\"vm.calendarCtrl.dateClicked(day.date)\" ng-bind=\"day.label\"></span><div class=\"cal-day-tick\" ng-show=\"dayIndex === vm.openDayIndex && (vm.cellAutoOpenDisabled || vm.view[vm.openDayIndex].events.length > 0) && !vm.slideBoxDisabled\"><i class=\"glyphicon glyphicon-chevron-up\"></i> <i class=\"fa fa-chevron-up\"></i></div><ng-include src=\"vm.customTemplateUrls.calendarMonthCellEvents || vm.calendarConfig.templates.calendarMonthCellEvents\"></ng-include></div>"
+    "    }\" ng-click=\"day.events.length > 0? vm.selectedIndex = dayIndex: ''\"><small class=\"cal-events-num badge badge-important pull-left\" ng-show=\"day.badgeTotal > 0 && (vm.calendarConfig.displayAllMonthEvents || day.inMonth)\" ng-bind=\"day.badgeTotal\"></small> <span class=\"pull-right\" data-cal-date ng-click=\"vm.calendarCtrl.dateClicked(day.date)\" ng-bind=\"day.label\"></span><div class=\"cal-day-tick\" ng-show=\"dayIndex === vm.openDayIndex && (vm.cellAutoOpenDisabled || vm.view[vm.openDayIndex].events.length > 0) && !vm.slideBoxDisabled\"><i class=\"glyphicon glyphicon-chevron-up\"></i> <i class=\"fa fa-chevron-up\"></i></div><ng-include src=\"vm.customTemplateUrls.calendarMonthCellEvents || vm.calendarConfig.templates.calendarMonthCellEvents\"></ng-include></div>"
   );
 
 
