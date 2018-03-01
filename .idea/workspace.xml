@@ -2,34 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f06849c3-7b28-4623-9895-0f3f05a31ae9" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/scripts/common/inventory/msisdn/get-mobile-details-by-reservation-token-fn.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/scripts/common/services/common-config.service.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/scripts/common/services/get-registration-data.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/scripts/common/services/lodashFactory.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/scripts/appointment-slot-picker/ttui-clm-appointment-slot-picker.js" afterPath="$PROJECT_DIR$/dist/scripts/appointment-slot-picker/ttui-clm-appointment-slot-picker.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/scripts/appointment-slot-picker/ttui-clm-appointment-slot-picker.tpl.js" afterPath="$PROJECT_DIR$/dist/scripts/appointment-slot-picker/ttui-clm-appointment-slot-picker.tpl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/scripts/calendar-picker/ttui-clm-calendar-picker.js" afterPath="$PROJECT_DIR$/dist/scripts/calendar-picker/ttui-clm-calendar-picker.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/scripts/calendar-picker/ttui-clm-calendar-picker.tpl.js" afterPath="$PROJECT_DIR$/dist/scripts/calendar-picker/ttui-clm-calendar-picker.tpl.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/scripts/common/ttui-clm-common.js" afterPath="$PROJECT_DIR$/dist/scripts/common/ttui-clm-common.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/scripts/feasibility-check/ttui-clm-feasibility-check.js" afterPath="$PROJECT_DIR$/dist/scripts/feasibility-check/ttui-clm-feasibility-check.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/scripts/feasibility-check/ttui-clm-feasibility-check.tpl.js" afterPath="$PROJECT_DIR$/dist/scripts/feasibility-check/ttui-clm-feasibility-check.tpl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/scripts/select-number/ttui-clm-select-number.js" afterPath="$PROJECT_DIR$/dist/scripts/select-number/ttui-clm-select-number.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scripts/common/config.js" afterPath="$PROJECT_DIR$/src/scripts/common/config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scripts/common/index.js" afterPath="$PROJECT_DIR$/src/scripts/common/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scripts/common/inventory/msisdn/get-mobile-details-by-msisdn-fn.js" afterPath="$PROJECT_DIR$/src/scripts/common/inventory/msisdn/get-mobile-details-by-msisdn-fn.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scripts/common/loaders/abstract-loader.js" afterPath="$PROJECT_DIR$/src/scripts/common/loaders/abstract-loader.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scripts/common/loaders/msisdn-prefix-loader.js" afterPath="$PROJECT_DIR$/src/scripts/common/loaders/msisdn-prefix-loader.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scripts/common/services/common-master-data-service.js" afterPath="$PROJECT_DIR$/src/scripts/common/services/common-master-data-service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scripts/common/steps/service-details/helpers/abstract-locker.js" afterPath="$PROJECT_DIR$/src/scripts/common/steps/service-details/helpers/abstract-locker.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scripts/common/steps/service-details/helpers/msisdn-locker.js" afterPath="$PROJECT_DIR$/src/scripts/common/steps/service-details/helpers/msisdn-locker.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scripts/common/steps/service-details/presentation/msisdn-presentation-model.js" afterPath="$PROJECT_DIR$/src/scripts/common/steps/service-details/presentation/msisdn-presentation-model.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scripts/common/steps/service-details/presentation/strategy/automatic-msisdn-strategy.js" afterPath="$PROJECT_DIR$/src/scripts/common/steps/service-details/presentation/strategy/automatic-msisdn-strategy.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scripts/common/steps/service-details/presentation/strategy/manual-msisdn-strategy.js" afterPath="$PROJECT_DIR$/src/scripts/common/steps/service-details/presentation/strategy/manual-msisdn-strategy.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scripts/common/steps/service-details/presentation/strategy/msisdn-strategy-factory.js" afterPath="$PROJECT_DIR$/src/scripts/common/steps/service-details/presentation/strategy/msisdn-strategy-factory.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scripts/common/steps/service-details/presentation/strategy/reserved-msisdn-strategy.js" afterPath="$PROJECT_DIR$/src/scripts/common/steps/service-details/presentation/strategy/reserved-msisdn-strategy.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scripts/common/steps/service-details/presentation/suggestion-box-presentation-model.js" afterPath="$PROJECT_DIR$/src/scripts/common/steps/service-details/presentation/suggestion-box-presentation-model.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scripts/common/steps/service-details/services/msisdn-service.js" afterPath="$PROJECT_DIR$/src/scripts/common/steps/service-details/services/msisdn-service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scripts/common/utils/data-model.js" afterPath="$PROJECT_DIR$/src/scripts/common/utils/data-model.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scripts/select-number/controller/select-number.controller.js" afterPath="$PROJECT_DIR$/src/scripts/select-number/controller/select-number.controller.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/scripts/fxl-select-offering/ttui-clm-fxl-select-offering.js" afterPath="$PROJECT_DIR$/dist/scripts/fxl-select-offering/ttui-clm-fxl-select-offering.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/scripts/fxl-select-offering/ttui-clm-fxl-select-offering.tpl.js" afterPath="$PROJECT_DIR$/dist/scripts/fxl-select-offering/ttui-clm-fxl-select-offering.tpl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/scripts/select-plan-offering/ttui-clm-select-plan-offering.js" afterPath="$PROJECT_DIR$/dist/scripts/select-plan-offering/ttui-clm-select-plan-offering.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/scripts/select-plan-offering/ttui-clm-select-plan-offering.tpl.js" afterPath="$PROJECT_DIR$/dist/scripts/select-plan-offering/ttui-clm-select-plan-offering.tpl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scripts/select-plan-offering/controller/select-plan-offering.controller.js" afterPath="$PROJECT_DIR$/src/scripts/select-plan-offering/controller/select-plan-offering.controller.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scripts/select-plan-offering/directives/select-plan-offering.directive.js" afterPath="$PROJECT_DIR$/src/scripts/select-plan-offering/directives/select-plan-offering.directive.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -47,53 +32,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="select-number.controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/scripts/select-number/controller/select-number.controller.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="58" column="58" lean-forward="false" selection-start-line="58" selection-start-column="44" selection-end-line="58" selection-end-column="58" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="msisdn-prefix.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/scripts/common/loaders/msisdn-prefix.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="42" column="10" lean-forward="false" selection-start-line="42" selection-start-column="10" selection-end-line="42" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="msisdn-prefix-loader.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/scripts/common/loaders/msisdn-prefix-loader.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="470">
+            <state relative-caret-position="646">
               <caret line="38" column="84" lean-forward="false" selection-start-line="38" selection-start-column="84" selection-end-line="38" selection-end-column="84" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="msisdn-presentation-model.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/scripts/common/steps/service-details/presentation/msisdn-presentation-model.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1768">
-              <caret line="234" column="13" lean-forward="false" selection-start-line="234" selection-start-column="13" selection-end-line="234" selection-end-column="13" />
-              <folding>
-                <marker date="1519376411902" expanded="true" signature="9108:9419" ph="[...]" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="suggestion-box-presentation-model.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/scripts/common/steps/service-details/presentation/suggestion-box-presentation-model.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-810">
-              <caret line="21" column="64" lean-forward="false" selection-start-line="21" selection-start-column="64" selection-end-line="21" selection-end-column="64" />
               <folding />
             </state>
           </provider>
@@ -122,18 +65,58 @@
       <file leaf-file-name="common-master-data-service.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/scripts/common/services/common-master-data-service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-197">
+            <state relative-caret-position="697">
               <caret line="41" column="52" lean-forward="false" selection-start-line="41" selection-start-column="52" selection-end-line="41" selection-end-column="52" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="get-mobile-details-by-msisdn-fn.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="get-mobile-details-by-msisdn-fn.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/scripts/common/inventory/msisdn/get-mobile-details-by-msisdn-fn.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="232">
-              <caret line="28" column="49" lean-forward="false" selection-start-line="28" selection-start-column="49" selection-end-line="28" selection-end-column="49" />
+            <state relative-caret-position="266">
+              <caret line="30" column="40" lean-forward="true" selection-start-line="30" selection-start-column="40" selection-end-line="30" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="select-plan-offering.controller.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/scripts/select-plan-offering/controller/select-plan-offering.controller.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="98" lean-forward="false" selection-start-line="2" selection-start-column="76" selection-end-line="2" selection-end-column="98" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="select-plan-offering.directive.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/scripts/select-plan-offering/directives/select-plan-offering.directive.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="12" column="48" lean-forward="false" selection-start-line="12" selection-start-column="48" selection-end-line="12" selection-end-column="48" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/scripts/select-plan-offering/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="select-plan-offering.tpl.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/scripts/select-plan-offering/views/select-plan-offering.tpl.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="141">
+              <caret line="10" column="24" lean-forward="true" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -161,7 +144,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>'TT-UI-CLM.Common.Api.Inventory.Msisdn.GetCommonMobileDetailsByMSISDN'</find>
       <find>'TT-UI-CLM.Common.Api.Inventory.Msisdn.GetMobileDetailsByMSISDN'</find>
       <find>getMobileDetailsByMSISDNFn</find>
       <find>ConfirmationDialog</find>
@@ -191,6 +173,7 @@
       <find>getCommoRequestPayload</find>
       <find>msisdnLoader</find>
       <find>COMMON_CONFIG</find>
+      <find>SelectPlanOfferingCtrl</find>
     </findStrings>
     <replaceStrings>
       <replace>COMMON_CONFIG</replace>
@@ -214,8 +197,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/scripts/select-number-test/data/schema/schema.select-number.json" />
-        <option value="$PROJECT_DIR$/src/scripts/select-number-test/data/options/options.select-number.json" />
         <option value="$PROJECT_DIR$/src/scripts/select-number-test/directives/select-number-test.js" />
         <option value="$PROJECT_DIR$/src/scripts/select-number-test/index.js" />
         <option value="$PROJECT_DIR$/src/scripts/select-number-test/services/select-number-test-service.js" />
@@ -265,6 +246,8 @@
         <option value="$PROJECT_DIR$/src/scripts/common/config.js" />
         <option value="$PROJECT_DIR$/src/scripts/common/services/common-master-data-service.js" />
         <option value="$PROJECT_DIR$/src/scripts/common/inventory/msisdn/get-mobile-details-by-msisdn-fn.js" />
+        <option value="$PROJECT_DIR$/src/scripts/select-plan-offering/controller/select-plan-offering.controller.js" />
+        <option value="$PROJECT_DIR$/src/scripts/select-plan-offering/directives/select-plan-offering.directive.js" />
       </list>
     </option>
   </component>
@@ -364,7 +347,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="select-number" />
+              <option name="myItemId" value="select-plan-offering" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -386,7 +369,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="select-number" />
+              <option name="myItemId" value="select-plan-offering" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -412,33 +395,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="select-number" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ttui-clm-test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ttui-clm-test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="select-number" />
+              <option name="myItemId" value="select-plan-offering" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -464,7 +421,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="select-number" />
+              <option name="myItemId" value="select-plan-offering" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -692,7 +649,7 @@
     <property name="js.eslint.eslintPackage" value="" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="SearchEverywhereHistoryKey" value="Grunt&#9;FILE&#9;file://D:/common_components/ttui-clm-test/Gruntfile.js&#10;grunt&#9;FILE&#9;file://D:/common_components/ttui-clm-test/Gruntfile.js&#10;abstract&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/helpers/abstract-locker.js&#10;msisdn-loc&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/helpers/msisdn-locker.js&#10;data-model&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/utils/data-model.js&#10;msisdn-ser&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/services/msisdn-service.js&#10;msisdn&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/services/msisdn-service.js&#10;manual&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/presentation/strategy/manual-msisdn-strategy.js&#10;msis&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/services/msisdn-service.js&#10;getMobileDetailsByMSISDNFn&#9;null&#9;null&#10;MsisdnStrategyFactory&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/presentation/strategy/msisdn-strategy-factory.js&#10;config&#9;null&#9;null&#10;bower&#9;FILE&#9;file://D:/common_components/ttui-clm-test/bower.json&#10;bower.json&#9;FILE&#9;file://D:/common_components/ttui-clm-test/bower.json&#10;msisdn-lo&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/helpers/msisdn-locker.js&#10;sugg&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/presentation/suggestion-box-presentation-model.js&#10;select-number.js&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/select-number/directives/select-number.js&#10;select&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/select-number/directives/select-number.js&#10;sugge&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/presentation/suggestion-box-presentation-model.js&#10;msisdn-pre&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/presentation/msisdn-presentation-model.js&#10;msisdn-&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/services/msisdn-service.js&#10;msisdn-prefi&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/loaders/msisdn-prefix-loader.js&#10;msisdn-strategy&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/presentation/strategy/msisdn-strategy-factory.js&#10;msisdnStra&#9;null&#9;null" />
+    <property name="SearchEverywhereHistoryKey" value="select-plan&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/select-plan-offering/controller/select-plan-offering.controller.js&#10;Grunt&#9;FILE&#9;file://D:/common_components/ttui-clm-test/Gruntfile.js&#10;grunt&#9;FILE&#9;file://D:/common_components/ttui-clm-test/Gruntfile.js&#10;abstract&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/helpers/abstract-locker.js&#10;msisdn-loc&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/helpers/msisdn-locker.js&#10;data-model&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/utils/data-model.js&#10;msisdn-ser&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/services/msisdn-service.js&#10;msisdn&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/services/msisdn-service.js&#10;manual&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/presentation/strategy/manual-msisdn-strategy.js&#10;msis&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/services/msisdn-service.js&#10;getMobileDetailsByMSISDNFn&#9;null&#9;null&#10;MsisdnStrategyFactory&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/presentation/strategy/msisdn-strategy-factory.js&#10;config&#9;null&#9;null&#10;bower&#9;FILE&#9;file://D:/common_components/ttui-clm-test/bower.json&#10;bower.json&#9;FILE&#9;file://D:/common_components/ttui-clm-test/bower.json&#10;msisdn-lo&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/helpers/msisdn-locker.js&#10;sugg&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/presentation/suggestion-box-presentation-model.js&#10;select-number.js&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/select-number/directives/select-number.js&#10;select&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/select-number/directives/select-number.js&#10;sugge&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/presentation/suggestion-box-presentation-model.js&#10;msisdn-pre&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/presentation/msisdn-presentation-model.js&#10;msisdn-&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/services/msisdn-service.js&#10;msisdn-prefi&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/loaders/msisdn-prefix-loader.js&#10;msisdn-strategy&#9;FILE&#9;file://D:/common_components/ttui-clm-test/src/scripts/common/steps/service-details/presentation/strategy/msisdn-strategy-factory.js&#10;msisdnStra&#9;null&#9;null" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -789,33 +746,34 @@
       <workItem from="1519018380252" duration="38817000" />
       <workItem from="1519190001310" duration="26088000" />
       <workItem from="1519362466508" duration="10648000" />
+      <workItem from="1519890818731" duration="225000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="206415000" />
+    <option name="totallyTimeSpent" value="206640000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3272328" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3272328" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Grunt " active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.873817" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -829,30 +787,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/scripts/common/steps/service-details/services/imei-service.js" />
-    <entry file="file://$PROJECT_DIR$/dist/scripts/select-number/ttui-clm-select-number.tpl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="76" lean-forward="false" selection-start-line="9" selection-start-column="48" selection-end-line="9" selection-end-column="76" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dist/scripts/select-number/ttui-clm-select-number.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="901">
-          <caret line="54" column="36" lean-forward="false" selection-start-line="54" selection-start-column="36" selection-end-line="54" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/bower_components/angular-schema-form/dist/schema-form.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45951">
-          <caret line="2703" column="8" lean-forward="false" selection-start-line="2703" selection-start-column="8" selection-end-line="2703" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/bower_components/angular-schema-form/src/directives/field.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="202">
@@ -912,7 +846,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1241">
           <caret line="73" column="34" lean-forward="false" selection-start-line="73" selection-start-column="34" selection-end-line="73" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -920,7 +853,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="71" lean-forward="false" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="71" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -928,7 +860,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="121">
           <caret line="18" column="18" lean-forward="true" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -936,18 +867,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="427">
           <caret line="132" column="1" lean-forward="true" selection-start-line="132" selection-start-column="1" selection-end-line="132" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/scripts/common/services/lodashFactory.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="19" lean-forward="false" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scripts/common/services/lodashFactory.js" />
     <entry file="file://$PROJECT_DIR$/Gruntfile.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
@@ -956,22 +879,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/scripts/common/inventory/msisdn/get-mobile-details-by-reservation-token-fn.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="453">
-          <caret line="36" column="102" lean-forward="false" selection-start-line="36" selection-start-column="102" selection-end-line="36" selection-end-column="102" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/scripts/common/services/common-config.service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="6" lean-forward="false" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scripts/common/inventory/msisdn/get-mobile-details-by-reservation-token-fn.js" />
+    <entry file="file://$PROJECT_DIR$/src/scripts/common/services/common-config.service.js" />
     <entry file="file://$PROJECT_DIR$/src/scripts/common/services/common-master-data-results.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-18">
@@ -980,19 +889,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/scripts/common/services/get-registration-data.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="41" lean-forward="false" selection-start-line="21" selection-start-column="15" selection-end-line="21" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scripts/common/services/get-registration-data.js" />
     <entry file="file://$PROJECT_DIR$/src/scripts/common/services/offering-data.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
           <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1000,7 +901,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-429">
           <caret line="4" column="97" lean-forward="false" selection-start-line="4" selection-start-column="97" selection-end-line="4" selection-end-column="97" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1008,7 +908,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="97" lean-forward="false" selection-start-line="5" selection-start-column="97" selection-end-line="5" selection-end-column="97" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1016,7 +915,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="97" lean-forward="false" selection-start-line="4" selection-start-column="97" selection-end-line="4" selection-end-column="97" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1024,7 +922,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="714">
           <caret line="42" column="25" lean-forward="false" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1032,7 +929,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
           <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1040,7 +936,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="13" column="57" lean-forward="false" selection-start-line="13" selection-start-column="57" selection-end-line="13" selection-end-column="57" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1048,7 +943,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="35" column="17" lean-forward="true" selection-start-line="35" selection-start-column="17" selection-end-line="35" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1056,7 +950,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
           <caret line="19" column="36" lean-forward="true" selection-start-line="19" selection-start-column="36" selection-end-line="19" selection-end-column="36" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1064,7 +957,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1072,7 +964,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="5" lean-forward="false" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1088,7 +979,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="54" lean-forward="false" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="54" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1104,7 +994,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="58" lean-forward="false" selection-start-line="7" selection-start-column="58" selection-end-line="7" selection-end-column="58" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1112,13 +1001,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="80" lean-forward="false" selection-start-line="10" selection-start-column="80" selection-end-line="10" selection-end-column="80" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/scripts/common/loaders/msisdn-prefix.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
+        <state relative-caret-position="714">
           <caret line="42" column="10" lean-forward="false" selection-start-line="42" selection-start-column="10" selection-end-line="42" selection-end-column="10" />
           <folding />
         </state>
@@ -1126,7 +1014,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/scripts/select-number/controller/select-number.controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
+        <state relative-caret-position="986">
           <caret line="58" column="58" lean-forward="false" selection-start-line="58" selection-start-column="44" selection-end-line="58" selection-end-column="58" />
           <folding />
         </state>
@@ -1134,7 +1022,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/scripts/common/steps/service-details/presentation/suggestion-box-presentation-model.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-810">
+        <state relative-caret-position="357">
           <caret line="21" column="64" lean-forward="false" selection-start-line="21" selection-start-column="64" selection-end-line="21" selection-end-column="64" />
           <folding />
         </state>
@@ -1142,11 +1030,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/scripts/common/steps/service-details/presentation/msisdn-presentation-model.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1768">
+        <state relative-caret-position="3978">
           <caret line="234" column="13" lean-forward="false" selection-start-line="234" selection-start-column="13" selection-end-line="234" selection-end-column="13" />
-          <folding>
-            <marker date="1519376411902" expanded="true" signature="9108:9419" ph="[...]" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1168,7 +1054,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/scripts/common/services/common-master-data-service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-197">
+        <state relative-caret-position="697">
           <caret line="41" column="52" lean-forward="false" selection-start-line="41" selection-start-column="52" selection-end-line="41" selection-end-column="52" />
           <folding />
         </state>
@@ -1176,7 +1062,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/scripts/common/loaders/msisdn-prefix-loader.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="470">
+        <state relative-caret-position="646">
           <caret line="38" column="84" lean-forward="false" selection-start-line="38" selection-start-column="84" selection-end-line="38" selection-end-column="84" />
           <folding />
         </state>
@@ -1192,8 +1078,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/scripts/common/inventory/msisdn/get-mobile-details-by-msisdn-fn.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="28" column="49" lean-forward="false" selection-start-line="28" selection-start-column="49" selection-end-line="28" selection-end-column="49" />
+        <state relative-caret-position="266">
+          <caret line="30" column="40" lean-forward="true" selection-start-line="30" selection-start-column="40" selection-end-line="30" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scripts/select-plan-offering/views/select-plan-offering.tpl.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="10" column="24" lean-forward="true" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scripts/select-plan-offering/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scripts/select-plan-offering/directives/select-plan-offering.directive.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="48" lean-forward="false" selection-start-line="12" selection-start-column="48" selection-end-line="12" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scripts/select-plan-offering/controller/select-plan-offering.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="98" lean-forward="false" selection-start-line="2" selection-start-column="76" selection-end-line="2" selection-end-column="98" />
           <folding />
         </state>
       </provider>
