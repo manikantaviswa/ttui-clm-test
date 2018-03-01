@@ -1,6 +1,6 @@
 'use strict';
 
-var module = angular.module('TT-UI-CLM.SelectPlanOffering.Controllers.SelectPlanOfferingCtrl', [
+var module = angular.module('TT-UI-CLM.SelectPlanOffering.Controllers.CommonSelectPlanOfferingCtrl', [
     'smart-table',
     'TT-UI.Table',
     'ttui-table.tpl',
@@ -9,7 +9,7 @@ var module = angular.module('TT-UI-CLM.SelectPlanOffering.Controllers.SelectPlan
     'ui.bootstrap.modal'
 ])
 
-function SelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa, $filter) {
+function CommonSelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa, $filter) {
     $scope.selectedVariant = {
         code: ""
     };
@@ -100,11 +100,11 @@ function SelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa, $filter) {
 	};
 }
 
-SelectPlanOfferingCtrl.$inject = [
+CommonSelectPlanOfferingCtrl.$inject = [
 	'$scope',
     '$parse',
     '$timeout',
     '$uibModal',
     '$filter'
 ]
-module.controller(SelectPlanOfferingCtrl.name, SelectPlanOfferingCtrl)
+module.controller(CommonSelectPlanOfferingCtrl.name, CommonSelectPlanOfferingCtrl)
