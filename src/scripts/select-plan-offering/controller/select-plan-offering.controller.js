@@ -8,6 +8,7 @@ var module = angular.module('TT-UI-CLM.SelectPlanOffering.Controllers.CommonSele
     'uib/template/modal/backdrop.html',
     'ui.bootstrap.modal'
 ])
+
 function CommonSelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa, $filter, COMMON_CONSTANTS_CONFIG, CommonConfiguration) {
     $scope.selectedVariant = {
         code: ""
