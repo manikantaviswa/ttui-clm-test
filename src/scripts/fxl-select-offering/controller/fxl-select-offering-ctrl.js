@@ -39,10 +39,8 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
     $scope.searchofferingModel = {
         offering: {
             CustomerType: "I",
-            State: "S2",
             SalesChannel: CurrentUser.getSalesChannel(),
             language: $translate.use(),
-            plan: ""
         }
     };
     $scope.searchofferingLabelModel = {
@@ -238,13 +236,16 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
         var categoryLists = $scope.lists.masterData.partyTypes.partyType;
         $scope.setCategoryDefault(categoryLists);
         $scope.setServiceDefault($scope.services);
-        $scope.setBusinessTypeDefault($scope.businessTypes);
+        $scope.setBusinessTypeDefault($scope.businessTypes);        
+        $scope.searchofferingModel.offering.Country = $parse('locality.country')(feasibilityModalData);
         $scope.searchofferingModel.offering.City = $parse('locality.locality')(feasibilityModalData);
+        $scope.searchofferingModel.offering.State = $parse('locality.province')(feasibilityModalData);
+        $scope.searchofferingModel.offering.Technology = $parse('technology')(feasibilityModalData);
         var serviceType = store.get('service');
         $scope.searchofferingModel.offering.LoB = _.isEmpty(serviceType)
             ? MasterDataUtil.getMasterDataDefault(masterData, [MASTER_CONFIG.SERVICE_TYPE])[MASTER_CONFIG.SERVICE_TYPE]
             : serviceType;
-        $scope.searchofferingModel.offering.Country = MasterDataUtil.getMasterDataDefault($scope.lists, [MASTER_CONFIG.COUNTRY])[MASTER_CONFIG.COUNTRY];
+        //$scope.searchofferingModel.offering.Country = MasterDataUtil.getMasterDataDefault($scope.lists, [MASTER_CONFIG.COUNTRY])[MASTER_CONFIG.COUNTRY];
     }
 
     onloadCall();
