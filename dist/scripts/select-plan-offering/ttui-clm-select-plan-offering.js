@@ -14,7 +14,7 @@ angular.module('TT-UI-CLM.SelectPlanOffering',[
 
 
 // Source: src/scripts/select-plan-offering/controller/select-plan-offering.controller.js
-var module = angular.module('TT-UI-CLM.SelectPlanOffering.Controllers.SelectPlanOfferingCtrl', [
+var module = angular.module('TT-UI-CLM.SelectPlanOffering.Controllers.CommonSelectPlanOfferingCtrl', [
     'smart-table',
     'TT-UI.Table',
     'ttui-table.tpl',
@@ -23,7 +23,7 @@ var module = angular.module('TT-UI-CLM.SelectPlanOffering.Controllers.SelectPlan
     'ui.bootstrap.modal'
 ])
 
-function SelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa, $filter, COMMON_CONSTANTS_CONFIG, CommonConfiguration) {
+function CommonSelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa, $filter, COMMON_CONSTANTS_CONFIG, CommonConfiguration) {
     $scope.selectedVariant = {
         code: ""
     };
@@ -120,7 +120,7 @@ function SelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa, $filter, COM
 
 }
 
-SelectPlanOfferingCtrl.$inject = [
+CommonSelectPlanOfferingCtrl.$inject = [
 	'$scope',
     '$parse',
     '$timeout',
@@ -129,12 +129,12 @@ SelectPlanOfferingCtrl.$inject = [
     'COMMON_CONSTANTS_CONFIG',
     'CommonConfiguration'
 ]
-module.controller(SelectPlanOfferingCtrl.name, SelectPlanOfferingCtrl)
+module.controller(CommonSelectPlanOfferingCtrl.name, CommonSelectPlanOfferingCtrl)
 
 
 // Source: src/scripts/select-plan-offering/directives/select-plan-offering.directive.js
 var module = angular.module('TT-UI-CLM.SelectPlanOffering.Directives.SelectPlanOffering',[
-    'TT-UI-CLM.SelectPlanOffering.Controllers.SelectPlanOfferingCtrl',
+    'TT-UI-CLM.SelectPlanOffering.Controllers.CommonSelectPlanOfferingCtrl',
     'TT-UI-CLM.SelectPlanOffering.Tpl',
     'ngSanitize'
 ])
@@ -143,7 +143,7 @@ module.directive('selectPlanOffering',function(){
     return{
         restrict:'EA',
         templateUrl:'scripts/select-plan-offering/views/select-plan-offering.tpl.html',
-        controller:'SelectPlanOfferingCtrl',
+        controller:'CommonSelectPlanOfferingCtrl',
         scope:{
             offeringData: '=',
             masterData: '=',
