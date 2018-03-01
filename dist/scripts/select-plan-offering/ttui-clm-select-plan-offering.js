@@ -23,7 +23,7 @@ var module = angular.module('TT-UI-CLM.SelectPlanOffering.Controllers.SelectPlan
     'ui.bootstrap.modal'
 ])
 
-function SelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa, $filter) {
+function SelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa, $filter, COMMON_CONSTANTS_CONFIG, CommonConfiguration) {
     $scope.selectedVariant = {
         code: ""
     };
@@ -111,7 +111,13 @@ function SelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa, $filter) {
 	$scope.setTab = function (tabId, $event) {
 	    $scope.tabId = tabId;
         $event.stopPropagation();
-	};
+    };
+    
+    $scope.selectOffering.config = {
+        itemsByPage: CommonConfiguration.getConfigForKey(COMMON_CONSTANTS_CONFIG.maximumOfferingsPerPage),
+        displayedPages: 5
+    };
+
 }
 
 SelectPlanOfferingCtrl.$inject = [
@@ -119,9 +125,12 @@ SelectPlanOfferingCtrl.$inject = [
     '$parse',
     '$timeout',
     '$uibModal',
-    '$filter'
+    '$filter',
+    'COMMON_CONSTANTS_CONFIG',
+    'CommonConfiguration'
 ]
 module.controller(SelectPlanOfferingCtrl.name, SelectPlanOfferingCtrl)
+
 
 // Source: src/scripts/select-plan-offering/directives/select-plan-offering.directive.js
 var module = angular.module('TT-UI-CLM.SelectPlanOffering.Directives.SelectPlanOffering',[
