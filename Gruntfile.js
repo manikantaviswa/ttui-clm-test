@@ -10,7 +10,7 @@ module.exports = function(grunt) {
         'calendar-picker': 'TT-UI-CLM.CalendarPicker.Tpl',
         'appointment-slot-picker': 'TT-UI-CLM.AppointmentSlotPicker.Tpl',
         'select-plan-offering': 'TT-UI-CLM.SelectPlanOffering.Tpl',
-
+        'auto-debit-new': 'TT-UI-CLM.AutoDebitNew.Tpl'
     };
 
     grunt.initConfig({
