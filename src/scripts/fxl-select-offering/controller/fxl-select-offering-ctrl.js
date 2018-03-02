@@ -136,6 +136,7 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
             });
     }
 
+    //Sould write a common function for this and call that. starts here
     $scope.onSelectsubCustomerCategory = function () {
         if ($scope.searchofferingModel.offering.CustomerSubCategory == null) {
             $scope.searchofferingModel.offering.CustomerSubCategory = '';
@@ -214,7 +215,6 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
         }
     }
     $scope.onSelectPlan = function () {
-        debugger;
         if ($scope.searchofferingModel.offering.plan == null) {
             $scope.searchofferingModel.offering.plan = '';
             $scope.searchofferingLabelModel.offering.planName = '';
@@ -229,26 +229,40 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
         }
 
     }
+    ////// ends
 
-    // Setting the droap down default values function ends here comon function for
-    // calling group oof function on onload
-    var onloadCall = function () {
-        var categoryLists = $scope.lists.masterData.partyTypes.partyType;
-        $scope.setCategoryDefault(categoryLists);
-        $scope.setServiceDefault($scope.services);
-        $scope.setBusinessTypeDefault($scope.businessTypes);        
+
+    
+
+    //Forming the payload for api calll
+    var updateSearchOfferingModel = function (){
         $scope.searchofferingModel.offering.Country = $parse('locality.country')(feasibilityModalData);
         $scope.searchofferingModel.offering.City = $parse('locality.locality')(feasibilityModalData);
         $scope.searchofferingModel.offering.State = $parse('locality.province')(feasibilityModalData);
         $scope.searchofferingModel.offering.Technology = $parse('technology')(feasibilityModalData);
+        $scope.searchofferingLabelModel.offering.TechnologyName = $parse('technology')(feasibilityModalData);
+    }
+
+    //Setting the default values
+    var settingDeafaultValues = function (){  
+        var categoryLists = $scope.lists.masterData.partyTypes.partyType;      
+        $scope.setCategoryDefault(categoryLists);
+        $scope.setServiceDefault($scope.services);
+        $scope.setBusinessTypeDefault($scope.businessTypes); 
+    }
+
+    // calling dependant functions on load
+    var onLoadCall = function () {         
         var serviceType = store.get('service');
         $scope.searchofferingModel.offering.LoB = _.isEmpty(serviceType)
             ? MasterDataUtil.getMasterDataDefault(masterData, [MASTER_CONFIG.SERVICE_TYPE])[MASTER_CONFIG.SERVICE_TYPE]
             : serviceType;
+        settingDeafaultValues();
+        updateSearchOfferingModel();
         //$scope.searchofferingModel.offering.Country = MasterDataUtil.getMasterDataDefault($scope.lists, [MASTER_CONFIG.COUNTRY])[MASTER_CONFIG.COUNTRY];
     }
 
-    onloadCall();
+    onLoadCall();
 
 }
 
