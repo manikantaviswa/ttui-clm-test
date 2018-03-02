@@ -7,14 +7,14 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
   "use strict";
 
 
-// Source: src/scripts/fxl-select-number/index.js
+// Source: src/scripts/select-number/index.js
 angular.module('TT-UI-CLM.SelectNumber', [
     'TT-UI-CLM.SelectNumber.Directives.SelectNumberDirective',
     'TT-UI-CLM.CommonComponents'
 ]);
 
 
-// Source: src/scripts/fxl-select-number/controller/select-number.controller.js
+// Source: src/scripts/select-number/controller/select-number.controller.js
 var module = angular.module('TT-UI-CLM.SelectNumber.Controller.SelectNumberController', [
     'TT-UI-CLM.SelectNumber.Services.SelectNumberService',
     'TT-UI-CLM.Common.Services.OfferingData',
@@ -106,7 +106,7 @@ SelectNumberController.$inject = [
 module.controller(SelectNumberController.name, SelectNumberController);
 
 
-// Source: src/scripts/fxl-select-number/directives/select-number.js
+// Source: src/scripts/select-number/directives/select-number.js
 var module = angular.module('TT-UI-CLM.SelectNumber.Directives.SelectNumberDirective', [
     'TT-UI-CLM.SelectNumber.Controller.SelectNumberController',
     'TT-UI-CLM.SelectNumber.Services.SelectNumberService'
@@ -127,7 +127,7 @@ module.directive('selectNumber', function() {
 });
 
 
-// Source: src/scripts/fxl-select-number/services/select-number-service.js
+// Source: src/scripts/select-number/services/select-number-service.js
 var module = angular.module('TT-UI-CLM.SelectNumber.Services.SelectNumberService', [
     'TT-UI-CLM.Common.Services.CommonMasterDataResults',
     'TT-UI-CLM.Common.Services.Config'
