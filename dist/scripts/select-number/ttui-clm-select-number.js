@@ -59,7 +59,7 @@ function SelectNumberController($rootScope, $scope, $parse, SelectNumberService,
 
     $scope.getPrefixList = function(){
         if ($scope.model.serviceDetails.gsmService.stDirect.MSISDNSelection.masterCode === SELECT_SERVICE_SETTINGS.MSISDN_SELECTION_MANUAL){
-            var commonRequestPayload = $scope.getCommoRequestPayload();
+            var commonRequestPayload = $scope.getCommonRequestPayload();
             var serviceDetails = commonRequestPayload;
             var msisdnLoader = CommonMSISDNPrefixLoader(serviceDetails);
             msisdnLoader.load().then(function(response){
@@ -69,7 +69,7 @@ function SelectNumberController($rootScope, $scope, $parse, SelectNumberService,
         }
     };
 
-    $scope.getCommoRequestPayload = function(){
+    $scope.getCommonRequestPayload = function(){
         return {
             'serviceType': offerDataService.getServiceType(),
             'subServiceType': offerDataService.getSubServiceType(),
