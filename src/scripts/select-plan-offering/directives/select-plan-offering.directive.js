@@ -1,8 +1,8 @@
 'use strict'
 
-var module = angular.module('TT-UI-CLM.SelectPlanOffering.Directives.SelectPlanOffering',[
-    'TT-UI-CLM.SelectPlanOffering.Controllers.SelectPlanOfferingCtrl',
-    'TT-UI-CLM.SelectPlanOffering.Tpl',
+var module = angular.module('TT-UI-CLM.CommonSelectPlanOffering.Directives.SelectPlanOffering',[
+    'TT-UI-CLM.CommonSelectPlanOffering.Controllers.SelectPlanOfferingCtrl',
+    'TT-UI-CLM.CommonSelectPlanOffering.Tpl',
     'ngSanitize'
 ])
 
@@ -13,8 +13,10 @@ module.directive('selectPlanOffering',function(){
         controller:'SelectPlanOfferingCtrl',
         scope:{
             offeringData: '=',
-            masterData: '=',
-            defaultState:'='
+            defaultState:'=',
+            getSelectedOffering:'=',
+            offerDetailChargesModel:'=',
+            offerDetailModel:'='
         }
     }
 })

@@ -1,6 +1,6 @@
 'use strict';
 
-var module = angular.module('TT-UI-CLM.SelectPlanOffering.Services.SelectOfferingPlanAPIService', [
+var module = angular.module('TT-UI-CLM.CommonSelectPlanOffering.Services.SelectOfferingPlanAPIService', [
     'TT-UI.Common'
 ]);
 

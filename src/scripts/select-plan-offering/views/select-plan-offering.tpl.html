@@ -187,19 +187,19 @@
 												 translate="Select">Select</a> -->
 									</td>
 									<td>
-										<a class="list-group-item-link" translate="Details" ng-click="items._meta.expanded=!items._meta.expanded; getOfferingDetailsView()">Details</a>
+										<a class="list-group-item-link" translate="Details" ng-click="items._meta.expanded=!items._meta.expanded; getSelectedOffering(items)">Details</a>
 									</td>
 								</tr>
 
 								<tr class="expanding-row" ng-class="{'show-row':items._meta.expanded}">
 									<td colspan="{{tableCtrl.colspan}}">
 										<div class="col-sm-12" uib-collapse="!items._meta.expanded">
-											<div class="col-sm-12 pr-0" ng-repeat="(key, val) in tabs" ng-show="key == $parent.tabId">
-												<p class="col-sm-9 col-sm-offset-3 prodcutSummary">{{val.summary}}</p>
+											<div class="col-sm-12 pr-0" ng-repeat="(key, val) in detailsTab" ng-show="key == $parent.tabId">
+												<p class="col-sm-9 col-sm-offset-3 prodcutSummary">{{offerDetailModel.description}}</p>
 											</div>
 											<div class="col-sm-3 tablist plr-0 pt-5x bt-1x">
 												<ul class="nav nav-list nav-stacked">
-													<li role="presentation" ng-repeat="tab in tabs track by $index" ng-class="{'active': $index == $parent.tabId}">
+													<li role="presentation" ng-repeat="tab in detailsTab track by $index" ng-class="{'active': $index == $parent.tabId}">
 														<a href ng-click="setTab($parent.$index,$event);" translate="{{tab.title}}">{{tab.title}}</a>
 													</li>
 												</ul>
@@ -207,11 +207,44 @@
 
 											<div class="col-sm-9 plr-0 pt-5x bt-1x">
 												<div class="tab-content">
-													<div class="tab-pane" ng-repeat="(key, val) in tabs" ng-class="{'show': key == $parent.tabId}">
+													<div class="tab-pane" ng-repeat="(key, val) in detailsTab" ng-class="{'show': key == $parent.tabId}">
 														<div class="col-sm-12 pr-0">
+															<table class="table charges-table" ng-show="key == 0">
+																<tbody>
+
+																	<tr ng-repeat="payment in monthlyCharges track by $index">
+																		<td>Monthly Rental</td>
+																		<td>
+																			<strong class="format-price"><span>{{chargesCurrency}}</span><span> {{payment.netAmount }}</span><span>/mo</span></strong>
+																		</td>
+																	</tr>
+
+																	<tr ng-repeat="payment in oneTimeCharges track by $index">
+																		<td>One Time Charges</td>
+																		<td>
+																			<strong class="format-price"><span>{{chargesCurrency}}</span> <span> {{payment.netAmount }}</span></strong>
+																		</td>
+																		<td ng-if="payment.chargeType === 'OneTimeCharge' && displayWaiveOff()" is-allowed="waiveOffLinkView">
+																			<a class="list-group-item-link" href ng-if="!payment.waiveOff" ng-click="waiveOffOneTimeCharges($index, payment.commercialArticle); $event.stopPropagation();"
+																			 translate="Waive Off">Waive Off</a>
+																			<a class="list-group-item-link" href ng-if="payment.waiveOff" ng-click="undoWaiveOff($index, payment.commercialArticle); $event.stopPropagation();"
+																			 translate="Undo">Undo</a>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<th class="border-top">TOTAL (incl. Tax) Upfront</th>
+																		<th class="border-top"><span>{{chargesCurrency}}</span> <span> {{upfront.netAmount+upfront.tax}}</span></th>
+																	</tr>
+																	<tr>
+																		<th>TOTAL AMOUNT in 1st Invoice</th>
+																		<th><span>{{chargesCurrency}}</span> <span> {{billing.netAmount + billing.tax}}</span></th>
+																	</tr>
+																</tbody>
+															</table>
 															<!-- <p class="prodcutSummary">{{val.summary}}</p> -->
 
-															<div class="col-sm-12 plr-0" ng-show="key == 0">
+															<!-- <div class="col-sm-12 plr-0" ng-show="key == 0">
 																<ul class="list-group table-list">
 																	<li class="list-group-item">
 																		<div class="col-sm-6 plr-0">
@@ -257,38 +290,7 @@
 																</tbody>
 
 															</table>
-															<table class="table charges-table" ng-show="key == 2">
-																<tbody>
-																	<tr>
-																		<td>Monthly Rental</td>
-																		<td>
-																			<span>%</span> MUR 345.00 /mo
-																			<span class="pull-right">
-																				<s>MUR 399.00 /mo</s>
-																			</span>
-																		</td>
-																	</tr>
-																	<tr>
-																		<td>Security Deposit</td>
-																		<td>MUR 100.00
-																			<span>Upfront</span>
-																		</td>
-																	</tr>
-																	<tr>
-																		<td>Insatallation Charge</td>
-																		<td>MUR 100.00</td>
-																	</tr>
-
-																	<tr>
-																		<th class="border-top">TOTAL (incl. Tax) Upfront</th>
-																		<th class="border-top">MUR 140.00</th>
-																	</tr>
-																	<tr>
-																		<th>TOTAL AMOUNT in 1st Invoice</th>
-																		<th>MUR 445.00</th>
-																	</tr>
-																</tbody>
-															</table>
+															
 															<table class="table contractsPenalty-table" ng-show="key == 3">
 
 																<tbody>
@@ -350,7 +352,7 @@
 																		<td>SELECT</td>
 																	</tr>
 																</tbody>
-															</table>
+															</table> -->
 
 														</div>
 													</div>
