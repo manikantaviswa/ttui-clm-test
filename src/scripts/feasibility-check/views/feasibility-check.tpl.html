@@ -58,7 +58,12 @@
                             <span class="glyphicon glyphicon-ok-sign" style="font-size: 24px"></span>
                         </div>
                         <div class="col-xs-10">
-                            <div>The address &lt; <em>{{checkResult.locality.locality}}, {{checkResult.locality.subLocality}}, {{checkResult.locality.street}} &gt;</em></div>
+                            <div>The address &lt;
+                                <em>{{getItemByCode(localities, checkResult.locality.locality).name}},
+                                    {{getItemByCode(subLocalities, checkResult.locality.subLocality).name}},
+                                    {{getItemByCode(streets, checkResult.locality.street).name}}&gt;
+                                </em>
+                            </div>
                             <p><strong>Has {{checkResult.technology}} Feasibility</strong></p>
                             <div>MDF: {{checkResult.MDF || "--unknown--"}}</div>
                             <div>Cabinet: {{checkResult.cabinet || "--unknown--"}}</div>

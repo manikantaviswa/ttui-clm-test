@@ -215,7 +215,7 @@ var module = angular.module('TT-UI-CLM.Common.Api.Inventory.Msisdn.GetCommonMobi
 				activatedVia: model.activatedVia,
 				category: model.category || '',
                 serviceNumber: msisdn || '',
-				hlrNumber: 'MDF-01',
+				hlrNumber: model.hlrOfMsisdn || '',
 				pageNumber: pageNumber || '1',
 				pageSize: pageSize || PAGE_SIZE
 			};

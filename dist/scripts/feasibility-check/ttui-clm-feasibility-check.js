@@ -154,6 +154,7 @@ function FeasibilityCheckCtrl($scope, $parse, Spinner, feasibilityCheckService, 
         }
         return item;
     }
+    $scope.getItemByCode = getItemByCode;
 
     function clearLocalityForm() {
         delete $scope.model.locality;

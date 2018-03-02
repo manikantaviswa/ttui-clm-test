@@ -1,5 +1,20 @@
-'use strict';
+/* commonjs package manager support (eg componentjs) */
+if (typeof module !== "undefined" && typeof exports !== "undefined" && module.exports === exports){
+  module.exports = '@@@@__SOURCE_FILENAME__';
+}
 
+(function (window, angular, undefined) {
+  "use strict";
+
+
+// Source: src/scripts/select-number/index.js
+angular.module('TT-UI-CLM.SelectNumber', [
+    'TT-UI-CLM.SelectNumber.Directives.SelectNumberDirective',
+    'TT-UI-CLM.CommonComponents'
+]);
+
+
+// Source: src/scripts/select-number/controller/select-number.controller.js
 var module = angular.module('TT-UI-CLM.SelectNumber.Controller.SelectNumberController', [
     'TT-UI-CLM.SelectNumber.Services.SelectNumberService',
     'TT-UI-CLM.Common.Services.OfferingData',
@@ -44,7 +59,7 @@ function SelectNumberController($rootScope, $scope, $parse, SelectNumberService,
 
     $scope.getPrefixList = function(){
         if ($scope.model.serviceDetails.gsmService.stDirect.MSISDNSelection.masterCode === SELECT_SERVICE_SETTINGS.MSISDN_SELECTION_MANUAL){
-            var commonRequestPayload = $scope.getCommoRequestPayload();
+            var commonRequestPayload = $scope.getCommonRequestPayload();
             var serviceDetails = commonRequestPayload;
             var msisdnLoader = CommonMSISDNPrefixLoader(serviceDetails);
             msisdnLoader.load().then(function(response){
@@ -54,7 +69,7 @@ function SelectNumberController($rootScope, $scope, $parse, SelectNumberService,
         }
     };
 
-    $scope.getCommoRequestPayload = function(){
+    $scope.getCommonRequestPayload = function(){
         return {
             'serviceType': offerDataService.getServiceType(),
             'subServiceType': offerDataService.getSubServiceType(),
@@ -89,3 +104,57 @@ SelectNumberController.$inject = [
     'CommonMsisdnLocker',
 ];
 module.controller(SelectNumberController.name, SelectNumberController);
+
+
+// Source: src/scripts/select-number/directives/select-number.js
+var module = angular.module('TT-UI-CLM.SelectNumber.Directives.SelectNumberDirective', [
+    'TT-UI-CLM.SelectNumber.Controller.SelectNumberController',
+    'TT-UI-CLM.SelectNumber.Services.SelectNumberService'
+]);
+
+module.directive('selectNumber', function() {
+    return {
+        restrict: 'E',
+        scope: {
+            model: '=',
+            // config: '=',
+            masterData: '=',
+            // permissions: '=',
+        },
+        controller: 'SelectNumberController',
+        templateUrl: 'scripts/select-number/views/select-number-view.tpl.html'
+    };
+});
+
+
+// Source: src/scripts/select-number/services/select-number-service.js
+var module = angular.module('TT-UI-CLM.SelectNumber.Services.SelectNumberService', [
+    'TT-UI-CLM.Common.Services.CommonMasterDataResults',
+    'TT-UI-CLM.Common.Services.Config'
+]);
+
+function SelectNumberFactory($parse, CommonMasterDataResults, COMMON_MASTER_CONFIG) {
+
+    function SelectNumberService(masterData) {
+        this.masterDataResults = CommonMasterDataResults.getMasterDataResults(masterData);
+    }
+
+    SelectNumberService.prototype.getCategoryList = function(){
+        return this.masterDataResults[COMMON_MASTER_CONFIG.TELEPHONE_CATEGORIES];
+    };
+
+    SelectNumberService.prototype.getSelectionList = function(){
+        return this.masterDataResults[COMMON_MASTER_CONFIG.TELEPHONE_SELECTIONS];
+    };
+
+    SelectNumberService.prototype.getPrefixList = function(){
+        //return this.masterDataResults[COMMON_MASTER_CONFIG.TELEPHONE_SELECTIONS];
+    };
+
+    return SelectNumberService;
+}
+SelectNumberFactory.$inject = ['$parse', 'CommonMasterDataResults', 'COMMON_MASTER_CONFIG']
+module.factory('SelectNumberService', SelectNumberFactory);
+
+return angular;
+})(window, window.angular);
