@@ -29,9 +29,9 @@ function SelectedOfferCartCtrl($scope, $parse,$rootScope) {
   $scope.onRemove = function(){
 
   }
-  $rootScope.$on('selectedOfferItem',function(event,data){
-    $scope.itemsSelected = data;
-  })
+  // $rootScope.$on('selectedOfferItem',function(event,data){
+  //   $scope.itemsSelected = data;
+  // })
 
 }
 
