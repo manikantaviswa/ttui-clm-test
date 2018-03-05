@@ -198,19 +198,20 @@
 												 translate="Select">Select</a> -->
 										</td>
 										<td>
-											<a class="list-group-item-link" translate="Details" ng-click="items._meta.expanded=!items._meta.expanded; getOfferingDetailsView()">Details</a>
+											<a class="list-group-item-link" translate="Details" ng-click="items._meta.expanded=!items._meta.expanded; getSelectedOffering(items)"
+											 ng-if='items.offering'>Details</a>
 										</td>
 									</tr>
 
-									<tr class="expanding-row" ng-class="{'show-row':items._meta.expanded}">
+									<tr class="expanding-row" ng-class="{'show-row':items._meta.expanded}" ng-if='selectOfferDetail.code == items.offering.code'>
 										<td colspan="{{tableCtrl.colspan}}">
 											<div class="col-sm-12" uib-collapse="!items._meta.expanded">
-												<div class="col-sm-12 pr-0" ng-repeat="(key, val) in tabs" ng-show="key == $parent.tabId">
-													<p class="col-sm-9 col-sm-offset-3 prodcutSummary">{{val.summary}}</p>
+												<div class="col-sm-12 pr-0" ng-repeat="(key, val) in detailsTab" ng-show="key == $parent.tabId">
+													<p class="col-sm-9 col-sm-offset-3 prodcutSummary" ng-bind="selectOfferDetail.description"></p>
 												</div>
 												<div class="col-sm-3 tablist plr-0 pt-5x bt-1x">
 													<ul class="nav nav-list nav-stacked">
-														<li role="presentation" ng-repeat="tab in tabs track by $index" ng-class="{'active': $index == $parent.tabId}">
+														<li role="presentation" ng-repeat="tab in detailsTab track by $index" ng-class="{'active': $index == $parent.tabId}">
 															<a href ng-click="setTab($parent.$index,$event);" translate="{{tab.title}}">{{tab.title}}</a>
 														</li>
 													</ul>
@@ -218,156 +219,13 @@
 
 												<div class="col-sm-9 plr-0 pt-5x bt-1x">
 													<div class="tab-content">
-														<div class="tab-pane" ng-repeat="(key, val) in tabs" ng-class="{'show': key == $parent.tabId}">
+														<div class="tab-pane" ng-repeat="(key, tab) in detailsTab" ng-class="{'show': key == $parent.tabId}">
 															<div class="col-sm-12 pr-0">
-																<!-- <p class="prodcutSummary">{{val.summary}}</p> -->
-
-																<div class="col-sm-12 plr-0" ng-show="key == 0">
-																	<ul class="list-group table-list">
-																		<li class="list-group-item">
-																			<div class="col-sm-6 plr-0">
-																				<label>BROADBAND</label>
-																				<p>
-																					<span>Volume</span>
-																				</p>
-																			</div>
-																			<div class="col-sm-6 plr-0">
-																				<label>Allowance</label>
-																				<p>
-																					<span>50 Channels</span>
-																					<span class="pull-right">FULL LIST</span>
-																				</p>
-																			</div>
-																		</li>
-																	</ul>
-
-																</div>
-
-																<table class="table equipment-table" ng-show="key == 1">
-																	<thead>
-																		<tr>
-																			<th>Equipment</th>
-																			<th>Make</th>
-																			<th>Model</th>
-																		</tr>
-																	</thead>
-																	<tbody>
-																		<tr>
-																			<td>Set Top Box First Room</td>
-																			<td>Huawei</td>
-																			<td>u45we</td>
-																		</tr>
-																		<tr>
-																			<td>Wi Fi Router</td>
-																		</tr>
-																		<tr>
-																			<td>Range Extender</td>
-
-
-																		</tr>
-																	</tbody>
-
-																</table>
-																<table class="table charges-table" ng-show="key == 2">
-																	<tbody>
-																		<tr>
-																			<td>Monthly Rental</td>
-																			<td>
-																				<span>%</span> MUR 345.00 /mo
-																				<span class="pull-right">
-																					<s>MUR 399.00 /mo</s>
-																				</span>
-																			</td>
-																		</tr>
-																		<tr>
-																			<td>Security Deposit</td>
-																			<td>MUR 100.00
-																				<span>Upfront</span>
-																			</td>
-																		</tr>
-																		<tr>
-																			<td>Insatallation Charge</td>
-																			<td>MUR 100.00</td>
-																		</tr>
-
-																		<tr>
-																			<th class="border-top">TOTAL (incl. Tax) Upfront</th>
-																			<th class="border-top">MUR 140.00</th>
-																		</tr>
-																		<tr>
-																			<th>TOTAL AMOUNT in 1st Invoice</th>
-																			<th>MUR 445.00</th>
-																		</tr>
-																	</tbody>
-																</table>
-																<table class="table contractsPenalty-table" ng-show="key == 3">
-
-																	<tbody>
-																		<tr>
-																			<td>Minimum Term Contract</td>
-																			<td>12 Months</td>
-																		</tr>
-																		<tr>
-																			<td>Earliest Exit</td>
-																			<td>12/12/2018</td>
-																		</tr>
-																		<tr>
-																			<td>Contract Breach Penalty</td>
-																			<td>MUR 100.00</td>
-																		</tr>
-																		<tr>
-																			<td>Downgrading Penalty</td>
-																			<td>MUR 500.00 upfront</td>
-																		</tr>
-																		<tr>
-																			<td>Upgrading Penalty</td>
-																			<td>--</td>
-																		</tr>
-																		<tr>
-																			<td>Equipment (Not Returned/ Broken )</td>
-																			<td>Show the rule of penalty if not value</td>
-																		</tr>
-																		<tr>
-																			<td>Suspension Penalty/Rules</td>
-																			<td>Allowed</td>
-																		</tr>
-																		<tr>
-																			<td>No. of Suspensions Allowed</td>
-																			<td>3</td>
-																		</tr>
-																	</tbody>
-																</table>
-																<table class="table EMIPlan-table" ng-show="key == 4">
-																	<thead>
-																		<tr>
-																			<th>Plan</th>
-																			<th>Interest Rate</th>
-																			<th>Cost</th>
-																			<th>Interest</th>
-																			<th>Total Payable</th>
-																			<th>EMI</th>
-																			<th></th>
-																		</tr>
-																	</thead>
-
-																	<tbody>
-																		<tr>
-																			<td>3 Months EMI</td>
-																			<td>12% p.a</td>
-																			<td>MUR 350.00</td>
-																			<td>MUR 50.00</td>
-																			<td>MUR 400.00</td>
-																			<td>MUR 133.00</td>
-																			<td>SELECT</td>
-																		</tr>
-																	</tbody>
-																</table>
-
+																<div ng-include="tab.page"></div>
 															</div>
 														</div>
 													</div>
 												</div>
-											</div>
 										</td>
 									</tr>
 								</tbody>
@@ -388,17 +246,17 @@
 									To see eligible plans list you need to select plan first
 								</div>
 							</div>
-							
+
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<div ng-show="isSetTab(1)">
-				<h4> No Vases </h4>
-			</div>
+				<div ng-show="isSetTab(1)">
+					<h4> No Vases </h4>
+				</div>
 
 		</uib-accordion-group>
 
 	</uib-accordion>
-</div>
+	</div>
