@@ -14,26 +14,20 @@ angular.module('TT-UI-CLM.SelectedOfferCart',[
 
 
 // Source: src/scripts/selected-offer-cart/controller/selected-offer-cart.controller.js
-var module = angular.module('TT-UI-CLM.SelectedOfferCart.Controllers.SelectedOfferCartCtrl', [
-  
-])
+var module = angular.module('TT-UI-CLM.SelectedOfferCart.Controllers.SelectedOfferCartCtrl', [])
 
-function SelectedOfferCartCtrl($scope, $parse,$rootScope) {
-  debugger
-  //$scope.testMsg ="cart";
-  $scope.selectedOfferItems=[]; 
-  $scope.showPanel = true;  
-  
- // $scope.selectedOfferItems = $scope.selectedOffering;
-  $scope.showCartList = function (){
+function SelectedOfferCartCtrl($scope, $parse, $rootScope) {
+  $scope.selectedOfferItems = [];
+  $scope.showPanel = true;
+  $scope.showCartList = function () {
     $scope.showPanel = !$scope.showPanel;
   }
-  $scope.onRemove = function(item){
+  $scope.onRemove = function (item) {
     var index = $scope.selectedOfferItems.indexOf(item);
-    $scope.selectedOfferItems.splice(index, 1);  
+    $scope.selectedOfferItems.splice(index, 1);
   }
 
-   $scope.payments ={
+  $scope.payments = {
     "payment": {
       "currency": "MUR",
       "charges": [
@@ -83,8 +77,7 @@ function SelectedOfferCartCtrl($scope, $parse,$rootScope) {
           "taxRate": 27,
           "isUpfrontCharge": false,
           "isRecurringCharge": true
-        },
-        {
+        }, {
           "chargeAmount": 0,
           "refundable": false,
           "taxable": true,
@@ -130,8 +123,7 @@ function SelectedOfferCartCtrl($scope, $parse,$rootScope) {
                     }
                   ]
                 }
-              },
-              {
+              }, {
                 "chargeAmount": 5000,
                 "nationality": {
                   "name": "Foreigner",
@@ -145,8 +137,7 @@ function SelectedOfferCartCtrl($scope, $parse,$rootScope) {
                     }
                   ]
                 }
-              },
-              {
+              }, {
                 "chargeAmount": 2000,
                 "segments": {
                   "segment": [
@@ -156,8 +147,7 @@ function SelectedOfferCartCtrl($scope, $parse,$rootScope) {
                     }
                   ]
                 }
-              },
-              {
+              }, {
                 "chargeAmount": 0,
                 "segments": {
                   "segment": [
@@ -256,30 +246,24 @@ function SelectedOfferCartCtrl($scope, $parse,$rootScope) {
       }
     }
   }
-  $rootScope.$on('selectedOfferItem',function(event,data){
-    debugger;
-    $scope.selectedOfferItems=[];
-     data.map(function (items) {
-            items.payments = $scope.payments;
-            var charges = $parse('charges')(items.payments.payment);   
-            var selectedPlan = $parse('name')(items);
-            var currency =$parse('currency')(items);
-            $scope.selectedOfferItems.push(
-              {
-            name:selectedPlan,
-            paymentDetails:charges,
-            currency:currency
-              }
-          );
-     })
-    
+  $rootScope.$on('selectedOfferItem', function (event, data) {
+    $scope.selectedOfferItems = [];
+    data.map(function (items) {
+      items.payments = $scope.payments;
+      var charges = $parse('charges')(items.payments.payment);
+      var selectedPlan = $parse('name')(items);
+      var currency = $parse('currency')(items);
+      $scope.selectedOfferItems.push({
+         name: selectedPlan,
+         paymentDetails: charges,
+         currency: currency});
+    })
+
   });
 
 }
 
-SelectedOfferCartCtrl.$inject = [
-	'$scope','$parse','$rootScope' 
-]
+SelectedOfferCartCtrl.$inject = ['$scope', '$parse', '$rootScope']
 module.controller(SelectedOfferCartCtrl.name, SelectedOfferCartCtrl)
 
 // Source: src/scripts/selected-offer-cart/directives/selected-offer-cart.directive.js
