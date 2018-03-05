@@ -68,28 +68,22 @@
 		<ul class="list-group" ng-if="selectedOfferItems.length > 0">
 				<li class="list-group-item" ng-repeat="item in selectedOfferItems">
 					<label class="cartHeader">{{item.name}}
-						<a class="removeIcon glyphicon glyphicon-remove ng-scope" aria-label="Remove" ng-click="onRemove()"></a>
+						<a class="removeIcon glyphicon glyphicon-remove ng-scope" aria-label="Remove" ng-click="onRemove(item)"></a>
 					</label>
-					<div class="col-sm-12" ng-show="showPanel">
-						<div class="col-sm-12 plr-0">
-							<div class="col-sm-7 text-left pl-0">{{item.charges.rentals.rental.commercialArticle.name}}</div>
+					<div class="col-sm-12" ng-show="showPanel" ng-repeat="payment in item.paymentDetails ">
+						
+						<div class="col-sm-12 plr-0" ng-show="payment.type === 'rental'">
+							<div class="col-sm-7 text-left pl-0">{{payment.commercialArticle.name}}</div>
 							<div class="col-sm-2 text-center plr-0">{{item.currency.code}}</div>
-							<div class="col-sm-3 pull-right text-right plr-0">{{item.charges.rentals.rental.chargeAmount}}
+							<div class="col-sm-3 pull-right text-right plr-0">{{payment.chargeAmount}}
 								<span class="text-right pull-right">/mo</span>
 							</div>
 						</div>
-						<div class="col-sm-12 plr-0">
-							<div class="col-sm-7 text-left pl-0">Security Deposit</div>
-							<div class="col-sm-2 text-center plr-0">MUR</div>
-							<div class="col-sm-3 pull-right text-right plr-0">999.00
-								<span class="text-right pull-right">/mo</span>
-							</div>
-						</div>
-						<div class="col-sm-12 plr-0">
-							<div class="col-sm-7 text-left pl-0">Installation Charge</div>
-							<div class="col-sm-2 text-center plr-0">MUR</div>
-							<div class="col-sm-3 pull-right text-right plr-0">99.00
-								<span class="text-right pull-right">/mo</span>
+						<div class="col-sm-12 plr-0" ng-show="payment.type === 'oneTimeCharge'">
+							<div class="col-sm-7 text-left pl-0">{{payment.commercialArticle.name}}</div>
+							<div class="col-sm-2 text-center plr-0">{{item.currency.code}}</div>
+							<div class="col-sm-3 pull-right text-right plr-0">{{payment.chargeAmount}}
+								<span class="text-right pull-right">/{{payment.collectionOption.code}}</span>
 							</div>
 						</div>
 					</div>
