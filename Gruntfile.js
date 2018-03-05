@@ -9,7 +9,7 @@ module.exports = function(grunt) {
         'select-number': 'TT-UI-CLM.SelectNumber.Tpl',
         'calendar-picker': 'TT-UI-CLM.CalendarPicker.Tpl',
         'appointment-slot-picker': 'TT-UI-CLM.AppointmentSlotPicker.Tpl',
-        'select-plan-offering': 'TT-UI-CLM.SelectPlanOffering.Tpl',
+        'select-plan-offering': 'TT-UI-CLM.CommonSelectPlanOffering.Tpl',
         'selected-offer-cart': 'TT-UI-CLM.SelectedOfferCart.Tpl'
 
     };

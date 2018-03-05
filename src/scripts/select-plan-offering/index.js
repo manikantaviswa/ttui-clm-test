@@ -1,5 +1,5 @@
 'use strict'
 
-angular.module('TT-UI-CLM.SelectPlanOffering',[
-    'TT-UI-CLM.SelectPlanOffering.Directives.SelectPlanOffering',
+angular.module('TT-UI-CLM.CommonSelectPlanOffering',[
+    'TT-UI-CLM.CommonSelectPlanOffering.Directives.SelectPlanOffering',
 ])

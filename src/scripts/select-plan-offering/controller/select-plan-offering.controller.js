@@ -1,43 +1,51 @@
 'use strict';
 
-var module = angular.module('TT-UI-CLM.SelectPlanOffering.Controllers.CommonSelectPlanOfferingCtrl', [
+var module = angular.module('TT-UI-CLM.CommonSelectPlanOffering.Controllers.CommonSelectPlanOfferingCtrl', [
+    'TT-UI-CLM.CommonSelectPlanOffering.Services.SelectOfferingPlanService',
     'smart-table',
     'TT-UI.Table',
     'ttui-table.tpl',
     'uib/template/modal/window.html',
     'uib/template/modal/backdrop.html',
     'ui.bootstrap.modal'
+    
 ])
 
-function CommonSelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa, $filter, COMMON_CONSTANTS_CONFIG, CommonConfiguration) {
+function CommonSelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa, $filter,SelectOfferingPlanService) {
     $scope.selectedVariant = {
         code: ""
     };
     $scope.selectAllowance = "";
-
+   
     $scope.offeringTabs = [
         {
-            id:0,
+            id: 0,
             title: 'Plans',
             disabled: false,
-            
+
 
         }, {
-            id:0,
+            id: 0,
             title: 'VAS',
             disabled: false
         }
     ];
     $scope.vasList = [];
+    $scope.payments =[];
 
     //selected Plan Offering Tabs
     $scope.offerTabId = 0;
     $scope.offerTab = function (tabId) {
-       $scope.offerTabId = tabId;
+        $scope.offerTabId = tabId;
     };
-    $scope.isSetTab = function (tabId) {     
+    $scope.isSetTab = function (tabId) {
         return $scope.offerTabId === tabId;
     };
+    $scope.detailsTab = [{
+        id:'charges',
+        title:'Charges',
+        page:'scripts/select-plan-offering/views/offerCharges.tpl.html'
+    }]
 
 
     this.setAllowanceDescription = function () {
@@ -55,7 +63,7 @@ function CommonSelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa, $filte
         setSelectedVariantAllowance(selectedOffer);
     }
 
-     var setSelectedVariantAllowance = function (selectedOffer) {
+    var setSelectedVariantAllowance = function (selectedOffer) {
         var selectedVariant = $scope.selectedVariant[selectedOffer.code];
         var offeringData = $scope.offeringData;
         $scope.offeringData.map(function (offer) {
@@ -76,42 +84,40 @@ function CommonSelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa, $filte
             selectedOffer.code === offer.offering.code ? offer.selected = !offer.selected : "";
         });
         Spinner.inner.show();
-         SelectOfferingPlanAPIService(req).then(function(res) {
-             debugger
-             Spinner.inner.hide();
-         }).catch(function(err) {
-             Spinner.inner.hide();
-             console.log(err);
+        SelectOfferingPlanAPIService(req).then(function (res) {
+            Spinner.inner.hide();
+        }).catch(function (err) {
+            Spinner.inner.hide();
+            console.log(err);
         });
     }
     $scope.isSelect = false; //Select offer toggle State
-  
-	$scope.getOfferingDetailsView = function () {
-		$scope.tabs = []
-		$scope.offeringData.map(function (offerDetails, $index) {
-			$scope.tabs = $parse('details')(offerDetails);
-		})
-	}
 
-	$scope.tabId = 0;
-	$scope.setTab = function (tabId, $event) {
-	    $scope.tabId = tabId;
+    $scope.tabId = 0;
+    $scope.setTab = function (tabId, $event) {
+        $scope.tabId = tabId;
         $event.stopPropagation();
     };
-    
-    $scope.selectOffering.config = {
-        itemsByPage: CommonConfiguration.getConfigForKey(COMMON_CONSTANTS_CONFIG.maximumOfferingsPerPage),
-        displayedPages: 5
-    };
 
+    $scope.$on('offerDetailModel',function(event,data){
+        $scope.monthlyCharges = $parse('monthlyCharges')(data);
+        $scope.oneTimeCharges = $parse('oneTimeCharges')(data);
+        var payments =  $parse('payments')(data.offerDetail);
+        var payment = $parse('payment')(payments);
+        $scope.chargesCurrency = $parse('currency')(payment);
+        var totals = $parse('totals')(payment);
+        $scope.upfront = $parse('upfront')(totals);
+        $scope.billing = $parse('billing')(totals);
+    });
 }
 
 CommonSelectPlanOfferingCtrl.$inject = [
-	'$scope',
+    '$scope',
     '$parse',
     '$timeout',
     '$uibModal',
     '$filter',
+    'SelectOfferingPlanService',
     'COMMON_CONSTANTS_CONFIG',
     'CommonConfiguration'
 ]
