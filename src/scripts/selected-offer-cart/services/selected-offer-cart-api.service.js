@@ -4,7 +4,7 @@ var module = angular.module('TT-UI-CLM.selectedOfferCart.Services.selectedOfferC
     'TT-UI.Common'
 ]);
 
-module.constant('API_CONFIG', {
+module.constant('SELECTED_OFFERING_CART_API_CONFIG', {
     API_URL: 'http://10.2.53.113/upc/rest/dataservice/1/UPC/1.1/GetOfferingDetailsWithTaxRequest/json/query',
     API_METHOD: 'PUT',
     RESPONSE_ERROR_JSON_PATH: 'response.errors.error'
@@ -92,5 +92,5 @@ function selectedOfferCartAPIService($q, $parse, Api, ResourceFactory, API_CONFI
 
 }
 
-selectedOfferCartAPIService.$inject = ['$q', '$parse', 'Api', 'ResourceFactory', 'API_CONFIG'];
+selectedOfferCartAPIService.$inject = ['$q', '$parse', 'Api', 'ResourceFactory', 'SELECTED_OFFERING_CART_API_CONFIG'];
 module.factory(selectedOfferCartAPIService.name, selectedOfferCartAPIService);
