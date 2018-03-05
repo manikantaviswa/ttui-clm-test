@@ -1,0 +1,119 @@
+<style>
+	/* Style the tab content */
+
+	/*Reset Padding*/
+
+	.pl-0 {
+		padding-left: 0
+	}
+
+	.pr-0 {
+		padding-right: 0
+	}
+
+	.plr-0 {
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	.bt-1x {
+		border-top: 1px solid #ddd;
+	}
+
+	.pt-5x {
+		padding-top: 5px;
+	}
+
+	.selectedOfferCart .list-group {
+		margin-bottom: 0px;
+	}
+
+	.selectedOfferCart .list-group-item {
+		display: inline-block;
+		width: 100%;
+		padding: 0;
+	}
+
+	.selectedOfferCart .totalAmount {
+		padding-top: 10px;
+		font-weight: 600;
+		background-color: #fff;
+		border: 1px solid #ccc;
+		border-top: 2px solid #7d7d7d;
+	}
+
+	.selectedOfferCart .cartHeader {
+		width: 100%;
+		line-height: 40px;
+		border-bottom: 1px solid #ccc;
+		padding-left: 5px;
+		margin-bottom: 0;
+	}
+	.selectedOfferCart .removeIcon{
+	line-height: 35px;
+    margin-right: 8px;
+    text-decoration: none;
+	float: right;
+	}
+</style>
+<div class="block block-ttui block-aside" role="complementary">
+	<div class="block-heading">
+		<h2 class="block-title">	
+			<span translate="Selected Offering">Selected Offering</span>
+			<i ng-if="selectedOfferItems.length > 0" class="pull-right glyphicon" ng-click="showCartList()" ng-class="{'glyphicon-chevron-down': showPanel, 'glyphicon-chevron-right': !showPanel}"></i>
+		</h2>
+		
+	</div>
+	<div class="col-sm-12 plr-0 selectedOfferCart"> 
+		<ul class="list-group" ng-if="selectedOfferItems.length > 0">
+				<li class="list-group-item" ng-repeat="item in selectedOfferItems">
+					<label class="cartHeader">{{item.name}}
+						<a class="removeIcon glyphicon glyphicon-remove ng-scope" aria-label="Remove" ng-click="onRemove()"></a>
+					</label>
+					<div class="col-sm-12" ng-show="showPanel">
+						<div class="col-sm-12 plr-0">
+							<div class="col-sm-7 text-left pl-0">{{item.charges.rentals.rental.commercialArticle.name}}</div>
+							<div class="col-sm-2 text-center plr-0">{{item.currency.code}}</div>
+							<div class="col-sm-3 pull-right text-right plr-0">{{item.charges.rentals.rental.chargeAmount}}
+								<span class="text-right pull-right">/mo</span>
+							</div>
+						</div>
+						<div class="col-sm-12 plr-0">
+							<div class="col-sm-7 text-left pl-0">Security Deposit</div>
+							<div class="col-sm-2 text-center plr-0">MUR</div>
+							<div class="col-sm-3 pull-right text-right plr-0">999.00
+								<span class="text-right pull-right">/mo</span>
+							</div>
+						</div>
+						<div class="col-sm-12 plr-0">
+							<div class="col-sm-7 text-left pl-0">Installation Charge</div>
+							<div class="col-sm-2 text-center plr-0">MUR</div>
+							<div class="col-sm-3 pull-right text-right plr-0">99.00
+								<span class="text-right pull-right">/mo</span>
+							</div>
+						</div>
+					</div>
+				</li>
+				
+					
+			
+			</ul>
+
+			<div class="col-sm-12 totalAmount" ng-if="selectedOfferItems.length > 0">
+				<p>
+					<span class="font-weight-bold">Total incl. Tax (Upfront)</span>
+					<span class="pull-right font-weight-bold ">40.00 MUR</span>
+				</p>
+				<p>
+					<span class="font-weight-bold">Total incl. Tax (Upfront)</span>
+					<span class="pull-right font-weight-bold">199.00 MUR</span>
+				</p>
+				
+			</div>
+			<div class="col-sm-12 totalAmount" ng-if="selectedOfferItems.length == 0">
+				<p translate="No offering selected yet">No offering selected yet</p>
+			</div>
+			
+</div>
+
+</div>
