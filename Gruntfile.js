@@ -9,12 +9,8 @@ module.exports = function(grunt) {
         'select-number': 'TT-UI-CLM.SelectNumber.Tpl',
         'calendar-picker': 'TT-UI-CLM.CalendarPicker.Tpl',
         'appointment-slot-picker': 'TT-UI-CLM.AppointmentSlotPicker.Tpl',
-<<<<<<< HEAD
         'select-plan-offering': 'TT-UI-CLM.CommonSelectPlanOffering.Tpl',
         'selected-offer-cart': 'TT-UI-CLM.SelectedOfferCart.Tpl',
-=======
-        'select-plan-offering': 'TT-UI-CLM.SelectPlanOffering.Tpl',
->>>>>>> 45ceb00d3626b43b22d3dbbf74129a453107a2fb
         'auto-debit-new': 'TT-UI-CLM.AutoDebitNew.Tpl'
     };
 
