@@ -24,6 +24,8 @@ function FeasibilityCheckService($parse) {
                             var cities = $parse('cities.city')(p);
                             if(cities && cities.length) {
                                 cities.forEach(function(city) {
+                                    city.countryCode = c.code;
+                                    city.provinceCode = p.code;
                                     localitiesObj[city.code] = city;
                                 });
                             }

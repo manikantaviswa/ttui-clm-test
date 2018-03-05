@@ -20,7 +20,6 @@ function FeasibilityCheckCtrl($scope, $parse, Spinner, feasibilityCheckService, 
     $scope.checkAddressFeasibility = function(isNumberCheck) {
         var req;
         setCheckResult(null);
-        $parse('form.localityCheck.$valid')($scope);
         if (isNumberCheck) {
             if ($parse('form.serviceNumCheck.$invalid')($scope)) {
                 $scope.form.serviceNumCheck.$setSubmitted();
@@ -96,6 +95,8 @@ function FeasibilityCheckCtrl($scope, $parse, Spinner, feasibilityCheckService, 
 
     function setSubLocalities(clearSubLocality) {
         var selectedLocality = $parse('model.locality.locality')($scope);
+        $parse('model.locality.country').assign($scope, $parse('countryCode')(selectedLocality));
+        $parse('model.locality.province').assign($scope, $parse('provinceCode')(selectedLocality));
         $scope.subLocalities = feasibilityCheckService.getSubLocalities($scope.localities, selectedLocality);
         if (clearSubLocality) {
             $parse('model.locality.subLocality').assign($scope, null);
@@ -113,6 +114,8 @@ function FeasibilityCheckCtrl($scope, $parse, Spinner, feasibilityCheckService, 
     function setLocality() {
         var subLocalityObj = getItemByCode($scope.subLocalities, $parse('model.locality.subLocality')($scope));
         var locality = getItemByCode($scope.localities, $parse('locality.code')(subLocalityObj));
+        $parse('model.locality.country').assign($scope, $parse('countryCode')(locality));
+        $parse('model.locality.province').assign($scope, $parse('provinceCode')(locality));
         if (locality) {
             $parse('model.locality.locality').assign($scope, locality.code);
         }
@@ -137,6 +140,7 @@ function FeasibilityCheckCtrl($scope, $parse, Spinner, feasibilityCheckService, 
         }
         return item;
     }
+    $scope.getItemByCode = getItemByCode;
 
     function clearLocalityForm() {
         delete $scope.model.locality;

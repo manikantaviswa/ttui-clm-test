@@ -118,6 +118,8 @@ SelectPlanOfferingCtrl.$inject = [
     '$timeout',
     '$uibModal',
     '$filter',
-    'SelectOfferingPlanService'
+    'SelectOfferingPlanService',
+    'COMMON_CONSTANTS_CONFIG',
+    'CommonConfiguration'
 ]
-module.controller(SelectPlanOfferingCtrl.name, SelectPlanOfferingCtrl)
+module.controller(CommonSelectPlanOfferingCtrl.name, CommonSelectPlanOfferingCtrl)

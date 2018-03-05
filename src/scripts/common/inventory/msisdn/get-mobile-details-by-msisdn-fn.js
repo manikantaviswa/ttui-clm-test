@@ -30,7 +30,7 @@
 				activatedVia: model.activatedVia,
 				category: model.category || '',
                 serviceNumber: msisdn || '',
-				hlrNumber: 'MDF-01',
+				hlrNumber: model.hlrOfMsisdn || '',
 				pageNumber: pageNumber || '1',
 				pageSize: pageSize || PAGE_SIZE
 			};

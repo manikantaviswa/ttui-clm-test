@@ -1,6 +1,6 @@
 {
   "name": "ttui-clm-test",
-  "version": "0.1.26",
+  "version": "0.1.29",
   "description": "Test Package only, later will replace it with our company repo stuff",
   "scripts": {},
   "devDependencies": {

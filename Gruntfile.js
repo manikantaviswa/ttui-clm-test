@@ -7,9 +7,10 @@ module.exports = function(grunt) {
         'fxl-select-offering': 'TT-UI-CLM.FxlSelectOffering.Tpl',
         'feasibility-check': 'TT-UI-CLM.FeasibilityCheck.Tpl',
         'select-number': 'TT-UI-CLM.SelectNumber.Tpl',
+        'calendar-picker': 'TT-UI-CLM.CalendarPicker.Tpl',
         'appointment-slot-picker': 'TT-UI-CLM.AppointmentSlotPicker.Tpl',
         'select-plan-offering': 'TT-UI-CLM.CommonSelectPlanOffering.Tpl',
-        'select-offer-charges-details': 'TT-UI-CLM.OfferCharges.Tpl'
+
     };
 
     grunt.initConfig({

@@ -10,10 +10,13 @@ module.directive('selectPlanOffering',function(){
     return{
         restrict:'EA',
         templateUrl:'scripts/select-plan-offering/views/select-plan-offering.tpl.html',
-        controller:'SelectPlanOfferingCtrl',
+        controller:'CommonSelectPlanOfferingCtrl',
         scope:{
             offeringData: '=',
+            masterData: '=',
             defaultState:'=',
+            tmSelectPlanOffering:'=',
+            tmUnselectPlanOffering: '=',
             getSelectedOffering:'=',
             offerDetailChargesModel:'=',
             offerDetailModel:'='
