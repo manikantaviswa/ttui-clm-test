@@ -4,13 +4,13 @@ var module = angular.module('TT-UI-CLM.CommonSelectPlanOffering.Services.SelectO
     'TT-UI.Common'
 ]);
 
-module.constant('API_CONFIG', {
+module.constant('SELECTC_PLAN_API_CONFIG', {
     API_URL: 'http://10.2.53.113/upc/rest/dataservice/1/UPC/1.1/GetOfferingDetailsWithTaxRequest/json/query',
     API_METHOD: 'PUT',
     RESPONSE_ERROR_JSON_PATH: 'response.errors.error'
 });
 
-function SelectOfferingPlanAPIService($q, $parse, Api, ResourceFactory, API_CONFIG) {
+function SelectOfferingPlanAPIService($q, $parse, Api, ResourceFactory, SELECTC_PLAN_API_CONFIG) {
 
     var prepareRequest = function (payload) {
         var requestData = {
@@ -65,13 +65,13 @@ function SelectOfferingPlanAPIService($q, $parse, Api, ResourceFactory, API_CONF
     };
 
     var sendRequest = function (payload) {
-        var apiService = ResourceFactory(Api.getUrl(), API_CONFIG.API_URL, API_CONFIG.API_METHOD);
+        var apiService = ResourceFactory(Api.getUrl(), SELECTC_PLAN_API_CONFIG.API_URL, SELECTC_PLAN_API_CONFIG.API_METHOD);
         return apiService.fetch(prepareRequest(payload)).$promise;
     };
 
     var getErrors = function (response) {
 
-        var errors = $parse(API_CONFIG.RESPONSE_ERROR_JSON_PATH)(response);
+        var errors = $parse(SELECTC_PLAN_API_CONFIG.RESPONSE_ERROR_JSON_PATH)(response);
         if (angular.isArray(errors) && errors.length) {
             return $q.reject(errors.map(function (error) {
                 return error.desc;
@@ -92,5 +92,5 @@ function SelectOfferingPlanAPIService($q, $parse, Api, ResourceFactory, API_CONF
 
 }
 
-SelectOfferingPlanAPIService.$inject = ['$q', '$parse', 'Api', 'ResourceFactory', 'API_CONFIG'];
+SelectOfferingPlanAPIService.$inject = ['$q', '$parse', 'Api', 'ResourceFactory', 'SELECTC_PLAN_API_CONFIG'];
 module.factory(SelectOfferingPlanAPIService.name, SelectOfferingPlanAPIService);
