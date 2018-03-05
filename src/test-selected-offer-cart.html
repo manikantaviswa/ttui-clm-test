@@ -1,0 +1,52 @@
+<html ng-app="testApp">
+
+<head>
+    <title>Test Dist JS Files</title>
+    <link href="./bower_components/tecnotree-ui-library/dist/css/tecnotree-ui-library.css" rel="stylesheet" type="text/css" />
+    <link href="http://design.tecnotree.com/uilib/dist/bower_components/ttui-table/dist/css/table.css" rel="stylesheet" type="text/css"/>
+    
+
+</head>
+
+<body  ng-controller="testCtrl">
+    test
+    {{testMsg}}
+     <selected-offer-cart master-data="masterData" >
+    </selected-offer-cart>
+</body>
+<script type="text/javaScript" src="http://design.tecnotree.com/uilib/dist/bower_components/jquery/dist/jquery.js"></script>
+<script type="text/javaScript" src="./bower_components/angular/angular.min.js"></script>
+<script type="text/javaScript" src="./bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script type="text/javaScript" src="./bower_components/angular-animate/angular-animate.js"></script>
+<script type="text/javaScript" src="./bower_components/angular-translate/angular-translate.js"></script>
+<script type="text/javaScript" src="./bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+<script type="text/javaScript" src="./bower_components/angular-ui-select/dist/select.min.js"></script>
+<script type="text/javaScript" src="./bower_components/tecnotree-ui-library/dist/scripts/ttui-auth.js"></script>
+<script type="text/javaScript" src="./bower_components/tecnotree-ui-library/dist/scripts/ttui-common.min.js"></script>
+<script type="text/javaScript" src="./bower_components/tecnotree-ui-library/dist/scripts/ttui-form.js"></script>
+<script type="text/javaScript" src="./bower_components/tecnotree-ui-library/dist/scripts/ttui-user.js"></script>
+<script type="text/javaScript" src="./bower_components/tecnotree-ui-library/dist/scripts/ttui-wizard-manager.js"></script>
+<script type="text/javaScript" src="./bower_components/tecnotree-ui-library/dist/scripts/ttui-auth.tpl.js"></script>
+<script type="text/javaScript" src="./bower_components/tecnotree-ui-library/dist/scripts/ttui-common.tpl.js"></script>
+<script type="text/javaScript" src="./bower_components/tecnotree-ui-library/dist/scripts/ttui-wizard-manager.tpl.js"></script>
+<script type="text/javaScript" src="./bower_components/angular-smart-table/dist/smart-table.js"></script>
+<script type="text/javaScript" src="./bower_components/ttui-table/dist/scripts/ttui-table.js"></script>
+<script type="text/javaScript" src="./bower_components/ttui-table/dist/scripts/ttui-table.tpl.js"></script>
+<script type="text/javaScript" src="http://design.tecnotree.com/uilib/dist/js/bootstrap.js"></script>
+<script type="text/javaScript" src="../dist/scripts/selected-offer-cart/ttui-clm-selected-offer-cart.tpl.js"></script>
+<script type="text/javaScript" src="../dist/scripts/selected-offer-cart/ttui-clm-selected-offer-cart.js"></script>
+
+
+
+<script type="text/javaScript">
+        angular.module('testApp', ['TT-UI-CLM.SelectedOfferCart']).controller('testCtrl', function($scope) {
+            $scope.testMsg = 'Test App Working';
+            $scope.model={};
+            $scope.masterData = {"response":{"body":[{ "_id" : { "$oid" : "5a81892e8cd20eecb1e11c53"} , "offering" : { "version" : "1.0" , "offeringCategory" : { "code" : "Plan"} , "extraElement" : { "isRequired" : false} , "offeringSubCategory" : { "code" : "Generic"} , "code" : "VOIPPlan" , "name" : "Voip Plan" , "nationalities" : { "nationality" : [ { "name" : "Citizen" , "code" : "Citizen"} , { "name" : "Foreigner" , "code" : "Foreigner"}]} , "description" : "Voip Plan" , "associatedProducts" : { "associatedProduct" : [ { "product" : { "code" : "IncomingCall" , "name" : "Incoming Allow" , "lineOfBusiness" : { "code" : "FXL"} , "productType" : { "code" : "Telephone"}} , "mandatory" : true} , { "product" : { "code" : "OutGoing" , "name" : "Outgoing Allow" , "lineOfBusiness" : { "code" : "FXL"} , "productType" : { "code" : "Telephone"}} , "mandatory" : true}]} , "constraints" : { "purchasingOption" : { "code" : "all"} , "recurringPurchase" : true} , "charges" : { "isChargeConvergent" : true , "sumOfOTC" : 1000.0 , "sumOfRC" : 90.0} , "allowances" : { "allowance" : [ { "product" : { "code" : "IncomingCall"} , "dedicatedAccounts" : { "dedicatedAccount" : [ { "accountType" : { "code" : "Voice"} , "criteria" : { "code" : "Monetary"} , "description" : "$ 1 for Voice"}]}} , { "product" : { "code" : "OutGoing"} , "dedicatedAccounts" : { "dedicatedAccount" : [ { "accountType" : { "code" : "Voice"} , "criteria" : { "code" : "Monetary"} , "description" : "$ 1.21 for Voice"}]}}]} , "currency" : { "code" : "MUR"}}}, { "_id" : { "$oid" : "5a82e0288cd2d1ba653b74e9"} , "offering" : { "version" : "1.0" , "offeringCategory" : { "code" : "Plan"} , "extraElement" : { "isRequired" : false} , "offeringSubCategory" : { "code" : "Generic"} , "nationalities" : { "nationality" : [ { "name" : "Citizen" , "code" : "Citizen"} , { "name" : "Foreigner" , "code" : "Foreigner"}]} , "code" : "VoipTest" , "name" : "voip Test" , "description" : "Optional field is provided for product" , "associatedProducts" : { "associatedProduct" : [ { "product" : { "code" : "IncomingCall" , "name" : "Incoming Allow" , "lineOfBusiness" : { "code" : "FXL"} , "productType" : { "code" : "Telephone"}} , "mandatory" : false} , { "product" : { "code" : "OutGoing" , "name" : "Outgoing Allow" , "lineOfBusiness" : { "code" : "FXL"} , "productType" : { "code" : "Telephone"}} , "mandatory" : false}]} , "constraints" : { "purchasingOption" : { "code" : "exact"} , "recurringPurchase" : true , "noOfExactProduct" : 1} , "charges" : { "isChargeConvergent" : true , "sumOfOTC" : 1000.0 , "sumOfRC" : 90.0} , "allowances" : { "allowance" : [ { "product" : { "code" : "IncomingCall"} , "dedicatedAccounts" : { "dedicatedAccount" : [ { "accountType" : { "code" : "Data"} , "criteria" : { "code" : "Monetary"} , "description" : "$ 0.22 for Data"}]}} , { "product" : { "code" : "OutGoing"} , "dedicatedAccounts" : { "dedicatedAccount" : [ { "accountType" : { "code" : "Data"} , "criteria" : { "code" : "Monetary"} , "description" : "$ 0.01 for Data"}]}}]} , "currency" : { "code" : "MUR"}}}, { "_id" : { "$oid" : "5a83bb976957bf10ace2ec44"} , "offering" : { "version" : "1.0" , "offeringCategory" : { "code" : "Plan"} , "extraElement" : { "isRequired" : false} , "offeringSubCategory" : { "code" : "Generic"} , "code" : "CLMVOIP" , "name" : "Voip Plan for CLM" , "nationalities" : { "nationality" : [ { "name" : "Citizen" , "code" : "Citizen"} , { "name" : "Foreigner" , "code" : "Foreigner"}]} , "description" : "Voip Plan" , "associatedProducts" : { "associatedProduct" : [ { "product" : { "code" : "IncomingCall" , "name" : "Incoming Allow" , "lineOfBusiness" : { "code" : "FXL"} , "productType" : { "code" : "Telephone"}} , "mandatory" : false} , { "product" : { "code" : "OutGoing" , "name" : "Outgoing Allow" , "lineOfBusiness" : { "code" : "FXL"} , "productType" : { "code" : "Telephone"}} , "mandatory" : false}]} , "constraints" : { "purchasingOption" : { "code" : "exact"} , "recurringPurchase" : false , "noOfExactProduct" : 1} , "charges" : { "isChargeConvergent" : true , "sumOfOTC" : 1000.0 , "sumOfRC" : 90.0} , "allowances" : { "allowance" : [ { "product" : { "code" : "IncomingCall"} , "dedicatedAccounts" : { "dedicatedAccount" : [ { "accountType" : { "code" : "Voice"} , "criteria" : { "code" : "Monetary"} , "description" : "$ 1 for Voice"}]}} , { "product" : { "code" : "OutGoing"} , "dedicatedAccounts" : { "dedicatedAccount" : [ { "accountType" : { "code" : "Voice"} , "criteria" : { "code" : "Monetary"} , "description" : "$ 1.21 for Voice"}]}}]} , "currency" : { "code" : "MUR"}}}]}}
+            $scope.myFunc = function(result) {
+                console.log(result)
+            }
+        });
+    </script>
+
+</html>
