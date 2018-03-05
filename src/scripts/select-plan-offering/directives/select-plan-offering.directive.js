@@ -1,7 +1,7 @@
 'use strict'
 
 var module = angular.module('TT-UI-CLM.CommonSelectPlanOffering.Directives.SelectPlanOffering',[
-    'TT-UI-CLM.CommonSelectPlanOffering.Controllers.SelectPlanOfferingCtrl',
+    'TT-UI-CLM.CommonSelectPlanOffering.Controllers.CommonSelectPlanOfferingCtrl',
     'TT-UI-CLM.CommonSelectPlanOffering.Tpl',
     'ngSanitize'
 ])
