@@ -207,41 +207,10 @@
 
 											<div class="col-sm-9 plr-0 pt-5x bt-1x">
 												<div class="tab-content">
-													<div class="tab-pane" ng-repeat="(key, val) in detailsTab" ng-class="{'show': key == $parent.tabId}">
+													<div class="tab-pane" ng-repeat="(key, tab) in detailsTab" ng-class="{'show': key == $parent.tabId}">
 														<div class="col-sm-12 pr-0">
-															<table class="table charges-table" ng-show="key == 0">
-																<tbody>
-
-																	<tr ng-repeat="payment in monthlyCharges track by $index">
-																		<td>Monthly Rental</td>
-																		<td>
-																			<strong class="format-price"><span>{{chargesCurrency}}</span><span> {{payment.netAmount }}</span><span>/mo</span></strong>
-																		</td>
-																	</tr>
-
-																	<tr ng-repeat="payment in oneTimeCharges track by $index">
-																		<td>One Time Charges</td>
-																		<td>
-																			<strong class="format-price"><span>{{chargesCurrency}}</span> <span> {{payment.netAmount }}</span></strong>
-																		</td>
-																		<td ng-if="payment.chargeType === 'OneTimeCharge' && displayWaiveOff()" is-allowed="waiveOffLinkView">
-																			<a class="list-group-item-link" href ng-if="!payment.waiveOff" ng-click="waiveOffOneTimeCharges($index, payment.commercialArticle); $event.stopPropagation();"
-																			 translate="Waive Off">Waive Off</a>
-																			<a class="list-group-item-link" href ng-if="payment.waiveOff" ng-click="undoWaiveOff($index, payment.commercialArticle); $event.stopPropagation();"
-																			 translate="Undo">Undo</a>
-																		</td>
-																	</tr>
-
-																	<tr>
-																		<th class="border-top">TOTAL (incl. Tax) Upfront</th>
-																		<th class="border-top"><span>{{chargesCurrency}}</span> <span> {{upfront.netAmount+upfront.tax}}</span></th>
-																	</tr>
-																	<tr>
-																		<th>TOTAL AMOUNT in 1st Invoice</th>
-																		<th><span>{{chargesCurrency}}</span> <span> {{billing.netAmount + billing.tax}}</span></th>
-																	</tr>
-																</tbody>
-															</table>
+																<div ng-include="tab.page"></div>
+															
 															<!-- <p class="prodcutSummary">{{val.summary}}</p> -->
 
 															<!-- <div class="col-sm-12 plr-0" ng-show="key == 0">

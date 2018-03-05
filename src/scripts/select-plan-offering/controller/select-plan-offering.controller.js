@@ -44,6 +44,7 @@ function SelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa, $filter,Sele
     $scope.detailsTab = [{
         id:'charges',
         title:'Charges',
+        page:'scripts/select-plan-offering/views/offerCharges.tpl.html'
     }]
 
 
