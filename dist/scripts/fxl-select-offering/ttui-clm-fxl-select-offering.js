@@ -20,8 +20,12 @@ var module = angular.module('TT-UI-CLM.FxlSelectOffering.Controllers.FxlSelectOf
 function FEASIBILITY_CHECK_FORM() {
     return {LOCAL_STORAGE_NS: 'feasibility-check-form', LOCAL_STORAGE_MODEL: 'model', LOCAL_STORAGE_DEFAULT_OBJECT: {}};
 }
+function SEARCH_OFFERINGS_FORM() {
+    return {LOCAL_STORAGE_NS: 'search-offerings-form', LOCAL_STORAGE_MODEL: 'model', LOCAL_STORAGE_DEFAULT_OBJECT: {}};
+}
 
 module.constant(FEASIBILITY_CHECK_FORM.name, FEASIBILITY_CHECK_FORM());
+module.constant(SEARCH_OFFERINGS_FORM.name, SEARCH_OFFERINGS_FORM());
 
 FxlSelectOfferingCtrl.$inject = [
     '$scope',
@@ -33,10 +37,11 @@ FxlSelectOfferingCtrl.$inject = [
     'store',
     'StepStorageFactory',
     'FEASIBILITY_CHECK_FORM',
+    'SEARCH_OFFERINGS_FORM',
     '$parse'
 ];
 
-function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil, $translate, CurrentUser, MASTER_CONFIG, store, StepStorageFactory, FEASIBILITY_CHECK_FORM, $parse) {
+function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil, $translate, CurrentUser, MASTER_CONFIG, store, StepStorageFactory, FEASIBILITY_CHECK_FORM, SEARCH_OFFERINGS_FORM, $parse) {
 
     $scope.lists = FxlSelectOfferingService.getAllList($scope.masterData);
     $scope.services = FxlSelectOfferingService.getServices($scope.masterData);
@@ -51,6 +56,13 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
         .load
         .bind(stepStorage);
     var feasibilityModalData = this.load();
+
+    var searchOfferingsStorage = new StepStorageFactory(SEARCH_OFFERINGS_FORM.LOCAL_STORAGE_NS, SEARCH_OFFERINGS_FORM.LOCAL_STORAGE_DEFAULT_OBJECT);
+    this.loadOfferings = searchOfferingsStorage
+        .load
+        .bind(searchOfferingsStorage);
+    var searchofferingsModalData = this.loadOfferings();
+
     $scope.searchofferingModel = {
         offering: {
             CustomerType: "I",
@@ -71,7 +83,7 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
                 angular.forEach($scope.customerSubCategoryList, function (temp) {
                     if ($scope.searchofferingModel.CustomerSubCategory === '' && angular.isDefined(temp.default)) {
                         $scope.searchofferingModel.CustomerSubCategory = temp.code;
-                        $scope.searchofferingLabelModel.CustomerSubCategoryName = temp.name;
+                        $scope.searchofferingLabelModel.CustomerSubCategory = temp.name;
                     }
                 });
             });
@@ -89,7 +101,7 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
                             .forEach($scope.customerCategoryList, function (temp) {
                                 if ($scope.searchofferingModel.offering.CustomerCategory === '' && angular.isDefined(temp.default)) {
                                     $scope.searchofferingModel.offering.CustomerCategory = temp.code;
-                                    $scope.searchofferingLabelModel.offering.CustomerCategoryName = temp.name;
+                                    $scope.searchofferingLabelModel.offering.CustomerCategory = temp.name;
                                 }
                             });
                         $scope.getCustomerSubCategory($scope.searchofferingModel.offering.CustomerCategory);
@@ -110,7 +122,7 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
                     angular.forEach($scope.customerCategoryList, function (temp) {
                         if (angular.isDefined(temp.default)) {
                             $scope.searchofferingModel.offering.CustomerType = temp.code;
-                            $scope.searchofferingLabelModel.offering.CustomerName = temp.name;
+                            $scope.searchofferingLabelModel.offering.Customer = temp.name;
                         }
                     });
                     $scope.getCustomerSubCategory($scope.searchofferingModel.offering.CustomerType);
@@ -125,7 +137,7 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
             .forEach(categoryLists, function (category) {
                 if (category.hasOwnProperty('default') && category.default === 'Y') {
                     $scope.searchofferingModel.offering.CustomerCategory = category.categories.category[0].code;
-                    $scope.searchofferingLabelModel.offering.CustomerCategoryName = category.categories.category[0].name;
+                    $scope.searchofferingLabelModel.offering.CustomerCategory = category.categories.category[0].name;
                     $scope.getCustomerCategory();
                 }
             });
@@ -136,7 +148,7 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
             .forEach(serviceList, function (service) {
                 if (service.hasOwnProperty('default') && service.default === 'Y') {
                     $scope.searchofferingModel.offering.ProductType = service.code;
-                    $scope.searchofferingLabelModel.offering.ProductName = service.name;
+                    $scope.searchofferingLabelModel.offering.ProductType = service.name;
                 }
             });
     }
@@ -146,108 +158,26 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
             .forEach(businesstypeList, function (businesstype) {
                 if (businesstype.hasOwnProperty('default') && businesstype.default === 'Y') {
                     $scope.searchofferingModel.offering.BusinessType = businesstype.code;
-                    $scope.searchofferingLabelModel.offering.BusinessName = businesstype.name;
+                    $scope.searchofferingLabelModel.offering.Business = businesstype.name;
                 }
             });
     }
 
-    //Sould write a common function for this and call that. starts here
-    $scope.onSelectsubCustomerCategory = function () {
-        if ($scope.searchofferingModel.offering.CustomerSubCategory == null) {
-            $scope.searchofferingModel.offering.CustomerSubCategory = '';
-            $scope.searchofferingLabelModel.offering.CustomerSubCategoryName = '';
+    $scope.onSelctOfDropdown = function(dropdownName, list){
+        if ($scope.searchofferingModel.offering[dropdownName] == null) {
+            $scope.searchofferingModel.offering[dropdownName] = '';
+            $scope.searchofferingLabelModel.offering[dropdownName] = '';
         } else {
             angular
-                .forEach($scope.customerSubCategoryList, function (item) {
-                    if (item.code === $scope.searchofferingModel.offering.CustomerSubCategory) {
-                        $scope.searchofferingModel.offering.CustomerSubCategory = item.code
-                        $scope.searchofferingLabelModel.offering.CustomerSubCategoryName = item.name
+                .forEach(list, function (item) {
+                    if (item.code === $scope.searchofferingModel.offering[dropdownName]) {
+                        $scope.searchofferingModel.offering[dropdownName] = item.code
+                        $scope.searchofferingLabelModel.offering[dropdownName] = item.name
                     }
 
                 });
         }
-
     }
-
-    $scope.onSelectService = function () {
-        if ($scope.searchofferingModel.offering.ProductType == null) {
-            $scope.searchofferingModel.offering.ProductType = '';
-            $scope.searchofferingLabelModel.offering.ProductName = '';
-        } else {
-            angular
-                .forEach($scope.services, function (item) {
-                    if (item.code === $scope.searchofferingModel.offering.ProductType) {
-                        $scope.searchofferingModel.offering.ProductType = item.code
-                        $scope.searchofferingLabelModel.offering.ProductName = item.name
-                    }
-                });
-        }
-
-    }
-    $scope.onSelectTechnologies = function () {
-        if ($scope.searchofferingModel.offering.Technology == null) {
-            $scope.searchofferingModel.offering.Technology = '';
-            $scope.searchofferingLabelModel.offering.TechnologyName = '';
-        } else {
-            angular
-                .forEach($scope.technologies, function (item) {
-                    if (item.code === $scope.searchofferingModel.offering.Technology) {
-                        $scope.searchofferingModel.offering.Technology = item.code
-                        $scope.searchofferingLabelModel.offering.TechnologyName = item.name
-                    }
-                });
-        }
-    }
-
-    $scope.onSelectNationalities = function () {
-        if ($scope.searchofferingModel.offering.Nationality == null) {
-            $scope.searchofferingModel.offering.Nationality = '';
-            $scope.searchofferingLabelModel.offering.NationalityName = '';
-        } else {
-            angular
-                .forEach($scope.nationalities, function (item) {
-                    if (item.code === $scope.searchofferingModel.offering.Nationality) {
-                        $scope.searchofferingModel.offering.Nationality = item.code;
-                        $scope.searchofferingLabelModel.offering.NationalityName = item.name;
-                    }
-                });
-        }
-
-    }
-
-    $scope.onSelectbusiness = function () {
-        if ($scope.searchofferingModel.offering.BusinessType == null) {
-            $scope.searchofferingModel.offering.BusinessType = '';
-            $scope.searchofferingLabelModel.offering.BusinessName = '';
-        } else {
-            angular
-                .forEach($scope.businessTypes, function (item) {
-                    if (item.code === $scope.searchofferingModel.offering.BusinessType) {
-                        $scope.searchofferingModel.offering.BusinessType = item.code
-                        $scope.searchofferingLabelModel.offering.BusinessName = item.name
-                    }
-                });
-        }
-    }
-    $scope.onSelectPlan = function () {
-        if ($scope.searchofferingModel.offering.plan == null) {
-            $scope.searchofferingModel.offering.plan = '';
-            $scope.searchofferingLabelModel.offering.planName = '';
-        } else {
-            angular
-                .forEach($scope.plans, function (item) {
-                    if (item.code === $scope.searchofferingModel.offering.plan) {
-                        $scope.searchofferingModel.offering.plan = item.code;
-                        $scope.searchofferingLabelModel.offering.planName = item.name;
-                    }
-                });
-        }
-
-    }
-    ////// ends
-
-
-    
 
     //Forming the payload for api calll
     var updateSearchOfferingModel = function (){
@@ -255,7 +185,7 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
         $scope.searchofferingModel.offering.City = $parse('locality.locality')(feasibilityModalData);
         $scope.searchofferingModel.offering.State = $parse('locality.province')(feasibilityModalData);
         $scope.searchofferingModel.offering.Technology = $parse('technology')(feasibilityModalData);
-        $scope.searchofferingLabelModel.offering.TechnologyName = $parse('technology')(feasibilityModalData);
+        $scope.searchofferingLabelModel.offering.Technology = $parse('technology')(feasibilityModalData);
     }
 
     //Setting the default values
