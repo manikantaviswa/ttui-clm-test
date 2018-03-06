@@ -164,6 +164,13 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
         }
     }
 
+    //Function for filling the model from store
+    var updateModalWithStorevalues = function(searchofferingsModalData){        
+        Object.keys(searchofferingsModalData).map(key => 
+            $scope.searchofferingModel.offering[key] = $parse(key)(searchofferingsModalData)       
+        );
+    }
+
     //Forming the payload for api calll
     var updateSearchOfferingModel = function (){
         $scope.searchofferingModel.offering.Country = $parse('locality.country')(feasibilityModalData);
@@ -171,9 +178,10 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
         $scope.searchofferingModel.offering.State = $parse('locality.province')(feasibilityModalData);
         $scope.searchofferingModel.offering.Technology = $parse('technology')(feasibilityModalData);
         $scope.searchofferingLabelModel.offering.Technology = $parse('technology')(feasibilityModalData);
-        $scope.searchofferingModel.offering.CustomerCategory = $parse('CustomerCategory')(searchofferingsModalData);
-        $scope.searchofferingModel.offering.CustomerSubCategory = $parse('CustomerSubCategory')(searchofferingsModalData);
-
+        console.log(Object.keys(searchofferingsModalData).length);
+        if(Object.keys(searchofferingsModalData).length != 0){
+            updateModalWithStorevalues(searchofferingsModalData);
+        }
     }
 
     //Setting the default values
