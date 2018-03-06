@@ -186,6 +186,9 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
         $scope.searchofferingModel.offering.State = $parse('locality.province')(feasibilityModalData);
         $scope.searchofferingModel.offering.Technology = $parse('technology')(feasibilityModalData);
         $scope.searchofferingLabelModel.offering.Technology = $parse('technology')(feasibilityModalData);
+        $scope.searchofferingModel.offering.CustomerCategory = $parse('CustomerCategory')(searchofferingsModalData);
+        $scope.searchofferingModel.offering.CustomerSubCategory = $parse('CustomerSubCategory')(searchofferingsModalData);
+
     }
 
     //Setting the default values
