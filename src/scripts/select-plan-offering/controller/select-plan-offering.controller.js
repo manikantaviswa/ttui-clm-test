@@ -8,15 +8,18 @@ var module = angular.module('TT-UI-CLM.CommonSelectPlanOffering.Controllers.Comm
     'uib/template/modal/window.html',
     'uib/template/modal/backdrop.html',
     'ui.bootstrap.modal'
-    
+
 ])
 
-function CommonSelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa, $filter,SelectOfferingPlanService) {
+function CommonSelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa, $filter, SelectOfferingPlanService) {
     $scope.selectedVariant = {
         code: ""
     };
+    $scope.selectedPlan = {
+        code: ""
+    };
     $scope.selectAllowance = "";
-   
+
     $scope.offeringTabs = [
         {
             id: 0,
@@ -31,7 +34,13 @@ function CommonSelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa, $filte
         }
     ];
     $scope.vasList = [];
-    $scope.payments =[];
+    $scope.payments = [];
+    $scope.selectOfferDetail = {};
+    $scope.monthlyCharges = [];
+    $scope.oneTimeCharges = [];
+    $scope.chargesCurrency = '';
+    $scope.upfront = "";
+    $scope.billing = "";
 
     //selected Plan Offering Tabs
     $scope.offerTabId = 0;
@@ -42,9 +51,29 @@ function CommonSelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa, $filte
         return $scope.offerTabId === tabId;
     };
     $scope.detailsTab = [{
-        id:'charges',
-        title:'Charges',
-        page:'scripts/select-plan-offering/views/offerCharges.tpl.html'
+        id: 'inclusions_allowance',
+        title: 'Inclusions & Allowance',
+        page: ''
+    },
+    {
+        id: 'equipments',
+        title: 'Equipments',
+        page: ''
+    },
+    {
+        id: 'charges',
+        title: 'Charges',
+        page: 'scripts/select-plan-offering/views/offerCharges.tpl.html'
+    },
+    {
+        id: 'contracts_penalty',
+        title: 'Contracts & Penalty',
+        page: ''
+    },
+    {
+        id: 'emi_plans',
+        title: 'EMI Plans',
+        page: ''
     }]
 
 
@@ -99,15 +128,18 @@ function CommonSelectPlanOfferingCtrl($scope, $parse, $timeout, $uibModa, $filte
         $event.stopPropagation();
     };
 
-    $scope.$on('offerDetailModel',function(event,data){
+    $scope.$on('offerDetailModel', function (event, data) {
+        $scope.selectOfferDetail = $parse('offerDetail')(data);
+
         $scope.monthlyCharges = $parse('monthlyCharges')(data);
         $scope.oneTimeCharges = $parse('oneTimeCharges')(data);
-        var payments =  $parse('payments')(data.offerDetail);
+        var payments = $parse('payments')(data.offerDetail);
         var payment = $parse('payment')(payments);
         $scope.chargesCurrency = $parse('currency')(payment);
         var totals = $parse('totals')(payment);
         $scope.upfront = $parse('upfront')(totals);
         $scope.billing = $parse('billing')(totals);
+
     });
 }
 
