@@ -8,10 +8,10 @@ function SelectedOfferCartCtrl($scope, $parse, $rootScope) {
   $scope.showCartList = function () {
     $scope.showPanel = !$scope.showPanel;
   }
-  $scope.onRemove = function (item) {
-    var index = $scope.selectedOfferItems.indexOf(item);
-    $scope.selectedOfferItems.splice(index, 1);
-  }
+  // $scope.onRemove = function (item) {
+  //   var index = $scope.selectedOfferItems.indexOf(item);
+  //   $scope.selectedOfferItems.splice(index, 1);
+  // }
 
   $scope.payments = {
     "payment": {
@@ -239,10 +239,14 @@ function SelectedOfferCartCtrl($scope, $parse, $rootScope) {
       var charges = $parse('charges')(items.payments.payment);
       var selectedPlan = $parse('name')(items);
       var currency = $parse('currency')(items);
+      var code = $parse('code')(items);
       $scope.selectedOfferItems.push({
-         name: selectedPlan,
-         paymentDetails: charges,
-         currency: currency});
+        name: selectedPlan,
+        paymentDetails: charges,
+        currency: currency,
+        code: code,
+        selected:true
+      });
     })
 
   });

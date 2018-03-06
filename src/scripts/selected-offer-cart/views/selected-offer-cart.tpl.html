@@ -68,7 +68,7 @@
 		<ul class="list-group" ng-if="selectedOfferItems.length > 0">
 				<li class="list-group-item" ng-repeat="item in selectedOfferItems">
 					<label class="cartHeader">{{item.name}}
-						<a class="removeIcon glyphicon glyphicon-remove ng-scope" aria-label="Remove" ng-click="onRemove(item)"></a>
+						<a class="removeIcon glyphicon glyphicon-remove ng-scope" aria-label="Remove" ng-click="removeSelectedOfferCart(item)"></a>
 					</label>
 					<div class="col-sm-12" ng-show="showPanel" ng-repeat="payment in item.paymentDetails ">
 						

@@ -14,7 +14,8 @@ module.directive('selectedOfferCart',function(){
         scope:{
             selectedOffering: '=',
             masterData: '=',
-            defaultState:'='
+            defaultState:'=',
+            removeSelectedOfferCart:'='
         }
     }
 })
