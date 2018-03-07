@@ -14,11 +14,9 @@ function AppointmentSlotPickerCtrl($scope, $parse, moment, calendarConfig, Fetch
         var toDate = moment(fromDate).add('month', 3).toDate();
         var req = {
             // @TODO need to get it from form or some constants
-            getAppointmentSlot: {
-                installationType: $parse('model.installationType')($scope),
-                startDate: fromDate,
-                endDate: toDate
-            }
+            installationType: $parse('model.installationType')($scope),
+            startDate: fromDate,
+            endDate: toDate
         };
         new FetchAppointmentsAPIService(req).then(function(res) {
             $scope.events = res.appointmentSlot.map(function(slot, index) {
@@ -42,7 +40,7 @@ function AppointmentSlotPickerCtrl($scope, $parse, moment, calendarConfig, Fetch
 AppointmentSlotPickerCtrl.$inject = [
     '$scope',
     '$parse',
-    'moment',
+    'abcMoment', // Provided by slot-calendar component
     'calendarConfig',
     'FetchAppointmentsAPIService',
     'AppointmentSlotPickerService'

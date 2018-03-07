@@ -1,5 +1,5 @@
 <div class="row" ng-if="viewDate">
-    <div class="col-md-8 pr-0" ng-if="events && events.length > 0">
+    <div class="col-md-12 pr-0" ng-if="events && events.length > 0">
         <div class="input-group text-center">
             <span class="input-group-btn">
                 <button class="btn btn-primary" mwl-date-modifier
@@ -33,14 +33,14 @@
             }">
         </mwl-calendar>
     </div>
-    <div class="col-md-4 pl-0">
+    <div class="col-md-12 pl-0">
         <!-- <div class="col-sm-12 event-Details">
             <label class="current-Date col-sm-4">{{viewDate | date: 'dd'}} </label>
             <label class="current-Date col-sm-4">{{viewDate | date: 'EEEE'}} </label>
             <label class="current-day col-sm-4">{{viewDate | date: 'MMM'}} </label>
         </div> -->
-        <div class="col-sm-12 pr-0 event-list">
-            <ul class="list-group">
+        <div class="col-sm-12 pr-0">
+            <ul class="list-group event-list">
                 <li class="list-group-item" ng-repeat="slot in selectedSlots" ng-click="onSlotClick(slot)" ng-class="{'active': activeSlot === slot}">
                     {{slot.startsAt | date: 'hh:mm'}} - {{slot.endsAt | date: 'hh:mm'}}
                 </li>
