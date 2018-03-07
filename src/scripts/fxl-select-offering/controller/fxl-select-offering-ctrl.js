@@ -57,7 +57,7 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
     };
     $scope.searchofferingLabelModel = {
         offering: {}
-    };
+    };    
 
     //Get Customer Subcategory (This function must be clean later)
     $scope.getCustomerSubCategory = function (customerCategory) {
@@ -167,7 +167,7 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
     //Function for filling the model from store
     var updateModalWithStorevalues = function(searchofferingsModalData){        
         Object.keys(searchofferingsModalData).map(key => 
-            $scope.searchofferingModel.offering[key] = $parse(key)(searchofferingsModalData)       
+            $scope.searchofferingModel.offering[key] = $parse(key)(searchofferingsModalData)           
         );
     }
 
@@ -178,20 +178,26 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
         $scope.searchofferingModel.offering.State = $parse('locality.province')(feasibilityModalData);
         $scope.searchofferingModel.offering.Technology = $parse('technology')(feasibilityModalData);
         $scope.searchofferingLabelModel.offering.Technology = $parse('technology')(feasibilityModalData);
+        updatelabelModel(searchofferingsModalData,$scope.businessTypes); 
         console.log(Object.keys(searchofferingsModalData).length);
         if(Object.keys(searchofferingsModalData).length != 0){
-            updateModalWithStorevalues(searchofferingsModalData);
+            updateModalWithStorevalues(searchofferingsModalData);          
         }
     }
-
+    
     //Setting the default values
     var settingDeafaultValues = function (){  
         var categoryLists = $scope.lists.masterData.partyTypes.partyType;      
         $scope.setCategoryDefault(categoryLists);
         $scope.setServiceDefault($scope.services);
         $scope.setBusinessTypeDefault($scope.businessTypes); 
+        
     }
-
+    var  updatelabelModel = function(searchofferingsModalData,list){
+       Object.keys(searchofferingsModalData).forEach(function(key){
+          $scope.onSelctOfDropdown(key, list );
+       })  
+    }
     // calling dependant functions on load
     var onLoadCall = function () {         
         var serviceType = store.get('service');
@@ -200,7 +206,7 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
             : serviceType;
         settingDeafaultValues();
         updateSearchOfferingModel();
-        //$scope.searchofferingModel.offering.Country = MasterDataUtil.getMasterDataDefault($scope.lists, [MASTER_CONFIG.COUNTRY])[MASTER_CONFIG.COUNTRY];
+      
     }
 
     onLoadCall();
