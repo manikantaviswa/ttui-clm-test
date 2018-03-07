@@ -122,7 +122,7 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
                     angular.forEach($scope.customerCategoryList, function (temp) {
                         if (angular.isDefined(temp.default)) {
                             $scope.searchofferingModel.offering.CustomerType = temp.code;
-                            $scope.searchofferingLabelModel.offering.Customer = temp.name;
+                            $scope.searchofferingLabelModel.offering.CustomerType = temp.name;
                         }
                     });
                     $scope.getCustomerSubCategory($scope.searchofferingModel.offering.CustomerType);
@@ -158,7 +158,7 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
             .forEach(businesstypeList, function (businesstype) {
                 if (businesstype.hasOwnProperty('default') && businesstype.default === 'Y') {
                     $scope.searchofferingModel.offering.BusinessType = businesstype.code;
-                    $scope.searchofferingLabelModel.offering.Business = businesstype.name;
+                    $scope.searchofferingLabelModel.offering.BusinessType = businesstype.name;
                 }
             });
     }
@@ -173,6 +173,22 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
                     if (item.code === $scope.searchofferingModel.offering[dropdownName]) {
                         $scope.searchofferingModel.offering[dropdownName] = item.code
                         $scope.searchofferingLabelModel.offering[dropdownName] = item.name
+                    }
+
+                });
+        }
+    }
+
+    $scope.getupdatedLabelModal = function(keyName, values, list){
+        if ($scope.searchofferingModel.offering[keyName] == null) {
+            $scope.searchofferingModel.offering[keyName] = '';
+            $scope.searchofferingLabelModel.offering[keyName] = '';
+        } else {
+            angular
+                .forEach(list, function (item) {
+                    if (item.code === values) {
+                        $scope.searchofferingModel.offering[keyName] = item.code
+                        $scope.searchofferingLabelModel.offering[keyName] = item.name
                     }
 
                 });
@@ -204,8 +220,15 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
         $scope.searchofferingLabelModel.offering.Technology = $parse('technology')(feasibilityModalData);
         if (isEmpty(searchofferingsModalData)) {
             updateModalWithStorevalues(searchofferingsModalData);
-            updatelabelModel(searchofferingsModalData, $scope.businessTypes);
         }
+
+        updatelabelModel(searchofferingsModalData,$scope.services);
+        updatelabelModel(searchofferingsModalData,$scope.technologies);
+        updatelabelModel(searchofferingsModalData,$scope.customerCategories);
+        updatelabelModel(searchofferingsModalData,$scope.customerCategories[0].subCategories.subCategory);
+        updatelabelModel(searchofferingsModalData,$scope.nationalities); 
+        updatelabelModel(searchofferingsModalData,$scope.businessTypes); 
+        updatelabelModel(searchofferingsModalData,$scope.plans); 
     }
 
     //Setting the default values
@@ -216,11 +239,13 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
         $scope.setBusinessTypeDefault($scope.businessTypes);
 
     }
-    var updatelabelModel = function (searchofferingsModalData, list) {
-        Object.keys(searchofferingsModalData).forEach(function (key) {
-            $scope.onSelctOfDropdown(key, list);
-        })
+
+    var  updatelabelModel = function(searchofferingsModalData,list){
+       Object.keys(searchofferingsModalData).forEach(function(key){
+          $scope.getupdatedLabelModal(key, searchofferingsModalData[key], list );
+       })  
     }
+    
     // calling dependant functions on load
     var onLoadCall = function () {
         var serviceType = store.get('service');
