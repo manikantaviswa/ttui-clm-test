@@ -171,6 +171,15 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
         );
     }
 
+    //Chekcing is empty
+    function isEmpty(obj) {
+        for(var key in obj) {
+            if(obj.hasOwnProperty(key))
+                return false;
+        }
+        return true;
+     }
+
     //Forming the payload for api calll
     var updateSearchOfferingModel = function (){
         $scope.searchofferingModel.offering.Country = $parse('locality.country')(feasibilityModalData);
@@ -178,8 +187,7 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
         $scope.searchofferingModel.offering.State = $parse('locality.province')(feasibilityModalData);
         $scope.searchofferingModel.offering.Technology = $parse('technology')(feasibilityModalData);
         $scope.searchofferingLabelModel.offering.Technology = $parse('technology')(feasibilityModalData);
-        console.log(Object.keys(searchofferingsModalData).length);
-        if(Object.keys(searchofferingsModalData).length != 0){
+        if(isEmpty(searchofferingsModalData)){
             updateModalWithStorevalues(searchofferingsModalData);
         }
     }
