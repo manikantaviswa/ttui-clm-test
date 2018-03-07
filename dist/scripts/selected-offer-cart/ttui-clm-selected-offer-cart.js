@@ -255,10 +255,12 @@ function SelectedOfferCartCtrl($scope, $parse, $rootScope) {
       var currency = $parse('currency')(items);
       var code = $parse('code')(items);
       $scope.selectedOfferItems.push({
-         name: selectedPlan,
-         paymentDetails: charges,
-         currency: currency,
-         code:code});
+        name: selectedPlan,
+        paymentDetails: charges,
+        currency: currency,
+        code: code,
+        selected:true
+      });
     })
 
   });

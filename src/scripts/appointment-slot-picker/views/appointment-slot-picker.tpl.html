@@ -1,6 +1,6 @@
 <div ng-form="appointment-form" class="row">
-    <div class="col-sm-7">
-        <div class="row form-horizontal form-horizontal-ttui">
+    <div class="col-sm-6">
+        <div class="form-horizontal form-horizontal-ttui">
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="installation-type" class="col-sm-4 control-label">Installation Type</label>
@@ -14,11 +14,13 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <calendar-picker config="config" model="model" master-data="masterData" events="events"></calendar-picker>
+                <div class="row">
+                    <calendar-picker config="config" model="model" master-data="masterData" events="events"></calendar-picker>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-sm-5">
+    <div class="col-sm-6">
         <div class="appointment-info-panel form-horizontal form-horizontal-ttui">
             <div class="form-group form-group-summary">
                 <label class="col-sm-4 control-label grayText" translate="Appointment">Appointment</label>
