@@ -18,10 +18,10 @@ angular.module('TT-UI-CLM.FxlSelectOffering', [
 var module = angular.module('TT-UI-CLM.FxlSelectOffering.Controllers.FxlSelectOfferingCtrl', ['TT-UI-CLM.FxlSelectOffering.Services.FxlSelectOfferingService', 'CLM-UI.Customers.Corporate.Services.MasterDataUtil', 'CLM-UI.Customers.Services.StepStorage']);
 
 function FEASIBILITY_CHECK_FORM() {
-    return {LOCAL_STORAGE_NS: 'feasibility-check-form', LOCAL_STORAGE_MODEL: 'model', LOCAL_STORAGE_DEFAULT_OBJECT: {}};
+    return { LOCAL_STORAGE_NS: 'feasibility-check-form', LOCAL_STORAGE_MODEL: 'model', LOCAL_STORAGE_DEFAULT_OBJECT: {} };
 }
 function SEARCH_OFFERINGS_FORM() {
-    return {LOCAL_STORAGE_NS: 'search-offerings-form', LOCAL_STORAGE_MODEL: 'model', LOCAL_STORAGE_DEFAULT_OBJECT: {}};
+    return { LOCAL_STORAGE_NS: 'search-offerings-form', LOCAL_STORAGE_MODEL: 'model', LOCAL_STORAGE_DEFAULT_OBJECT: {} };
 }
 
 module.constant(FEASIBILITY_CHECK_FORM.name, FEASIBILITY_CHECK_FORM());
@@ -50,7 +50,7 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
     $scope.nationalities = FxlSelectOfferingService.getCustomerNationalities($scope.masterData);
     $scope.businessTypes = FxlSelectOfferingService.getBusinessTypes($scope.masterData);
     $scope.plans = FxlSelectOfferingService.getPlans($scope.masterData);
-    
+
     var stepStorage = new StepStorageFactory(FEASIBILITY_CHECK_FORM.LOCAL_STORAGE_NS, FEASIBILITY_CHECK_FORM.LOCAL_STORAGE_DEFAULT_OBJECT);
     this.load = stepStorage
         .load
@@ -76,7 +76,7 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
 
     //Get Customer Subcategory (This function must be clean later)
     $scope.getCustomerSubCategory = function (customerCategory) {
-          MasterDataUtil
+        MasterDataUtil
             .getCustomerSubCategory($scope.searchofferingModel.offering.CustomerType, customerCategory)
             .then(function (data) {
                 $scope.customerSubCategoryList = data;
@@ -163,7 +163,7 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
             });
     }
 
-    $scope.onSelctOfDropdown = function(dropdownName, list){
+    $scope.onSelctOfDropdown = function (dropdownName, list) {
         if ($scope.searchofferingModel.offering[dropdownName] == null) {
             $scope.searchofferingModel.offering[dropdownName] = '';
             $scope.searchofferingLabelModel.offering[dropdownName] = '';
@@ -180,42 +180,56 @@ function FxlSelectOfferingCtrl($scope, FxlSelectOfferingService, MasterDataUtil,
     }
 
     //Function for filling the model from store
-    var updateModalWithStorevalues = function(searchofferingsModalData){        
-        Object.keys(searchofferingsModalData).map(key => 
-            $scope.searchofferingModel.offering[key] = $parse(key)(searchofferingsModalData)       
+    var updateModalWithStorevalues = function (searchofferingsModalData) {
+        Object.keys(searchofferingsModalData).map(key =>
+            $scope.searchofferingModel.offering[key] = $parse(key)(searchofferingsModalData)
         );
     }
 
+    //Chekcing is empty
+    function isEmpty(obj) {
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key))
+                return false;
+        }
+        return true;
+    }
+
     //Forming the payload for api calll
-    var updateSearchOfferingModel = function (){
+    var updateSearchOfferingModel = function () {
         $scope.searchofferingModel.offering.Country = $parse('locality.country')(feasibilityModalData);
         $scope.searchofferingModel.offering.City = $parse('locality.locality')(feasibilityModalData);
         $scope.searchofferingModel.offering.State = $parse('locality.province')(feasibilityModalData);
         $scope.searchofferingModel.offering.Technology = $parse('technology')(feasibilityModalData);
         $scope.searchofferingLabelModel.offering.Technology = $parse('technology')(feasibilityModalData);
-        console.log(Object.keys(searchofferingsModalData).length);
-        if(Object.keys(searchofferingsModalData).length != 0){
+        if (isEmpty(searchofferingsModalData)) {
             updateModalWithStorevalues(searchofferingsModalData);
+            updatelabelModel(searchofferingsModalData, $scope.businessTypes);
         }
     }
 
     //Setting the default values
-    var settingDeafaultValues = function (){  
-        var categoryLists = $scope.lists.masterData.partyTypes.partyType;      
+    var settingDeafaultValues = function () {
+        var categoryLists = $scope.lists.masterData.partyTypes.partyType;
         $scope.setCategoryDefault(categoryLists);
         $scope.setServiceDefault($scope.services);
-        $scope.setBusinessTypeDefault($scope.businessTypes); 
-    }
+        $scope.setBusinessTypeDefault($scope.businessTypes);
 
+    }
+    var updatelabelModel = function (searchofferingsModalData, list) {
+        Object.keys(searchofferingsModalData).forEach(function (key) {
+            $scope.onSelctOfDropdown(key, list);
+        })
+    }
     // calling dependant functions on load
-    var onLoadCall = function () {         
+    var onLoadCall = function () {
         var serviceType = store.get('service');
         $scope.searchofferingModel.offering.LoB = _.isEmpty(serviceType)
             ? MasterDataUtil.getMasterDataDefault(masterData, [MASTER_CONFIG.SERVICE_TYPE])[MASTER_CONFIG.SERVICE_TYPE]
             : serviceType;
         settingDeafaultValues();
         updateSearchOfferingModel();
-        //$scope.searchofferingModel.offering.Country = MasterDataUtil.getMasterDataDefault($scope.lists, [MASTER_CONFIG.COUNTRY])[MASTER_CONFIG.COUNTRY];
+
     }
 
     onLoadCall();
